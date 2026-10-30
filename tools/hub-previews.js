@@ -91,10 +91,10 @@ const THEMES = [
     bg: 'center top / 360px auto',
     name: 'Lin Mei',
     placeholder: 'Write a few lines…',
-    avatar: ['#c8352b', '#f6e3d8'],
+    avatar: ['#c2695a', '#3a2621'],
     markup: true,
     title: `<img src="SRC/title.png" style="height:30px">
-      <span style="font:italic 500 17px Lora,Georgia,serif;color:#8c2a20;letter-spacing:.08em">Falling Blossoms</span>`,
+      <span style="font:italic 500 17px Lora,Georgia,serif;color:#c9a27a;letter-spacing:.08em">Falling Blossoms</span>`,
     lines: [
       ['c', '*She sets down the brush.* "The plum tree lost half its flowers to the rain last night."'],
       ['u', 'Then let us count the ones that stayed.'],

@@ -1,7 +1,7 @@
 /* ============================================================
    花落 · FALLING BLOSSOMS — мягкий старый Китай
-   Свиток в парчовом обрамлении: ответы персонажа — листы
-   рисовой бумаги с уголками хуэйвэнь, по ним летят лепестки
+   Вечерний свиток при свете лампы: ответы персонажа — листы
+   тёмной «чайной» бумаги с уголками хуэйвэнь, по ним летят лепестки
    сливы. Пока персонаж отвечает, в поле ввода кисть
    выводит мазок тушью.
    Шрифт Lora (SIL OFL 1.1) встроен в тему.
@@ -69,7 +69,7 @@
 
 .tavo-message-content::selection,
 .tavo-message-content *::selection {
-  background: rgba(200, 53, 43, 0.22);
+  background: rgba(194, 105, 90, 0.35);
   color: inherit;
 }
 
@@ -79,7 +79,7 @@
 }
 
 .tavo-character-bubble {
-  background-color: #fbf6ea;
+  background-color: rgba(38, 32, 25, 0.92);
   background-image:
     url("theme/assets/corner-tl.svg"),
     url("theme/assets/corner-br.svg"),
@@ -88,22 +88,22 @@
   background-size: 20px 20px, 20px 20px, 220px 220px, 256px 256px;
   background-repeat: no-repeat, no-repeat, repeat, repeat;
   background-position: left 0 top 0, right 0 bottom 0, 0 0, 0 0;
-  border: 1px solid rgba(160, 60, 40, 0.16);
-  box-shadow: 0 3px 12px rgba(80, 40, 20, 0.12);
+  border: 1px solid rgba(194, 105, 90, 0.22);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
   padding: 13px 18px;
   animation: blossoms-fall 60s linear infinite;
 }
 
 /* ---------- Вы: записка на розоватой бумаге ---------- */
 .tavo-user-bubble {
-  background-color: #f6e3d8;
-  border-left: 3px solid #c8352b;
-  box-shadow: 0 3px 12px rgba(80, 40, 20, 0.1);
+  background-color: rgba(58, 38, 33, 0.9);
+  border-left: 3px solid #a8503f;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 /* ---------- Имена: маленькая красная печать перед именем ---------- */
 .tavo-speaker-name {
-  color: #8c2a20;
+  color: #c9a27a;
   font-weight: 600;
   letter-spacing: 0.06em;
 }
@@ -115,21 +115,21 @@
   height: 0.62em;
   margin-right: 0.45em;
   vertical-align: 0.05em;
-  background: #c8352b;
+  background: #a8503f;
   border-radius: 1px;
-  box-shadow: inset 0 0 0 1.5px rgba(251, 246, 234, 0.75);
+  box-shadow: inset 0 0 0 1.5px rgba(230, 218, 196, 0.45);
 }
 
 .tavo-avatar {
-  outline: 1.5px solid rgba(200, 53, 43, 0.7);
+  outline: 1.5px solid rgba(194, 105, 90, 0.6);
   outline-offset: -1.5px;
 }
 
 /* ---------- Мысли, разделитель, вложения ---------- */
 .tavo-message-reasoning {
   font-style: italic;
-  color: #6b5a4a;
-  border-left: 1px dashed rgba(43, 33, 24, 0.35);
+  color: #a8977f;
+  border-left: 1px dashed rgba(201, 162, 122, 0.35);
   padding-left: 10px;
 }
 
@@ -140,28 +140,28 @@
 }
 
 .tavo-message-attachments {
-  outline: 4px solid #fbf6ea;
-  box-shadow: 0 3px 12px rgba(80, 40, 20, 0.18);
+  outline: 3px solid #3a3027;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .tavo-action-bar-button,
 .tavo-action-bar-button-group {
-  background-color: rgba(251, 246, 234, 0.85);
+  background-color: rgba(34, 28, 22, 0.85);
   border-radius: 2px;
 }
 
 /* ---------- Поле ввода: лист под кистью ---------- */
 .tavo-composer-shell {
-  background-color: rgba(246, 239, 225, 0.97);
-  border: 1px solid rgba(140, 42, 32, 0.45);
+  background-color: rgba(34, 28, 22, 0.95);
+  border: 1px solid rgba(194, 105, 90, 0.35);
   border-radius: 3px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 /* Пока персонаж отвечает, кисть выводит мазок тушью под строкой */
 :root:has(.tavo-composer-stop-icon) .tavo-composer-shell {
   background-image:
-    linear-gradient(90deg, rgba(246, 239, 225, 0) 0 46%, rgba(246, 239, 225, 0.97) 54% 100%),
+    linear-gradient(90deg, rgba(34, 28, 22, 0) 0 46%, rgba(34, 28, 22, 0.95) 54% 100%),
     url("theme/assets/brush.png");
   background-size: 220% 100%, 100% 22px;
   background-repeat: no-repeat, no-repeat;
@@ -169,12 +169,12 @@
 }
 
 .tavo-composer-input {
-  color: #2b2118;
-  caret-color: #c8352b;
+  color: #e6dac4;
+  caret-color: #c2695a;
 }
 
 .tavo-composer-input::placeholder {
-  color: #9c8a76;
+  color: #8a7a68;
   font-style: italic;
 }
 

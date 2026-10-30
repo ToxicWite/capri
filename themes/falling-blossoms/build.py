@@ -48,7 +48,7 @@ def huiwen_tile(size=48, color=(196, 164, 108, 40)):
     return img
 
 
-def paper_texture(w, h, seed, base=PAPER):
+def paper_texture(w, h, seed, base=PAPER, fiber=(226, 214, 190, 120)):
     nr = np.random.default_rng(seed)
     blot = nr.normal(0, 1, (h // 40 + 2, w // 40 + 2))
     blot = np.asarray(Image.fromarray(((blot + 3) * 40).clip(0, 255).astype(np.uint8)).resize((w, h), Image.BICUBIC), dtype=np.float64)
@@ -61,7 +61,7 @@ def paper_texture(w, h, seed, base=PAPER):
         x, y = rng.uniform(0, w), rng.uniform(0, h)
         a = rng.uniform(0, math.pi)
         ln = rng.uniform(4, 18)
-        d.line([(x, y), (x + math.cos(a) * ln, y + math.sin(a) * ln)], fill=(226, 214, 190, 120), width=1)
+        d.line([(x, y), (x + math.cos(a) * ln, y + math.sin(a) * ln)], fill=fiber, width=1)
     return img
 
 
@@ -201,11 +201,23 @@ def make_background():
         inner = edge + (10 if y0 == 0 else -10)
         d.line([(0, inner), (W, inner)], fill=VERMILION + (255,), width=2)
 
-    img.convert("RGB").save(ASSETS / "scroll.jpg", quality=90, optimize=True)
+    # Вечер: свиток при свете лампы — приглушить и согреть, середину чуть темнее под сообщения
+    arr = np.asarray(img.convert("RGB"), dtype=np.float64)
+    lum = arr.mean(axis=2, keepdims=True)
+    arr = arr * 0.7 + lum * 0.3                       # меньше насыщенности
+    arr = arr * np.array([0.40, 0.36, 0.32])          # тёплый полумрак
+    yy, xx = np.mgrid[0:H, 0:W]
+    vign = 1 - 0.35 * np.clip(np.hypot((xx / W - 0.5) * 1.2, (yy / H - 0.5) * 0.9), 0, 1)
+    veil = 1 - 0.25 * np.exp(-((yy / H - 0.62) / 0.18) ** 2)
+    arr *= (vign * veil)[..., None]
+    Image.fromarray(arr.clip(0, 255).astype(np.uint8)).save(ASSETS / "scroll.jpg", quality=90, optimize=True)
 
 
 def make_paper_tile():
-    paper_texture(256, 256, 3, base=(251, 246, 234)).save(ASSETS / "paper.png", optimize=True)
+    # тёмная «чайная» бумага, полупрозрачная поверх цвета пузыря
+    tile = paper_texture(256, 256, 3, base=(70, 58, 46), fiber=(86, 72, 58, 90))
+    tile.putalpha(150)
+    tile.save(ASSETS / "paper.png", optimize=True)
 
 
 def make_petals():
@@ -217,7 +229,7 @@ def make_petals():
         x, y = rng.uniform(0, s), rng.uniform(0, s)
         pr = rng.uniform(3.5, 6)
         petal = Image.new("RGBA", (30, 30), (0, 0, 0, 0))
-        ImageDraw.Draw(petal).ellipse([15 - pr, 15 - pr * 0.55, 15 + pr, 15 + pr * 0.55], fill=VERMILION + (rng.randint(60, 110),))
+        ImageDraw.Draw(petal).ellipse([15 - pr, 15 - pr * 0.55, 15 + pr, 15 + pr * 0.55], fill=(176, 92, 78, rng.randint(55, 95)))
         petal = petal.rotate(rng.uniform(0, 180))
         for dx in range(3):  # копии во все соседние клетки, чтобы края совпали
             for dy in range(3):
@@ -243,16 +255,16 @@ def make_brush():
         seg = []
         for p in pts:
             if rng.random() < 0.12 and len(seg) > 1:
-                d.line(seg, fill=INK + (alpha,), width=width)
+                d.line(seg, fill=(214, 196, 168, alpha), width=width)
                 seg = []
             seg.append(p)
         if len(seg) > 1:
-            d.line(seg, fill=INK + (alpha,), width=width)
+            d.line(seg, fill=(214, 196, 168, alpha), width=width)
     img.filter(ImageFilter.GaussianBlur(0.6)).save(ASSETS / "brush.png", optimize=True)
 
 
 def make_svgs():
-    v = "#c8352b"
+    v = "#b0574a"
     # уголок хуэйвэнь (левый верхний; правый нижний — поворот)
     corner = ('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">'
               '<g transform="{t}" fill="none" stroke="' + v + '" stroke-width="2.4" stroke-linecap="square">'
@@ -305,24 +317,24 @@ def manifest(css):
             "charAvatar": False,
             "image": "theme/assets/scroll.jpg",
             "imageOpacity": 1,
-            "color": argb("#F2E8D5"),
+            "color": argb("#2A221B"),
         },
-        "user_bubble": {"color": argb("#F6E3D8", 0xF2), "blur": 0, "radius": 2, "alignment": "right"},
-        "character_bubble": {"color": argb("#FBF6EA", 0xF5), "blur": 0, "radius": 2, "alignment": "left"},
-        "user_bubble_font": font(argb("#2B2118"), argb("#8A6A58"), argb("#5A1A14")),
-        "character_bubble_font": font(argb("#2B2118"), argb("#7A5C48"), argb("#8C2A20")),
+        "user_bubble": {"color": argb("#3A2621", 0xE6), "blur": 0, "radius": 2, "alignment": "right"},
+        "character_bubble": {"color": argb("#262019", 0xEB), "blur": 0, "radius": 2, "alignment": "left"},
+        "user_bubble_font": font(argb("#E4D5C3"), argb("#B8988A"), argb("#F0C9B6")),
+        "character_bubble_font": font(argb("#E6DAC4"), argb("#A8977F"), argb("#E5A893")),
         "console": {
-            "color": argb("#F6EFE1", 0xF5),
+            "color": argb("#221C16", 0xF2),
             "blur": 0,
             "radius": 3,
-            "sendColor": argb("#C8352B"),
+            "sendColor": argb("#C2695A"),
             "fontSize": 17,
             "fontWeight": 400,
-            "fontColor": argb("#2B2118"),
-            "placeholderColor": argb("#9C8A76"),
+            "fontColor": argb("#E6DAC4"),
+            "placeholderColor": argb("#8A7A68"),
         },
-        "thinking": {"fontSize": 14, "fontWeight": 400, "color": argb("#6B5A4A"), "backgroundColor": argb("#FBF6EA", 0xE6)},
-        "status_bar": {"fontSize": 13, "fontWeight": 500, "color": argb("#8C2A20"), "backgroundColor": argb("#FBF6EA", 0xE6)},
+        "thinking": {"fontSize": 14, "fontWeight": 400, "color": argb("#A8977F"), "backgroundColor": argb("#262019", 0xE6)},
+        "status_bar": {"fontSize": 13, "fontWeight": 500, "color": argb("#C2695A"), "backgroundColor": argb("#262019", 0xE6)},
         "user_avatar": dict(avatar),
         "character_avatar": dict(avatar),
         "group_user_avatar": dict(avatar),

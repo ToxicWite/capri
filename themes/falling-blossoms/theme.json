@@ -4,21 +4,21 @@
   "display_mode": "message",
   "visual_novel_bubble_height_ratio": 0.6,
   "bubble_display_type": "bubble",
-  "custom_css": "/* ============================================================\n   花落 · FALLING BLOSSOMS — мягкий старый Китай\n   Свиток в парчовом обрамлении: ответы персонажа — листы\n   рисовой бумаги с уголками хуэйвэнь, по ним летят лепестки\n   сливы. Пока персонаж отвечает, в поле ввода кисть\n   выводит мазок тушью.\n   Шрифт Lora (SIL OFL 1.1) встроен в тему.\n   Нужен Advanced Rendering.\n   ============================================================ */\n\n@font-face {\n  font-family: \"Lora\";\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(\"theme/assets/lora-normal-cyrillic.woff2\") format(\"woff2\");\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n@font-face {\n  font-family: \"Lora\";\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(\"theme/assets/lora-normal-latin.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n@font-face {\n  font-family: \"Lora\";\n  font-style: italic;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(\"theme/assets/lora-italic-cyrillic.woff2\") format(\"woff2\");\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n@font-face {\n  font-family: \"Lora\";\n  font-style: italic;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(\"theme/assets/lora-italic-latin.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n\n/* ---------- Анимации ---------- */\n\n/* Лепестки медленно опадают и сносятся ветром */\n@keyframes blossoms-fall {\n  0%   { background-position: left 0 top 0, right 0 bottom 0, 0 0, 0 0; }\n  100% { background-position: left 0 top 0, right 0 bottom 0, -220px 440px, 0 0; }\n}\n\n/* Кисть ведёт мазок слева направо, потом лист «высыхает» и всё сначала */\n@keyframes blossoms-brush {\n  0%   { background-position: 100% 0, left 0 bottom 4px; }\n  70%  { background-position: 0% 0, left 0 bottom 4px; }\n  100% { background-position: 0% 0, left 0 bottom 4px; }\n}\n\n/* ---------- Типографика ---------- */\n.tavo-bubble-content,\n.tavo-speaker-name,\n.tavo-composer-input {\n  font-family: \"Lora\", \"Noto Serif\", Georgia, serif;\n}\n\n.tavo-message-content {\n  line-height: 1.65;\n}\n\n.tavo-message-content::selection,\n.tavo-message-content *::selection {\n  background: rgba(200, 53, 43, 0.22);\n  color: inherit;\n}\n\n/* ---------- Персонаж: лист рисовой бумаги ---------- */\n.tavo-bubble {\n  border-radius: 2px;\n}\n\n.tavo-character-bubble {\n  background-color: #fbf6ea;\n  background-image:\n    url(\"theme/assets/corner-tl.svg\"),\n    url(\"theme/assets/corner-br.svg\"),\n    url(\"theme/assets/petals.png\"),\n    url(\"theme/assets/paper.png\");\n  background-size: 20px 20px, 20px 20px, 220px 220px, 256px 256px;\n  background-repeat: no-repeat, no-repeat, repeat, repeat;\n  background-position: left 0 top 0, right 0 bottom 0, 0 0, 0 0;\n  border: 1px solid rgba(160, 60, 40, 0.16);\n  box-shadow: 0 3px 12px rgba(80, 40, 20, 0.12);\n  padding: 13px 18px;\n  animation: blossoms-fall 60s linear infinite;\n}\n\n/* ---------- Вы: записка на розоватой бумаге ---------- */\n.tavo-user-bubble {\n  background-color: #f6e3d8;\n  border-left: 3px solid #c8352b;\n  box-shadow: 0 3px 12px rgba(80, 40, 20, 0.1);\n}\n\n/* ---------- Имена: маленькая красная печать перед именем ---------- */\n.tavo-speaker-name {\n  color: #8c2a20;\n  font-weight: 600;\n  letter-spacing: 0.06em;\n}\n\n.tavo-speaker-name::before {\n  content: \"\";\n  display: inline-block;\n  width: 0.62em;\n  height: 0.62em;\n  margin-right: 0.45em;\n  vertical-align: 0.05em;\n  background: #c8352b;\n  border-radius: 1px;\n  box-shadow: inset 0 0 0 1.5px rgba(251, 246, 234, 0.75);\n}\n\n.tavo-avatar {\n  outline: 1.5px solid rgba(200, 53, 43, 0.7);\n  outline-offset: -1.5px;\n}\n\n/* ---------- Мысли, разделитель, вложения ---------- */\n.tavo-message-reasoning {\n  font-style: italic;\n  color: #6b5a4a;\n  border-left: 1px dashed rgba(43, 33, 24, 0.35);\n  padding-left: 10px;\n}\n\n.tavo-message-divider {\n  height: 32px;\n  border: 0;\n  background: url(\"theme/assets/divider.svg\") center / min(320px, 76%) auto no-repeat;\n}\n\n.tavo-message-attachments {\n  outline: 4px solid #fbf6ea;\n  box-shadow: 0 3px 12px rgba(80, 40, 20, 0.18);\n}\n\n.tavo-action-bar-button,\n.tavo-action-bar-button-group {\n  background-color: rgba(251, 246, 234, 0.85);\n  border-radius: 2px;\n}\n\n/* ---------- Поле ввода: лист под кистью ---------- */\n.tavo-composer-shell {\n  background-color: rgba(246, 239, 225, 0.97);\n  border: 1px solid rgba(140, 42, 32, 0.45);\n  border-radius: 3px;\n  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);\n}\n\n/* Пока персонаж отвечает, кисть выводит мазок тушью под строкой */\n:root:has(.tavo-composer-stop-icon) .tavo-composer-shell {\n  background-image:\n    linear-gradient(90deg, rgba(246, 239, 225, 0) 0 46%, rgba(246, 239, 225, 0.97) 54% 100%),\n    url(\"theme/assets/brush.png\");\n  background-size: 220% 100%, 100% 22px;\n  background-repeat: no-repeat, no-repeat;\n  animation: blossoms-brush 4.5s ease-in-out infinite;\n}\n\n.tavo-composer-input {\n  color: #2b2118;\n  caret-color: #c8352b;\n}\n\n.tavo-composer-input::placeholder {\n  color: #9c8a76;\n  font-style: italic;\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .tavo-character-bubble,\n  :root:has(.tavo-composer-stop-icon) .tavo-composer-shell {\n    animation: none;\n  }\n}\n",
+  "custom_css": "/* ============================================================\n   花落 · FALLING BLOSSOMS — мягкий старый Китай\n   Вечерний свиток при свете лампы: ответы персонажа — листы\n   тёмной «чайной» бумаги с уголками хуэйвэнь, по ним летят лепестки\n   сливы. Пока персонаж отвечает, в поле ввода кисть\n   выводит мазок тушью.\n   Шрифт Lora (SIL OFL 1.1) встроен в тему.\n   Нужен Advanced Rendering.\n   ============================================================ */\n\n@font-face {\n  font-family: \"Lora\";\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(\"theme/assets/lora-normal-cyrillic.woff2\") format(\"woff2\");\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n@font-face {\n  font-family: \"Lora\";\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(\"theme/assets/lora-normal-latin.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n@font-face {\n  font-family: \"Lora\";\n  font-style: italic;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(\"theme/assets/lora-italic-cyrillic.woff2\") format(\"woff2\");\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n@font-face {\n  font-family: \"Lora\";\n  font-style: italic;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(\"theme/assets/lora-italic-latin.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n\n/* ---------- Анимации ---------- */\n\n/* Лепестки медленно опадают и сносятся ветром */\n@keyframes blossoms-fall {\n  0%   { background-position: left 0 top 0, right 0 bottom 0, 0 0, 0 0; }\n  100% { background-position: left 0 top 0, right 0 bottom 0, -220px 440px, 0 0; }\n}\n\n/* Кисть ведёт мазок слева направо, потом лист «высыхает» и всё сначала */\n@keyframes blossoms-brush {\n  0%   { background-position: 100% 0, left 0 bottom 4px; }\n  70%  { background-position: 0% 0, left 0 bottom 4px; }\n  100% { background-position: 0% 0, left 0 bottom 4px; }\n}\n\n/* ---------- Типографика ---------- */\n.tavo-bubble-content,\n.tavo-speaker-name,\n.tavo-composer-input {\n  font-family: \"Lora\", \"Noto Serif\", Georgia, serif;\n}\n\n.tavo-message-content {\n  line-height: 1.65;\n}\n\n.tavo-message-content::selection,\n.tavo-message-content *::selection {\n  background: rgba(194, 105, 90, 0.35);\n  color: inherit;\n}\n\n/* ---------- Персонаж: лист рисовой бумаги ---------- */\n.tavo-bubble {\n  border-radius: 2px;\n}\n\n.tavo-character-bubble {\n  background-color: rgba(38, 32, 25, 0.92);\n  background-image:\n    url(\"theme/assets/corner-tl.svg\"),\n    url(\"theme/assets/corner-br.svg\"),\n    url(\"theme/assets/petals.png\"),\n    url(\"theme/assets/paper.png\");\n  background-size: 20px 20px, 20px 20px, 220px 220px, 256px 256px;\n  background-repeat: no-repeat, no-repeat, repeat, repeat;\n  background-position: left 0 top 0, right 0 bottom 0, 0 0, 0 0;\n  border: 1px solid rgba(194, 105, 90, 0.22);\n  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);\n  padding: 13px 18px;\n  animation: blossoms-fall 60s linear infinite;\n}\n\n/* ---------- Вы: записка на розоватой бумаге ---------- */\n.tavo-user-bubble {\n  background-color: rgba(58, 38, 33, 0.9);\n  border-left: 3px solid #a8503f;\n  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);\n}\n\n/* ---------- Имена: маленькая красная печать перед именем ---------- */\n.tavo-speaker-name {\n  color: #c9a27a;\n  font-weight: 600;\n  letter-spacing: 0.06em;\n}\n\n.tavo-speaker-name::before {\n  content: \"\";\n  display: inline-block;\n  width: 0.62em;\n  height: 0.62em;\n  margin-right: 0.45em;\n  vertical-align: 0.05em;\n  background: #a8503f;\n  border-radius: 1px;\n  box-shadow: inset 0 0 0 1.5px rgba(230, 218, 196, 0.45);\n}\n\n.tavo-avatar {\n  outline: 1.5px solid rgba(194, 105, 90, 0.6);\n  outline-offset: -1.5px;\n}\n\n/* ---------- Мысли, разделитель, вложения ---------- */\n.tavo-message-reasoning {\n  font-style: italic;\n  color: #a8977f;\n  border-left: 1px dashed rgba(201, 162, 122, 0.35);\n  padding-left: 10px;\n}\n\n.tavo-message-divider {\n  height: 32px;\n  border: 0;\n  background: url(\"theme/assets/divider.svg\") center / min(320px, 76%) auto no-repeat;\n}\n\n.tavo-message-attachments {\n  outline: 3px solid #3a3027;\n  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);\n}\n\n.tavo-action-bar-button,\n.tavo-action-bar-button-group {\n  background-color: rgba(34, 28, 22, 0.85);\n  border-radius: 2px;\n}\n\n/* ---------- Поле ввода: лист под кистью ---------- */\n.tavo-composer-shell {\n  background-color: rgba(34, 28, 22, 0.95);\n  border: 1px solid rgba(194, 105, 90, 0.35);\n  border-radius: 3px;\n  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);\n}\n\n/* Пока персонаж отвечает, кисть выводит мазок тушью под строкой */\n:root:has(.tavo-composer-stop-icon) .tavo-composer-shell {\n  background-image:\n    linear-gradient(90deg, rgba(34, 28, 22, 0) 0 46%, rgba(34, 28, 22, 0.95) 54% 100%),\n    url(\"theme/assets/brush.png\");\n  background-size: 220% 100%, 100% 22px;\n  background-repeat: no-repeat, no-repeat;\n  animation: blossoms-brush 4.5s ease-in-out infinite;\n}\n\n.tavo-composer-input {\n  color: #e6dac4;\n  caret-color: #c2695a;\n}\n\n.tavo-composer-input::placeholder {\n  color: #8a7a68;\n  font-style: italic;\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .tavo-character-bubble,\n  :root:has(.tavo-composer-stop-icon) .tavo-composer-shell {\n    animation: none;\n  }\n}\n",
   "background": {
     "charAvatar": false,
     "image": "theme/assets/scroll.jpg",
     "imageOpacity": 1,
-    "color": 4294109397
+    "color": 4280951323
   },
   "user_bubble": {
-    "color": 4076266456,
+    "color": 3862570529,
     "blur": 0,
     "radius": 2,
     "alignment": "right"
   },
   "character_bubble": {
-    "color": 4126930666,
+    "color": 3945144345,
     "blur": 0,
     "radius": 2,
     "alignment": "left"
@@ -29,21 +29,21 @@
       "fontSize": 17,
       "fontWeight": 400,
       "fontStyle": "normal",
-      "color": 4281016600
+      "color": 4293187011
     },
     "toneTextStyle": {
       "fontFamily": null,
       "fontSize": 17,
       "fontWeight": 400,
       "fontStyle": "italic",
-      "color": 4287261272
+      "color": 4290287754
     },
     "quoteTextStyle": {
       "fontFamily": null,
       "fontSize": 17,
       "fontWeight": 600,
       "fontStyle": "normal",
-      "color": 4284094996
+      "color": 4293970358
     },
     "toneHighlight": true,
     "toneDelimiters": [
@@ -68,21 +68,21 @@
       "fontSize": 17,
       "fontWeight": 400,
       "fontStyle": "normal",
-      "color": 4281016600
+      "color": 4293319364
     },
     "toneTextStyle": {
       "fontFamily": null,
       "fontSize": 17,
       "fontWeight": 400,
       "fontStyle": "italic",
-      "color": 4286209096
+      "color": 4289238911
     },
     "quoteTextStyle": {
       "fontFamily": null,
       "fontSize": 17,
       "fontWeight": 600,
       "fontStyle": "normal",
-      "color": 4287375904
+      "color": 4293240979
     },
     "toneHighlight": true,
     "toneDelimiters": [
@@ -102,26 +102,26 @@
     "quoteSymbol": "\"\""
   },
   "console": {
-    "color": 4126601185,
+    "color": 4062321686,
     "blur": 0,
     "radius": 3,
-    "sendColor": 4291310891,
+    "sendColor": 4290931034,
     "fontSize": 17,
     "fontWeight": 400,
-    "fontColor": 4281016600,
-    "placeholderColor": 4288449142
+    "fontColor": 4293319364,
+    "placeholderColor": 4287265384
   },
   "thinking": {
     "fontSize": 14,
     "fontWeight": 400,
-    "color": 4285225546,
-    "backgroundColor": 3875272426
+    "color": 4289238911,
+    "backgroundColor": 3861258265
   },
   "status_bar": {
     "fontSize": 13,
     "fontWeight": 500,
-    "color": 4287375904,
-    "backgroundColor": 3875272426
+    "color": 4290931034,
+    "backgroundColor": 3861258265
   },
   "user_avatar": {
     "avatar": true,
