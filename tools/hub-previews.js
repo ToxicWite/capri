@@ -55,6 +55,21 @@ const THEMES = [
     ],
   },
   {
+    dir: 'library-of-babel',
+    bg: 'center -20px / 380px auto',
+    name: 'The Librarian',
+    placeholder: 'Write in the margin…',
+    avatar: ['#c9a66b', '#2a1f14'],
+    title: `<img src="ASSETS/hex-mark.svg" style="width:46px">
+      <span style="font:500 22px 'EB Garamond',Georgia,serif;font-variant:small-caps;color:#e8d9b8;
+        letter-spacing:.12em;text-shadow:0 0 14px rgba(255,206,140,.35)">The Library of Babel</span>`,
+    lines: [
+      ['c', 'Every book that could ever be written is shelved here. *He turns a page.* "Yours too."'],
+      ['u', 'Then find the one about me.'],
+      ['c', '"Patience. It is somewhere below — between the lamps."'],
+    ],
+  },
+  {
     dir: 'ternovaya-noch',
     active: false,
     flat: true, // тема в плоском режиме: сообщения во всю ширину, между ними разделитель
@@ -92,7 +107,7 @@ function richText(text, font) {
   const quote = font.quoteTextStyle
   return text.replace(/(\*[^*]+\*)|("[^"]+"|«[^»]+»)/g, (_, act, q) =>
     act
-      ? `<span style="color:${rgba(tone.color)};font-style:${tone.fontStyle}">${act}</span>`
+      ? `<span style="color:${rgba(tone.color)};font-style:${tone.fontStyle}">${font.toneSymbol === 'none' ? act.slice(1, -1) : act}</span>`
       : `<span style="color:${rgba(quote.color)};font-weight:${quote.fontWeight}">${q}</span>`)
 }
 
