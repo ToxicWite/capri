@@ -72,6 +72,7 @@ const THEMES = [
   {
     dir: 'invisible-cities',
     head: 314, // у этой темы пузыри выше из-за названий городов
+    markup: true, // текст как в Tavo: абзацы <p>, действия <em> — от них зависит город
     bg: 'center top / 380px auto',
     name: 'Marco Polo',
     you: 'Kublai Khan',
@@ -82,7 +83,7 @@ const THEMES = [
     lines: [
       ['c', '"In Valdrada, Sire, every gesture is repeated in the lake."'],
       ['u', 'And does this city exist, Marco?'],
-      ['c', '"Each city, Sire, is a little of Venice."'],
+      ['c', '*smiles* "Each city, Sire, is a little of Venice."'],
     ],
   },
   {
@@ -118,12 +119,12 @@ const avatarSvg = ([fg, bg]) =>
       `<circle cx="32" cy="25" r="12" fill="${fg}" opacity="0.85"/><path d="M8 64c2-14 12-22 24-22s22 8 24 22z" fill="${fg}" opacity="0.85"/></svg>`
   )
 
-function richText(text, font) {
+function richText(text, font, markup) {
   const tone = font.toneTextStyle
   const quote = font.quoteTextStyle
   return text.replace(/(\*[^*]+\*)|("[^"]+"|«[^»]+»)/g, (_, act, q) =>
     act
-      ? `<span style="color:${rgba(tone.color)};font-style:${tone.fontStyle}">${font.toneSymbol === 'none' ? act.slice(1, -1) : act}</span>`
+      ? `<${markup ? 'em' : 'span'} style="color:${rgba(tone.color)};font-style:${tone.fontStyle}">${font.toneSymbol === 'none' ? act.slice(1, -1) : act}</${markup ? 'em' : 'span'}>`
       : `<span style="color:${rgba(quote.color)};font-weight:${quote.fontWeight}">${q}</span>`)
 }
 
@@ -138,7 +139,7 @@ function page(t, m, generating) {
   const radius = (r) => (r >= 50 ? '50%' : `${r}px`)
   const bubble = (c, text) => `<div class="tavo-bubble ${c ? 'tavo-character-bubble' : 'tavo-user-bubble'}">
           <div class="tavo-bubble-content ${c ? 'tavo-character-bubble-content' : 'tavo-user-bubble-content'}">
-            <div class="tavo-message-content" style="color:${rgba((c ? cf : uf).textStyle.color)}">${richText(text, c ? cf : uf)}</div>
+            <div class="tavo-message-content" style="color:${rgba((c ? cf : uf).textStyle.color)}">${t.markup ? '<p style="margin:0">' : ''}${richText(text, c ? cf : uf, t.markup)}${t.markup ? '</p>' : ''}</div>
           </div></div>`
   const avatarImg = (c) => `<img class="tavo-avatar ${c ? 'tavo-character-avatar' : 'tavo-user-avatar'}"
       style="border-radius:${radius((c ? m.character_avatar : m.user_avatar).radius)}" src="${c ? ava : userAva}">`

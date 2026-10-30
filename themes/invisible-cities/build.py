@@ -247,6 +247,23 @@ def make_svgs():
     (ASSETS / "divider.svg").write_text(divider, encoding="utf-8")
 
 
+def city_rules():
+    """Город для рассказа: число абзацев (1..10+), есть ли курсив и жирный.
+    40 сочетаний разбросаны по 55 городам шагом 7 (взаимно просто с 55)."""
+    base = ".tavo-character-bubble-content"
+    rules = ["/* ---------- Города (сгенерировано build.py) ---------- */"]
+    for k in range(1, 11):
+        paras = f":has(p:nth-of-type({k}))" + (f":not(:has(p:nth-of-type({k + 1})))" if k < 10 else "")
+        for em in (0, 1):
+            for strong in (0, 1):
+                flags = (":has(:is(em, i))" if em else ":not(:has(:is(em, i)))") + \
+                        (":has(:is(strong, b))" if strong else ":not(:has(:is(strong, b)))")
+                idx = (k - 1) * 4 + em * 2 + strong
+                city = CITIES[(idx * 7 + 1) % len(CITIES)]
+                rules.append(f'{base}{paras}{flags}::before {{ content: "{city}"; }}')
+    return "\n".join(rules)
+
+
 def font(color, tone, quote):
     def style(c, it=False, weight=400):
         return {"fontFamily": None, "fontSize": 17, "fontWeight": weight,
@@ -311,7 +328,7 @@ def main():
     make_svgs()
 
     css = (HERE / "style.css").read_text(encoding="utf-8")
-    css = css.replace("CITY_SYMBOLS", " ".join(f'"{c}"' for c in CITIES))
+    css = css.replace("CITY_RULES", city_rules())
     m = manifest(css)
     (HERE / "theme.json").write_text(json.dumps(m, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     out = DIST / "invisible-cities.thm"

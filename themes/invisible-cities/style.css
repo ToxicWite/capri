@@ -49,18 +49,6 @@
   src: url("theme/assets/cinzel-latin.woff2") format("woff2");
 }
 
-/* 55 городов по кругу. Счётчик идёт по сообщениям на экране,
-   поэтому при прокрутке названия меняются: города Кальвино
-   никогда не бывают одними и теми же дважды. */
-@counter-style invisible-cities {
-  system: cyclic;
-  symbols: CITY_SYMBOLS;
-}
-
-:root {
-  counter-reset: city;
-}
-
 /* ---------- Анимации ---------- */
 
 /* Ход конём по доске: квадраты 16px, буква «Г» за ход */
@@ -102,7 +90,6 @@
 }
 
 .tavo-character-bubble {
-  counter-increment: city;
   background-color: rgba(18, 26, 58, 0.9);
   background-image:
     url("theme/assets/corner-tl.svg"),
@@ -120,9 +107,12 @@
   -webkit-box-reflect: below 3px linear-gradient(to bottom, transparent calc(100% - 20px), rgba(0, 0, 0, 0.22));
 }
 
-/* Название города над каждым рассказом */
+/* Название города над каждым рассказом. CSS-счётчики в Tavo не работают
+   (каждое сообщение изолировано), поэтому город выбирается по самому
+   рассказу: числу абзацев, курсиву и жирному. Один и тот же рассказ
+   всегда ведёт в один и тот же город, разные рассказы — в разные. */
 .tavo-character-bubble-content::before {
-  content: counter(city, invisible-cities);
+  content: "Diomira";
   display: block;
   margin-bottom: 4px;
   font-family: "Cinzel", Georgia, serif;
@@ -233,3 +223,5 @@
     animation: none;
   }
 }
+
+CITY_RULES
