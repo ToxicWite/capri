@@ -1,0 +1,206 @@
+/* ============================================================
+   TLOU // SPORES — тема для Tavo (The Last of Us Part I)
+   Заражённый подвал: споры в луче фонарика, кордицепс,
+   поле ввода — стекло противогаза, над ним светлячки.
+   Пока персонаж генерирует — Listen Mode: мир серый,
+   он светится белым силуэтом.
+   Нужен Advanced Rendering.
+   ============================================================ */
+
+/* ---------- Анимации ---------- */
+@keyframes tlou-spores-drift {
+  0%   { background-position: right 0 bottom 0, 0 0; }
+  100% { background-position: right 0 bottom 0, 160px -320px; }
+}
+
+@keyframes tlou-listen {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45), 0 0 14px rgba(255, 255, 255, 0.22); }
+  50%      { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.85), 0 0 26px rgba(255, 255, 255, 0.45); }
+}
+
+@keyframes tlou-fireflies {
+  0%   { background-image: url("theme/assets/fireflies-0.png"); }
+  25%  { background-image: url("theme/assets/fireflies-1.png"); }
+  50%  { background-image: url("theme/assets/fireflies-2.png"); }
+  75%  { background-image: url("theme/assets/fireflies-3.png"); }
+  100% { background-image: url("theme/assets/fireflies-0.png"); }
+}
+
+@keyframes tlou-filter {
+  0%   { background-size: calc(100% - 28px) 3px, auto; }
+  100% { background-size: 0px 3px, auto; }
+}
+
+@keyframes tlou-fog {
+  0%, 100% { background-color: rgba(20, 22, 18, 0.92); }
+  45%      { background-color: rgba(78, 86, 76, 0.92); }
+}
+
+/* ---------- Сообщения ---------- */
+.tavo-bubble {
+  border-radius: 4px;
+}
+
+/* Персонаж — сырой тёмный бетон, в нём плавают споры, из угла растёт кордицепс */
+.tavo-character-bubble {
+  background-color: rgba(11, 13, 10, 0.92);
+  background-image:
+    url("theme/assets/cordyceps.png"),
+    url("theme/assets/spores.png");
+  background-size: min(110px, 40%) auto, 160px 160px;
+  background-repeat: no-repeat, repeat;
+  background-position: right 0 bottom 0, 0 0;
+  border: 1px solid rgba(150, 78, 34, 0.35);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  padding-bottom: 12px;
+  animation: tlou-spores-drift 40s linear infinite;
+}
+
+/* Вы — потёртый брезент рюкзака */
+.tavo-user-bubble {
+  background-color: rgba(28, 32, 24, 0.94);
+  border: 1px solid rgba(230, 220, 198, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.tavo-message-content {
+  line-height: 1.65;
+}
+
+.tavo-message-content::selection,
+.tavo-message-content *::selection {
+  background: #d6ba6e;
+  color: #0b0d0a;
+}
+
+.tavo-message-divider {
+  border: none;
+  height: 1px;
+  background: rgba(214, 186, 110, 0.18);
+}
+
+/* ---------- Имена и аватары ---------- */
+.tavo-speaker-name {
+  color: #d6ba6e;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: color 0.6s, text-shadow 0.6s;
+}
+
+.tavo-avatar {
+  border-radius: 4px;
+  outline: 2px solid rgba(214, 186, 110, 0.55);
+  outline-offset: -2px;
+  transition: filter 0.6s;
+}
+
+.tavo-character-avatar,
+.tavo-group-character-avatar {
+  filter: sepia(0.25) saturate(0.85);
+}
+
+/* ---------- Listen Mode: пока персонаж генерирует ---------- */
+:root:has(.tavo-composer-stop-icon) .tavo-user-bubble,
+:root:has(.tavo-composer-stop-icon) .tavo-user-avatar,
+:root:has(.tavo-composer-stop-icon) .tavo-group-user-avatar {
+  filter: grayscale(1) brightness(0.65);
+}
+
+:root:has(.tavo-composer-stop-icon) .tavo-character-bubble {
+  filter: grayscale(1) brightness(1.15);
+  border-color: rgba(255, 255, 255, 0.6);
+  animation:
+    tlou-spores-drift 40s linear infinite,
+    tlou-listen 2.4s ease-in-out infinite;
+}
+
+:root:has(.tavo-composer-stop-icon) .tavo-character-avatar,
+:root:has(.tavo-composer-stop-icon) .tavo-group-character-avatar {
+  filter: grayscale(1) brightness(1.6) contrast(0.8) drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+}
+
+:root:has(.tavo-composer-stop-icon) .tavo-speaker-name {
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* ---------- Рассуждения, вложения, тулбар ---------- */
+.tavo-message-reasoning {
+  background: rgba(214, 186, 110, 0.06);
+  border-left: 2px solid rgba(214, 186, 110, 0.4);
+  padding-left: 8px;
+}
+
+.tavo-message-reasoning > summary {
+  color: #d6ba6e;
+}
+
+.tavo-message-attachments {
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)) sepia(0.15);
+}
+
+.tavo-action-bar-button,
+.tavo-action-bar-button-group {
+  background-color: rgba(11, 13, 10, 0.85);
+  border-radius: 4px;
+}
+
+/* ---------- Светлячки над полем ввода: Look for the light ---------- */
+.tavo-composer {
+  padding-top: 24px;
+  background-image: url("theme/assets/fireflies-0.png");
+  background-size: auto 36px;
+  background-repeat: no-repeat;
+  background-position: center top;
+  animation: tlou-fireflies 2.6s steps(1, end) infinite;
+}
+
+/* ---------- Поле ввода: стекло противогаза ---------- */
+.tavo-composer-shell {
+  background-color: rgba(20, 22, 18, 0.92);
+  /* полоска фильтра внизу стекла + блик */
+  background-image:
+    linear-gradient(90deg, #8f3a22, #d6ba6e 35%, #9fbf68),
+    linear-gradient(160deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0) 45%);
+  background-size: calc(100% - 28px) 3px, auto;
+  background-repeat: no-repeat;
+  background-position: left 14px bottom 4px, 0 0;
+  border: 5px solid #1d1e1b;
+  border-radius: 28px;
+  box-shadow:
+    0 0 0 1px #34362f,
+    0 6px 14px rgba(0, 0, 0, 0.7),
+    inset 0 0 18px rgba(0, 0, 0, 0.8);
+}
+
+/* Пока персонаж генерирует — фильтр расходуется, стекло запотевает от дыхания */
+:root:has(.tavo-composer-stop-icon) .tavo-composer-shell {
+  animation:
+    tlou-filter 30s linear infinite,
+    tlou-fog 3.2s ease-in-out infinite;
+}
+
+.tavo-composer-input {
+  color: #e6dcc6;
+  caret-color: #d6ba6e;
+}
+
+.tavo-composer-input::placeholder {
+  color: #7a7a68;
+}
+
+.tavo-composer-send-icon,
+.tavo-composer-stop-icon {
+  filter: drop-shadow(0 0 4px rgba(214, 186, 110, 0.6));
+}
+
+/* ---------- Без движения для тех, кому надо ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .tavo-character-bubble,
+  :root:has(.tavo-composer-stop-icon) .tavo-character-bubble,
+  .tavo-composer,
+  :root:has(.tavo-composer-stop-icon) .tavo-composer-shell {
+    animation: none;
+  }
+}

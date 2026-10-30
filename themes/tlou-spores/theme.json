@@ -1,0 +1,144 @@
+{
+  "spec": "tavo_theme_v1",
+  "name": "TLOU // Spores",
+  "display_mode": "message",
+  "visual_novel_bubble_height_ratio": 0.6,
+  "bubble_display_type": "bubble",
+  "custom_css": "/* ============================================================\n   TLOU // SPORES — тема для Tavo (The Last of Us Part I)\n   Заражённый подвал: споры в луче фонарика, кордицепс,\n   поле ввода — стекло противогаза, над ним светлячки.\n   Пока персонаж генерирует — Listen Mode: мир серый,\n   он светится белым силуэтом.\n   Нужен Advanced Rendering.\n   ============================================================ */\n\n/* ---------- Анимации ---------- */\n@keyframes tlou-spores-drift {\n  0%   { background-position: right 0 bottom 0, 0 0; }\n  100% { background-position: right 0 bottom 0, 160px -320px; }\n}\n\n@keyframes tlou-listen {\n  0%, 100% { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.45), 0 0 14px rgba(255, 255, 255, 0.22); }\n  50%      { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.85), 0 0 26px rgba(255, 255, 255, 0.45); }\n}\n\n@keyframes tlou-fireflies {\n  0%   { background-image: url(\"theme/assets/fireflies-0.png\"); }\n  25%  { background-image: url(\"theme/assets/fireflies-1.png\"); }\n  50%  { background-image: url(\"theme/assets/fireflies-2.png\"); }\n  75%  { background-image: url(\"theme/assets/fireflies-3.png\"); }\n  100% { background-image: url(\"theme/assets/fireflies-0.png\"); }\n}\n\n@keyframes tlou-filter {\n  0%   { background-size: calc(100% - 28px) 3px, auto; }\n  100% { background-size: 0px 3px, auto; }\n}\n\n@keyframes tlou-fog {\n  0%, 100% { background-color: rgba(20, 22, 18, 0.92); }\n  45%      { background-color: rgba(78, 86, 76, 0.92); }\n}\n\n/* ---------- Сообщения ---------- */\n.tavo-bubble {\n  border-radius: 4px;\n}\n\n/* Персонаж — сырой тёмный бетон, в нём плавают споры, из угла растёт кордицепс */\n.tavo-character-bubble {\n  background-color: rgba(11, 13, 10, 0.92);\n  background-image:\n    url(\"theme/assets/cordyceps.png\"),\n    url(\"theme/assets/spores.png\");\n  background-size: min(110px, 40%) auto, 160px 160px;\n  background-repeat: no-repeat, repeat;\n  background-position: right 0 bottom 0, 0 0;\n  border: 1px solid rgba(150, 78, 34, 0.35);\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);\n  padding-bottom: 12px;\n  animation: tlou-spores-drift 40s linear infinite;\n}\n\n/* Вы — потёртый брезент рюкзака */\n.tavo-user-bubble {\n  background-color: rgba(28, 32, 24, 0.94);\n  border: 1px solid rgba(230, 220, 198, 0.12);\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);\n}\n\n.tavo-message-content {\n  line-height: 1.65;\n}\n\n.tavo-message-content::selection,\n.tavo-message-content *::selection {\n  background: #d6ba6e;\n  color: #0b0d0a;\n}\n\n.tavo-message-divider {\n  border: none;\n  height: 1px;\n  background: rgba(214, 186, 110, 0.18);\n}\n\n/* ---------- Имена и аватары ---------- */\n.tavo-speaker-name {\n  color: #d6ba6e;\n  font-weight: 600;\n  text-transform: uppercase;\n  letter-spacing: 0.08em;\n  transition: color 0.6s, text-shadow 0.6s;\n}\n\n.tavo-avatar {\n  border-radius: 4px;\n  outline: 2px solid rgba(214, 186, 110, 0.55);\n  outline-offset: -2px;\n  transition: filter 0.6s;\n}\n\n.tavo-character-avatar,\n.tavo-group-character-avatar {\n  filter: sepia(0.25) saturate(0.85);\n}\n\n/* ---------- Listen Mode: пока персонаж генерирует ---------- */\n:root:has(.tavo-composer-stop-icon) .tavo-user-bubble,\n:root:has(.tavo-composer-stop-icon) .tavo-user-avatar,\n:root:has(.tavo-composer-stop-icon) .tavo-group-user-avatar {\n  filter: grayscale(1) brightness(0.65);\n}\n\n:root:has(.tavo-composer-stop-icon) .tavo-character-bubble {\n  filter: grayscale(1) brightness(1.15);\n  border-color: rgba(255, 255, 255, 0.6);\n  animation:\n    tlou-spores-drift 40s linear infinite,\n    tlou-listen 2.4s ease-in-out infinite;\n}\n\n:root:has(.tavo-composer-stop-icon) .tavo-character-avatar,\n:root:has(.tavo-composer-stop-icon) .tavo-group-character-avatar {\n  filter: grayscale(1) brightness(1.6) contrast(0.8) drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));\n}\n\n:root:has(.tavo-composer-stop-icon) .tavo-speaker-name {\n  color: #ffffff;\n  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);\n}\n\n/* ---------- Рассуждения, вложения, тулбар ---------- */\n.tavo-message-reasoning {\n  background: rgba(214, 186, 110, 0.06);\n  border-left: 2px solid rgba(214, 186, 110, 0.4);\n  padding-left: 8px;\n}\n\n.tavo-message-reasoning > summary {\n  color: #d6ba6e;\n}\n\n.tavo-message-attachments {\n  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)) sepia(0.15);\n}\n\n.tavo-action-bar-button,\n.tavo-action-bar-button-group {\n  background-color: rgba(11, 13, 10, 0.85);\n  border-radius: 4px;\n}\n\n/* ---------- Светлячки над полем ввода: Look for the light ---------- */\n.tavo-composer {\n  padding-top: 24px;\n  background-image: url(\"theme/assets/fireflies-0.png\");\n  background-size: auto 36px;\n  background-repeat: no-repeat;\n  background-position: center top;\n  animation: tlou-fireflies 2.6s steps(1, end) infinite;\n}\n\n/* ---------- Поле ввода: стекло противогаза ---------- */\n.tavo-composer-shell {\n  background-color: rgba(20, 22, 18, 0.92);\n  /* полоска фильтра внизу стекла + блик */\n  background-image:\n    linear-gradient(90deg, #8f3a22, #d6ba6e 35%, #9fbf68),\n    linear-gradient(160deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0) 45%);\n  background-size: calc(100% - 28px) 3px, auto;\n  background-repeat: no-repeat;\n  background-position: left 14px bottom 4px, 0 0;\n  border: 5px solid #1d1e1b;\n  border-radius: 28px;\n  box-shadow:\n    0 0 0 1px #34362f,\n    0 6px 14px rgba(0, 0, 0, 0.7),\n    inset 0 0 18px rgba(0, 0, 0, 0.8);\n}\n\n/* Пока персонаж генерирует — фильтр расходуется, стекло запотевает от дыхания */\n:root:has(.tavo-composer-stop-icon) .tavo-composer-shell {\n  animation:\n    tlou-filter 30s linear infinite,\n    tlou-fog 3.2s ease-in-out infinite;\n}\n\n.tavo-composer-input {\n  color: #e6dcc6;\n  caret-color: #d6ba6e;\n}\n\n.tavo-composer-input::placeholder {\n  color: #7a7a68;\n}\n\n.tavo-composer-send-icon,\n.tavo-composer-stop-icon {\n  filter: drop-shadow(0 0 4px rgba(214, 186, 110, 0.6));\n}\n\n/* ---------- Без движения для тех, кому надо ---------- */\n@media (prefers-reduced-motion: reduce) {\n  .tavo-character-bubble,\n  :root:has(.tavo-composer-stop-icon) .tavo-character-bubble,\n  .tavo-composer,\n  :root:has(.tavo-composer-stop-icon) .tavo-composer-shell {\n    animation: none;\n  }\n}\n",
+  "background": {
+    "charAvatar": false,
+    "image": "theme/assets/spore-room.png",
+    "imageOpacity": 1,
+    "color": 4278914314
+  },
+  "user_bubble": {
+    "color": 4028375064,
+    "blur": 0,
+    "radius": 4,
+    "alignment": "right"
+  },
+  "character_bubble": {
+    "color": 3943369994,
+    "blur": 4,
+    "radius": 4,
+    "alignment": "left"
+  },
+  "user_bubble_font": {
+    "textStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "normal",
+      "color": 4293319878
+    },
+    "toneTextStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "italic",
+      "color": 4289109124
+    },
+    "quoteTextStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 500,
+      "fontStyle": "normal",
+      "color": 4294967295
+    },
+    "toneHighlight": true,
+    "toneDelimiters": [
+      "**",
+      "()",
+      "（）"
+    ],
+    "toneSymbol": "none",
+    "quoteHighlight": true,
+    "quoteDelimiters": [
+      "“”",
+      "「」",
+      "\"\"",
+      "«»"
+    ],
+    "quoteSymbol": "\"\""
+  },
+  "character_bubble_font": {
+    "textStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "normal",
+      "color": 4292400324
+    },
+    "toneTextStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "italic",
+      "color": 4288453254
+    },
+    "quoteTextStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 500,
+      "fontStyle": "normal",
+      "color": 4293973914
+    },
+    "toneHighlight": true,
+    "toneDelimiters": [
+      "**",
+      "()",
+      "（）"
+    ],
+    "toneSymbol": "none",
+    "quoteHighlight": true,
+    "quoteDelimiters": [
+      "“”",
+      "「」",
+      "\"\"",
+      "«»"
+    ],
+    "quoteSymbol": "\"\""
+  },
+  "console": {
+    "color": 4061402642,
+    "blur": 8,
+    "radius": 26,
+    "sendColor": 4292262510,
+    "fontSize": 16,
+    "fontWeight": 400,
+    "fontColor": 4293319878,
+    "placeholderColor": 4286216808
+  },
+  "thinking": {
+    "fontSize": 14,
+    "fontWeight": 400,
+    "color": 4290360220,
+    "backgroundColor": 3859483914
+  },
+  "status_bar": {
+    "fontSize": 13,
+    "fontWeight": 500,
+    "color": 4292262510,
+    "backgroundColor": 3859483914
+  },
+  "user_avatar": {
+    "avatar": true,
+    "radius": 4,
+    "name": true
+  },
+  "character_avatar": {
+    "avatar": true,
+    "radius": 4,
+    "name": true
+  },
+  "group_user_avatar": {
+    "avatar": true,
+    "radius": 4,
+    "name": true
+  },
+  "group_character_avatar": {
+    "avatar": true,
+    "radius": 4,
+    "name": true
+  }
+}
