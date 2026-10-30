@@ -1,0 +1,144 @@
+{
+  "spec": "tavo_theme_v1",
+  "name": "Ophanim",
+  "display_mode": "message",
+  "visual_novel_bubble_height_ratio": 0.6,
+  "bubble_display_type": "bubble",
+  "custom_css": "/* ============================================================\n   OPHANIM — библейски точный ангел\n   Чёрная пустота, мрамор и гравюра. Ответы персонажа — тёмный\n   мрамор с крылом-глазом в углу, ваши — лист в двойной рамке.\n   Пока персонаж отвечает, над полем ввода открываются глаза\n   и смотрят, а у аватара загорается нимб.\n   Шрифт Cormorant (SIL OFL 1.1) встроен в тему.\n   Нужен Advanced Rendering.\n   ============================================================ */\n\n@font-face {\n  font-family: \"Cormorant Garamond\";\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(\"theme/assets/cormorant-cyrillic.woff2\") format(\"woff2\");\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n@font-face {\n  font-family: \"Cormorant Garamond\";\n  font-style: normal;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(\"theme/assets/cormorant-latin.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n@font-face {\n  font-family: \"Cormorant Garamond\";\n  font-style: italic;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(\"theme/assets/cormorant-italic-cyrillic.woff2\") format(\"woff2\");\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n@font-face {\n  font-family: \"Cormorant Garamond\";\n  font-style: italic;\n  font-weight: 400 700;\n  font-display: swap;\n  src: url(\"theme/assets/cormorant-italic-latin.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n@font-face {\n  font-family: \"Cormorant SC\";\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"theme/assets/cormorant-sc-cyrillic.woff2\") format(\"woff2\");\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n@font-face {\n  font-family: \"Cormorant SC\";\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"theme/assets/cormorant-sc-latin.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n\n/* ---------- Анимации ---------- */\n\n/* Глаза медленно плывут над полем ввода */\n@keyframes ophanim-watch {\n  0%   { background-position: 0 0; }\n  100% { background-position: -320px 0; }\n}\n\n/* Нимб у аватара во время ответа */\n@keyframes ophanim-halo {\n  0%, 100% { box-shadow: 0 0 0 2px rgba(201, 170, 110, 0.55), 0 0 10px 2px rgba(201, 170, 110, 0.25); }\n  50%      { box-shadow: 0 0 0 2px rgba(201, 170, 110, 0.9), 0 0 18px 5px rgba(201, 170, 110, 0.45); }\n}\n\n/* Холодный свет медленно скользит по мрамору */\n@keyframes ophanim-light {\n  0%   { background-position: left 5px top 5px, -60% 0, 0 0; }\n  100% { background-position: left 5px top 5px, 160% 0, 0 0; }\n}\n\n/* ---------- Типографика ---------- */\n.tavo-bubble-content,\n.tavo-composer-input {\n  font-family: \"Cormorant Garamond\", \"Noto Serif\", Georgia, serif;\n}\n\n.tavo-message-content {\n  line-height: 1.55;\n  font-size: 1.06em;\n}\n\n.tavo-message-content::selection,\n.tavo-message-content *::selection {\n  background: rgba(226, 222, 212, 0.25);\n  color: inherit;\n}\n\n/* ---------- Персонаж: тёмный мрамор с крылом-глазом ---------- */\n.tavo-bubble {\n  border-radius: 0;\n}\n\n.tavo-character-bubble {\n  background-color: #222226;\n  background-image:\n    url(\"theme/assets/wing-corner.svg\"),\n    linear-gradient(105deg, rgba(255, 255, 255, 0) 40%, rgba(226, 222, 212, 0.07) 50%, rgba(255, 255, 255, 0) 60%),\n    url(\"theme/assets/marble.png\");\n  background-size: min(48px, 28%) auto, 50% 100%, 320px 320px;\n  background-repeat: no-repeat, no-repeat, repeat;\n  background-position: left 5px top 5px, -60% 0, 0 0;\n  border: 1px solid rgba(226, 222, 212, 0.18);\n  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.7);\n  padding: 16px 18px 14px 36px;\n  animation: ophanim-light 14s ease-in-out infinite alternate;\n}\n\n/* ---------- Вы: лист в двойной гравюрной рамке ---------- */\n.tavo-user-bubble {\n  background-color: rgba(11, 11, 13, 0.92);\n  border: 1px solid rgba(226, 222, 212, 0.45);\n  outline: 1px solid rgba(226, 222, 212, 0.18);\n  outline-offset: -5px;\n  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.7);\n  padding: 12px 16px;\n}\n\n/* ---------- Имена и аватары ---------- */\n.tavo-speaker-name {\n  font-family: \"Cormorant SC\", \"Cormorant Garamond\", Georgia, serif;\n  font-weight: 500;\n  letter-spacing: 0.14em;\n  color: #e2ded4;\n  font-size: 1.05em;\n}\n\n.tavo-speaker-name::before {\n  content: \"\";\n  display: inline-block;\n  width: 1.3em;\n  height: 0.76em;\n  margin-right: 0.4em;\n  vertical-align: -0.02em;\n  background: url(\"theme/assets/eye.svg\") center / contain no-repeat;\n  opacity: 0.85;\n}\n\n.tavo-avatar {\n  outline: 1px solid rgba(226, 222, 212, 0.55);\n  outline-offset: -1px;\n  filter: grayscale(1) contrast(1.08);\n}\n\n/* Пока персонаж отвечает — нимб и краски возвращаются */\n:root:has(.tavo-composer-stop-icon) .tavo-character-avatar,\n:root:has(.tavo-composer-stop-icon) .tavo-group-character-avatar {\n  filter: grayscale(0.4);\n  animation: ophanim-halo 2.6s ease-in-out infinite;\n}\n\n/* ---------- Мысли, разделитель, вложения ---------- */\n.tavo-message-reasoning {\n  font-style: italic;\n  color: #9c9a94;\n  border-left: 1px solid rgba(201, 170, 110, 0.45);\n  padding-left: 10px;\n}\n\n.tavo-message-reasoning > summary {\n  font-family: \"Cormorant SC\", Georgia, serif;\n  letter-spacing: 0.1em;\n  color: #c9aa6e;\n}\n\n.tavo-message-divider {\n  height: 30px;\n  border: 0;\n  background: url(\"theme/assets/divider.svg\") center / min(320px, 76%) auto no-repeat;\n}\n\n.tavo-message-attachments {\n  filter: grayscale(1) contrast(1.05);\n  outline: 1px solid rgba(226, 222, 212, 0.4);\n  outline-offset: 4px;\n}\n\n.tavo-action-bar-button,\n.tavo-action-bar-button-group {\n  background-color: rgba(11, 11, 13, 0.85);\n  border-radius: 0;\n}\n\n/* ---------- Поле ввода и глаза над ним ---------- */\n.tavo-composer {\n  padding-top: 32px;\n  background-image: url(\"theme/assets/eyes-closed.png\");\n  background-size: 320px 30px;\n  background-repeat: repeat-x;\n  background-position: 0 0;\n  animation: ophanim-watch 60s linear infinite;\n}\n\n/* Пока персонаж отвечает — глаза открыты и смотрят */\n:root:has(.tavo-composer-stop-icon) .tavo-composer {\n  background-image: url(\"theme/assets/eyes-open.png\");\n  animation-duration: 30s;\n}\n\n.tavo-composer-shell {\n  background-color: rgba(11, 11, 13, 0.94);\n  border: 1px solid rgba(226, 222, 212, 0.35);\n  outline: 1px solid rgba(226, 222, 212, 0.12);\n  outline-offset: -5px;\n  border-radius: 0;\n  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.6);\n}\n\n.tavo-composer-input {\n  color: #e2ded4;\n  caret-color: #c9aa6e;\n}\n\n.tavo-composer-input::placeholder {\n  color: #77756f;\n  font-style: italic;\n}\n\n.tavo-composer-send-icon,\n.tavo-composer-add-icon,\n.tavo-composer-voice-icon,\n.tavo-composer-stop-icon {\n  filter: grayscale(1) brightness(1.4);\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .tavo-character-bubble,\n  .tavo-composer,\n  :root:has(.tavo-composer-stop-icon) .tavo-composer,\n  :root:has(.tavo-composer-stop-icon) .tavo-character-avatar,\n  :root:has(.tavo-composer-stop-icon) .tavo-group-character-avatar {\n    animation: none;\n  }\n}\n",
+  "background": {
+    "charAvatar": false,
+    "image": "theme/assets/ophanim.jpg",
+    "imageOpacity": 1,
+    "color": 4278716426
+  },
+  "user_bubble": {
+    "color": 3943369485,
+    "blur": 0,
+    "radius": 0,
+    "alignment": "right"
+  },
+  "character_bubble": {
+    "color": 4028768806,
+    "blur": 0,
+    "radius": 0,
+    "alignment": "left"
+  },
+  "user_bubble_font": {
+    "textStyle": {
+      "fontFamily": null,
+      "fontSize": 18,
+      "fontWeight": 500,
+      "fontStyle": "normal",
+      "color": 4292400330
+    },
+    "toneTextStyle": {
+      "fontFamily": null,
+      "fontSize": 18,
+      "fontWeight": 500,
+      "fontStyle": "italic",
+      "color": 4287532166
+    },
+    "quoteTextStyle": {
+      "fontFamily": null,
+      "fontSize": 18,
+      "fontWeight": 600,
+      "fontStyle": "normal",
+      "color": 4294110948
+    },
+    "toneHighlight": true,
+    "toneDelimiters": [
+      "**",
+      "()",
+      "（）"
+    ],
+    "toneSymbol": "none",
+    "quoteHighlight": true,
+    "quoteDelimiters": [
+      "“”",
+      "«»",
+      "„“",
+      "\"\""
+    ],
+    "quoteSymbol": "\"\""
+  },
+  "character_bubble_font": {
+    "textStyle": {
+      "fontFamily": null,
+      "fontSize": 18,
+      "fontWeight": 500,
+      "fontStyle": "normal",
+      "color": 4293058260
+    },
+    "toneTextStyle": {
+      "fontFamily": null,
+      "fontSize": 18,
+      "fontWeight": 500,
+      "fontStyle": "italic",
+      "color": 4288453268
+    },
+    "quoteTextStyle": {
+      "fontFamily": null,
+      "fontSize": 18,
+      "fontWeight": 600,
+      "fontStyle": "normal",
+      "color": 4294242274
+    },
+    "toneHighlight": true,
+    "toneDelimiters": [
+      "**",
+      "()",
+      "（）"
+    ],
+    "toneSymbol": "none",
+    "quoteHighlight": true,
+    "quoteDelimiters": [
+      "“”",
+      "«»",
+      "„“",
+      "\"\""
+    ],
+    "quoteSymbol": "\"\""
+  },
+  "console": {
+    "color": 4060809997,
+    "blur": 6,
+    "radius": 0,
+    "sendColor": 4291406446,
+    "fontSize": 18,
+    "fontWeight": 500,
+    "fontColor": 4293058260,
+    "placeholderColor": 4286018927
+  },
+  "thinking": {
+    "fontSize": 15,
+    "fontWeight": 500,
+    "color": 4288453268,
+    "backgroundColor": 3859878163
+  },
+  "status_bar": {
+    "fontSize": 13,
+    "fontWeight": 600,
+    "color": 4291406446,
+    "backgroundColor": 3859878163
+  },
+  "user_avatar": {
+    "avatar": true,
+    "radius": 100,
+    "name": true
+  },
+  "character_avatar": {
+    "avatar": true,
+    "radius": 100,
+    "name": true
+  },
+  "group_user_avatar": {
+    "avatar": true,
+    "radius": 100,
+    "name": true
+  },
+  "group_character_avatar": {
+    "avatar": true,
+    "radius": 100,
+    "name": true
+  }
+}

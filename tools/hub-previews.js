@@ -102,6 +102,23 @@ const THEMES = [
     ],
   },
   {
+    dir: 'ophanim',
+    head: 336,
+    bg: 'center -140px / 400px auto',
+    name: 'Seraphiel',
+    placeholder: 'Speak, and be seen…',
+    avatar: ['#e2ded4', '#222226'],
+    markup: true,
+    title: `<img src="ASSETS/eye.svg" style="width:30px">
+      <span style="font:500 26px 'Cormorant SC',Georgia,serif;color:#e2ded4;letter-spacing:.3em">OPHANIM</span>
+      <img src="ASSETS/eye.svg" style="width:30px">`,
+    lines: [
+      ['c', '*Every eye turns to you.* "Be not afraid."'],
+      ['u', 'That is what monsters say.'],
+      ['c', '"And yet you stayed."'],
+    ],
+  },
+  {
     dir: 'ternovaya-noch',
     active: false,
     flat: true, // тема в плоском режиме: сообщения во всю ширину, между ними разделитель
