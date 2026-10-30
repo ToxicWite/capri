@@ -1,7 +1,6 @@
-// Обложки тем для Tavo Hub в формате 9:16. Hub прячет края картинки: карточка
-// показывает средний квадрат, страница темы закрывает верх навигацией, а низ —
-// названием. Поэтому чат с настоящим CSS темы стоит в центральной полосе,
-// над ним маленький логотип, сверху и снизу только фон.
+// Обложки тем для Tavo Hub в формате 9:16. Hub показывает в карточке и на
+// странице темы нижнюю часть картинки (примерно 40–90% высоты), поэтому чат
+// с настоящим CSS темы и маленький логотип стоят внизу, сверху только фон.
 // Для каждой темы две картинки: покой и генерация.
 //
 // Запуск: node tools/hub-previews.js   (нужен playwright)
@@ -31,7 +30,7 @@ const THEMES = [
   },
   {
     dir: 'not-a-human',
-    bg: 'center -30px / 420px auto',
+    bg: 'center 78px / 420px auto',
     name: 'Guest',
     title: `<img src="ASSETS/energy-5.png" style="height:12px">
       <span style="font:600 15px Inter,sans-serif;color:#e9e4da;letter-spacing:.22em;white-space:nowrap">NO, I'M NOT A HUMAN</span>`,
@@ -103,8 +102,8 @@ function page(t, m, generating) {
     html,body{margin:0}
     body{width:${W}px;height:${H}px;overflow:hidden;display:flex;flex-direction:column;
       background:${rgba(m.background.color)} url("${bg}") ${t.bg} no-repeat;font-family:Inter,"Roboto",sans-serif}
-    .head{height:128px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;
-      gap:10px;padding-top:56px}
+    .head{height:262px;box-sizing:border-box;display:flex;align-items:flex-end;justify-content:center;
+      gap:10px;padding-bottom:4px}
     .top{display:flex;flex-direction:column}
     .list{flex:1;padding:12px 12px 0;display:flex;flex-direction:column;gap:9px}
     .row{display:flex;gap:7px;align-items:flex-start}.row.u{flex-direction:row-reverse}
