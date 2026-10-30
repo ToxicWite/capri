@@ -30,7 +30,7 @@ const THEMES = [
   },
   {
     dir: 'not-a-human',
-    bg: 'center 110px / 420px auto',
+    bg: 'center -280px / 420px auto',
     name: 'Guest',
     title: `<img src="ASSETS/energy-5.png" style="height:12px">
       <span style="font:600 15px Inter,sans-serif;color:#e9e4da;letter-spacing:.22em;white-space:nowrap">NO, I'M NOT A HUMAN</span>`,
