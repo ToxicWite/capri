@@ -1,5 +1,6 @@
-// Квадратные обложки тем для Tavo Hub: компактный чат из нескольких реплик
-// с настоящим CSS темы. Для каждой темы две картинки: покой и генерация.
+// Обложки тем для Tavo Hub в формате 9:16: сверху компактный чат из нескольких
+// реплик с настоящим CSS темы (эту часть видно в карточке), снизу название темы
+// на фоне её арта. Для каждой темы две картинки: покой и генерация.
 //
 // Запуск: node tools/hub-previews.js   (нужен playwright)
 const fs = require('fs')
@@ -7,7 +8,8 @@ const path = require('path')
 const { chromium } = require('playwright')
 
 const ROOT = path.resolve(__dirname, '..')
-const SIZE = 360 // CSS-пиксели, снимок в 3x -> 1080×1080
+const W = 360 // CSS-пиксели, снимок в 3x -> 1080×1920
+const H = 640
 
 const THEMES = [
   {
@@ -15,6 +17,10 @@ const THEMES = [
     active: false, // у Капри генерация почти не меняет вид
     bg: 'center top / cover',
     name: 'Capri',
+    title: `<img src="ASSETS/eye.png" style="width:44px">
+      <div style="font:800 52px 'DejaVu Sans Mono',monospace;color:#2bff6a;letter-spacing:.08em;
+        text-shadow:3px 0 0 #ff1644,-3px 0 0 #164cff,6px 6px 0 #7c3aff">CAPRI</div>
+      <div style="font:700 13px 'DejaVu Sans Mono',monospace;color:#ff1644;letter-spacing:.3em">// PROJECT CAPRICORN</div>`,
     avatar: ['#2bff6a', '#09070e'],
     lines: [
       ['c', '*glitches into view* "Hehe. You\'re late, choom."'],
@@ -24,8 +30,11 @@ const THEMES = [
   },
   {
     dir: 'not-a-human',
-    bg: 'center 42% / 420px auto',
+    bg: 'center -75px / 420px auto',
     name: 'Guest',
+    title: `<img src="ASSETS/energy-5.png" style="height:16px">
+      <div style="font:600 31px Inter,sans-serif;color:#e9e4da;letter-spacing:.14em;white-space:nowrap">NOT A HUMAN</div>
+      <div style="font:400 13px Inter,sans-serif;color:#6fe0d4;letter-spacing:.35em">LOOK FOR THE SIGNS</div>`,
     avatar: ['#6fe0d4', '#04100e'],
     lines: [
       ['c', '"Let me in. The sun is coming up."'],
@@ -35,8 +44,11 @@ const THEMES = [
   },
   {
     dir: 'tlou-spores',
-    bg: 'center 30% / 520px auto',
+    bg: 'center top / cover',
     name: 'Joel',
+    title: `<img src="ASSETS/fireflies-a.png" style="width:300px;margin-bottom:-14px">
+      <div style="font:700 56px Inter,sans-serif;color:#efe6d2;letter-spacing:.22em;text-shadow:0 4px 18px #000">SPORES</div>
+      <div style="font:500 12px Inter,sans-serif;color:#d6ba6e;letter-spacing:.32em">THE LAST OF US · PART I</div>`,
     avatar: ['#d6ba6e', '#1c2018'],
     lines: [
       ['c', '"Mask on. Spores are thick down here."'],
@@ -90,8 +102,11 @@ function page(t, m, generating) {
   const con = m.console
   return `<!doctype html><html><head><meta charset="utf-8"><style>
     html,body{margin:0}
-    body{width:${SIZE}px;height:${SIZE}px;overflow:hidden;display:flex;flex-direction:column;
+    body{width:${W}px;height:${H}px;overflow:hidden;display:flex;flex-direction:column;
       background:${rgba(m.background.color)} url("${bg}") ${t.bg} no-repeat;font-family:Inter,"Roboto",sans-serif}
+    .top{height:${W}px;display:flex;flex-direction:column}
+    .poster{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+      gap:6px;padding-bottom:42px;text-align:center}
     .list{flex:1;padding:12px 12px 0;display:flex;flex-direction:column;gap:9px}
     .row{display:flex;gap:7px;align-items:flex-start}.row.u{flex-direction:row-reverse}
     img.tavo-avatar{width:30px;height:30px;flex:none}
@@ -104,7 +119,7 @@ function page(t, m, generating) {
       background-color:${rgba(con.color)};border-radius:${con.radius}px}
     .tavo-composer-input{flex:1;font-size:13px;color:${rgba(con.placeholderColor)}}
     .ic{width:18px;height:18px}
-  </style><style>${css}</style></head><body>
+  </style><style>${css}</style></head><body><div class="top">
     <div class="list">${rows}</div>
     <div class="tavo-composer"><div class="tavo-composer-shell">
       <svg class="ic tavo-composer-add-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="${rgba(con.fontColor)}" stroke-width="2"/></svg>
@@ -112,12 +127,13 @@ function page(t, m, generating) {
       ${generating
         ? `<svg class="ic tavo-composer-stop-icon" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="${rgba(con.sendColor)}"/></svg>`
         : `<svg class="ic tavo-composer-send-icon" viewBox="0 0 24 24"><path d="M4 12l16-8-5 16-3-6z" fill="${rgba(con.sendColor)}"/></svg>`}
-    </div></div></body></html>`
+    </div></div></div>
+    <div class="poster">${t.title.replaceAll('ASSETS/', assets)}</div></body></html>`
 }
 
 ;(async () => {
   const browser = await chromium.launch()
-  const p = await browser.newPage({ viewport: { width: SIZE, height: SIZE }, deviceScaleFactor: 3 })
+  const p = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 3 })
   for (const t of THEMES) {
     const m = JSON.parse(fs.readFileSync(path.join(ROOT, 'themes', t.dir, 'theme.json'), 'utf8'))
     const states = t.active === false ? [['hub', false]] : [['hub', false], ['hub-active', true]]
