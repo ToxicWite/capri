@@ -1,4 +1,4 @@
-# Not a Human
+# No, I'm Not a Human
 
 Тема для Tavo по мотивам хоррора «No, I'm Not a Human» (Trioskaz). Визуальный язык взят со скриншотов игры:
 
@@ -8,8 +8,8 @@
 - **Вложения** в такой же светлой рамке, как вставка с руками при осмотре.
 
 Две версии:
-- `dist/not-a-human.thm` — «Not a Human // Visitor Check», с английскими надписями.
-- `dist/not-a-human-silent.thm` — «Not a Human // Silent», без надписей.
+- `dist/not-a-human.thm` — «No, I'm Not a Human // Visitor Check», с английскими надписями.
+- `dist/not-a-human-silent.thm` — «No, I'm Not a Human // Silent», без надписей.
 
 Нужен **Advanced Rendering**. Пересборка: `python3 themes/not-a-human/build.py` (Pillow и numpy). Общий CSS лежит в `style.css`, надписи в `labels.css`.
 

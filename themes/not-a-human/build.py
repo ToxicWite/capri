@@ -1,4 +1,4 @@
-"""Сборка темы «Not a Human» для Tavo в двух версиях: с надписями и без.
+"""Сборка темы «No, I'm Not a Human» для Tavo в двух версиях: с надписями и без.
 
 Визуальный язык игры: монохромная ночная бирюза, зерно, вид «через глазок»
 со скруглённой тёмной виньеткой, чёрные плашки реплик, синий CRT-экран,
@@ -257,8 +257,8 @@ def main():
     labels_css = labels_css.replace("TICKER_W", str(tw)).replace("TICKER_H", str(th))
     common = ["night-porch.png", "static.png"] + [f"energy-{i}.png" for i in range(6)]
 
-    package("not-a-human-silent.thm", "Not a Human // Silent", base_css, common)
-    labeled = package("not-a-human.thm", "Not a Human // Visitor Check",
+    package("not-a-human-silent.thm", "No, I'm Not a Human // Silent", base_css, common)
+    labeled = package("not-a-human.thm", "No, I'm Not a Human // Visitor Check",
                       base_css + "\n" + labels_css, common + ["ticker.png"])
     (HERE / "theme.json").write_text(json.dumps(labeled, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 

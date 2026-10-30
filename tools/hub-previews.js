@@ -33,7 +33,8 @@ const THEMES = [
     bg: 'center -75px / 420px auto',
     name: 'Guest',
     title: `<img src="ASSETS/energy-5.png" style="height:16px">
-      <div style="font:600 31px Inter,sans-serif;color:#e9e4da;letter-spacing:.14em;white-space:nowrap">NOT A HUMAN</div>
+      <div style="font:500 17px Inter,sans-serif;color:#e9e4da;letter-spacing:.32em;white-space:nowrap">NO, I'M NOT</div>
+      <div style="font:600 40px Inter,sans-serif;color:#e9e4da;letter-spacing:.16em;white-space:nowrap;margin-top:-6px">A HUMAN</div>
       <div style="font:400 13px Inter,sans-serif;color:#6fe0d4;letter-spacing:.35em">LOOK FOR THE SIGNS</div>`,
     avatar: ['#6fe0d4', '#04100e'],
     lines: [
