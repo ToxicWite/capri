@@ -1,0 +1,223 @@
+/* ============================================================
+   CAPRI // PROJECT CAPRICORN — тема для Tavo
+   Красный глиттер, кислотно-зелёный, чёрные осколки,
+   фиолетовый «сдвинутый» контур и зубастая улыбка.
+   Нужен Advanced Rendering.
+   ============================================================ */
+
+/* ---------- Анимации ---------- */
+@keyframes capri-glitch-in {
+  0%   { transform: translateX(-6px) skewX(-8deg); opacity: 0; filter: hue-rotate(90deg); }
+  40%  { transform: translateX(4px) skewX(4deg); opacity: 1; }
+  70%  { transform: translateX(-2px) skewX(-1deg); filter: hue-rotate(0deg); }
+  100% { transform: none; }
+}
+
+@keyframes capri-avatar-glitch {
+  0%, 92%, 100% { transform: none; filter: none; }
+  93% { transform: translate(-3px, 1px); filter: hue-rotate(120deg) saturate(2); }
+  95% { transform: translate(3px, -2px) skewX(6deg); filter: invert(1) hue-rotate(180deg); }
+  97% { transform: translate(-1px, 0); filter: hue-rotate(-60deg); }
+}
+
+@keyframes capri-blink {
+  0%, 88%, 100% { transform: scaleY(1); }
+  92% { transform: scaleY(0.1); }
+  96% { transform: scaleY(1); }
+}
+
+@keyframes capri-pulse {
+  0%, 100% { filter: drop-shadow(0 0 2px #ff1644); transform: scale(1); }
+  50%      { filter: drop-shadow(0 0 9px #ff1644) drop-shadow(0 0 3px #2bff6a); transform: scale(1.12); }
+}
+
+/* ---------- Пузыри ---------- */
+.tavo-bubble {
+  border-radius: 2px 14px 2px 14px;
+}
+
+/* Пользователь — красный звёздный глиттер */
+.tavo-user-bubble {
+  background-color: #b20a2c;
+  background-image: url("theme/assets/glitter-red.png");
+  background-size: 256px 256px;
+  border: 1px solid #ff1644;
+  box-shadow:
+    5px 5px 0 #7c3aff,
+    -2px -2px 0 rgba(43, 255, 106, 0.55);
+}
+
+.tavo-user-bubble-content {
+  text-shadow: 0 1px 0 rgba(9, 7, 14, 0.65);
+}
+
+/* Капри — чёрный осколок с зелёной кромкой и зубастой улыбкой снизу */
+.tavo-character-bubble {
+  background-color: rgba(9, 7, 14, 0.92);
+  background-image:
+    url("theme/assets/teeth.png"),
+    url("theme/assets/static-black.png");
+  background-size: 90px 15px, 256px 256px;
+  background-repeat: no-repeat, repeat;
+  background-position: right 12px bottom 4px, 0 0;
+  border: 1px solid rgba(124, 58, 255, 0.7);
+  border-left: 4px solid #2bff6a;
+  padding-bottom: 18px;
+  box-shadow:
+    -5px 5px 0 #ff1644,
+    -9px 9px 0 #7c3aff;
+  animation: capri-glitch-in 0.32s steps(4, end) both;
+}
+
+.tavo-message-content {
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+.tavo-message-content::selection,
+.tavo-message-content *::selection {
+  background: #2bff6a;
+  color: #09070e;
+}
+
+/* Плоский режим: разделитель — та самая улыбка */
+.tavo-message-divider {
+  border: none;
+  height: 14px;
+  background: url("theme/assets/teeth.png") no-repeat center / 90px 15px;
+  opacity: 0.55;
+}
+
+/* ---------- Имена и аватары ---------- */
+.tavo-speaker-name {
+  font-family: ui-monospace, "SF Mono", "Roboto Mono", monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #2bff6a;
+  text-shadow:
+    1.5px 0 0 #ff1644,
+    -1.5px 0 0 #164cff;
+}
+
+/* Глаз Капри подглядывает за каждым, кто говорит */
+.tavo-speaker-name::before {
+  content: "";
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  margin-right: 0.4em;
+  vertical-align: -0.2em;
+  background: url("theme/assets/eye.png") center / contain no-repeat;
+  animation: capri-blink 5.5s ease-in-out infinite;
+}
+
+/* Зазубренные «осколочные» аватары */
+.tavo-avatar {
+  border-radius: 0;
+  clip-path: polygon(0 8%, 22% 0, 40% 10%, 62% 0, 100% 6%, 92% 38%, 100% 64%, 90% 100%, 58% 92%, 30% 100%, 4% 90%, 10% 58%);
+}
+
+.tavo-character-avatar,
+.tavo-group-character-avatar {
+  background-color: #2bff6a;
+  animation: capri-avatar-glitch 7s steps(1, end) infinite;
+}
+
+.tavo-user-avatar,
+.tavo-group-user-avatar {
+  background-color: #ff1644;
+}
+
+/* ---------- Рассуждения, вложения, тулбар ---------- */
+.tavo-message-reasoning {
+  border-left: 2px dashed #2bff6a;
+  background: rgba(43, 255, 106, 0.06);
+  padding-left: 8px;
+}
+
+.tavo-message-reasoning > summary {
+  font-family: ui-monospace, "SF Mono", "Roboto Mono", monospace;
+  color: #2bff6a;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.tavo-message-reasoning > summary::after {
+  content: "  // CAPRICORN.SYS";
+  color: #ff1644;
+  opacity: 0.75;
+  font-size: 0.85em;
+}
+
+.tavo-message-attachments {
+  filter: drop-shadow(4px 4px 0 #7c3aff);
+}
+
+.tavo-action-bar-button,
+.tavo-action-bar-button-group {
+  background-color: rgba(9, 7, 14, 0.75);
+  border-radius: 2px 8px 2px 8px;
+}
+
+.tavo-action-bar-button-group {
+  box-shadow: 0 0 0 1px rgba(43, 255, 106, 0.45);
+}
+
+/* ---------- Поле ввода ---------- */
+.tavo-composer-shell {
+  background-color: rgba(9, 7, 14, 0.92);
+  background-image: url("theme/assets/static-black.png");
+  background-size: 256px 256px;
+  border: 1px solid #2bff6a;
+  border-radius: 2px 14px 2px 14px;
+  box-shadow: 5px 5px 0 #7c3aff;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.tavo-composer-shell:focus-within {
+  border-color: #ff1644;
+  box-shadow: 5px 5px 0 #7c3aff, 0 0 14px rgba(255, 22, 68, 0.55);
+}
+
+.tavo-composer-input {
+  color: #e9e6ff;
+  caret-color: #2bff6a;
+}
+
+.tavo-composer-input::placeholder {
+  color: #7c6bb0;
+  letter-spacing: 0.04em;
+}
+
+.tavo-composer-send-icon {
+  filter: drop-shadow(0 0 4px #2bff6a);
+  transition: transform 0.15s;
+}
+
+.tavo-composer-send-icon:hover {
+  transform: rotate(-12deg) scale(1.1);
+}
+
+/* Пока Капри генерирует — кнопка «стоп» пульсирует */
+.tavo-composer-stop-icon {
+  animation: capri-pulse 1.1s ease-in-out infinite;
+}
+
+.tavo-composer-add-icon,
+.tavo-composer-voice-icon {
+  filter: drop-shadow(0 0 3px #7c3aff);
+}
+
+/* ---------- Для тех, кому не нужны глюки ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .tavo-character-bubble,
+  .tavo-character-avatar,
+  .tavo-group-character-avatar,
+  .tavo-speaker-name::before,
+  .tavo-composer-stop-icon {
+    animation: none;
+  }
+}
