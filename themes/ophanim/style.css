@@ -73,8 +73,8 @@
 
 /* Холодный свет медленно скользит по мрамору */
 @keyframes ophanim-light {
-  0%   { background-position: left 5px top 5px, -60% 0, 0 0; }
-  100% { background-position: left 5px top 5px, 160% 0, 0 0; }
+  0%   { background-position: left 0 top 0, -60% 0, 0 0; }
+  100% { background-position: left 0 top 0, 160% 0, 0 0; }
 }
 
 /* ---------- Типографика ---------- */
@@ -105,12 +105,12 @@
     url("theme/assets/wing-corner.svg"),
     linear-gradient(105deg, rgba(255, 255, 255, 0) 40%, rgba(226, 222, 212, 0.07) 50%, rgba(255, 255, 255, 0) 60%),
     url("theme/assets/marble.png");
-  background-size: min(48px, 28%) auto, 50% 100%, 320px 320px;
+  background-size: min(120px, 45%) auto, 50% 100%, 320px 320px;
   background-repeat: no-repeat, no-repeat, repeat;
-  background-position: left 5px top 5px, -60% 0, 0 0;
+  background-position: left 0 top 0, -60% 0, 0 0;
   border: 1px solid rgba(226, 222, 212, 0.18);
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.7);
-  padding: 16px 18px 14px 36px;
+  padding: 16px 18px 14px 22px;
   animation: ophanim-light 14s ease-in-out infinite alternate;
 }
 

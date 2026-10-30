@@ -144,8 +144,8 @@ def make_background():
     img = Image.fromarray(arr.clip(0, 255).astype(np.uint8)).convert("RGBA")
 
     cx, cy = W / 2, 520
-    wing(img, (cx - 150, cy - 30), -1, rng, 1.05)
-    wing(img, (cx + 150, cy - 30), 1, rng, 1.05)
+    wing(img, (cx - 30, cy - 10), -1, rng, 1.25)
+    wing(img, (cx + 30, cy - 10), 1, rng, 1.25)
     # нимб
     halo = Image.new("RGBA", img.size, (0, 0, 0, 0))
     hd = ImageDraw.Draw(halo)
@@ -235,14 +235,17 @@ def make_eye_strips():
 
 def make_svgs():
     b = "#e2ded4"
-    # уголок: медальон с глазом, от него — тонкие линии рамки вправо и вниз
-    corner = ('<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 56 56">'
-              f'<path d="M22,11 L56,11 M11,22 L11,56" stroke="{b}" stroke-width="1" opacity="0.55"/>'
-              f'<path d="M24,15 L44,15 M15,24 L15,44" stroke="{b}" stroke-width="0.7" opacity="0.35"/>'
-              f'<circle cx="11" cy="11" r="10" fill="#1a1a1d" stroke="{b}" stroke-width="1.1"/>'
-              f'<circle cx="11" cy="11" r="7.6" fill="none" stroke="#c9aa6e" stroke-width="0.6" opacity="0.8"/>'
-              f'<path d="M4.5,11 Q11,5.5 17.5,11 Q11,16.5 4.5,11 Z" fill="{b}"/>'
-              '<circle cx="11" cy="11" r="2.6" fill="#1a1a1d"/><circle cx="10.1" cy="10.1" r="0.8" fill="#e2ded4"/></svg>')
+    # уголок рамки: глаз в медальоне ровно в углу, линии идут по верхней и левой кромке
+    corner = ('<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">'
+              '<defs><linearGradient id="h" x1="0" x2="1"><stop offset="0" stop-color="#e2ded4" stop-opacity="0.75"/>'
+              '<stop offset="1" stop-color="#e2ded4" stop-opacity="0"/></linearGradient>'
+              '<linearGradient id="v" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#e2ded4" stop-opacity="0.75"/>'
+              '<stop offset="1" stop-color="#e2ded4" stop-opacity="0"/></linearGradient></defs>'
+              '<path d="M16,1 L120,1" stroke="url(#h)" stroke-width="1.4"/>'
+              '<path d="M1,16 L1,120" stroke="url(#v)" stroke-width="1.4"/>'
+              f'<circle cx="9" cy="9" r="8" fill="#1a1a1d" stroke="{b}" stroke-width="1"/>'
+              f'<path d="M3.5,9 Q9,4.5 14.5,9 Q9,13.5 3.5,9 Z" fill="{b}"/>'
+              '<circle cx="9" cy="9" r="2.1" fill="#1a1a1d"/></svg>')
     (ASSETS / "wing-corner.svg").write_text(corner, encoding="utf-8")
     # маленький глаз перед именем
     eye_svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="14" viewBox="0 0 24 14">'
