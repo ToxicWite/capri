@@ -1,0 +1,142 @@
+{
+  "spec": "tavo_theme_v1",
+  "name": "Soft Night Paper",
+  "display_mode": "message",
+  "visual_novel_bubble_height_ratio": 0.6,
+  "bubble_display_type": "bubble",
+  "custom_css": ".tavo-character-bubble { background-image: url(\"theme/assets/paper.png\"); background-repeat: repeat; border: 1px solid rgba(160, 180, 220, 0.4); }\n.tavo-message-content { line-height: 1.8; }",
+  "background": {
+    "charAvatar": false,
+    "image": null,
+    "imageOpacity": 1,
+    "color": 4279573544
+  },
+  "user_bubble": {
+    "color": 4281614940,
+    "blur": 0,
+    "radius": 16,
+    "alignment": "right"
+  },
+  "character_bubble": {
+    "color": 4280692285,
+    "blur": 0,
+    "radius": 16,
+    "alignment": "left"
+  },
+  "user_bubble_font": {
+    "textStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "normal",
+      "color": 4293784319
+    },
+    "toneTextStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "italic",
+      "color": null
+    },
+    "quoteTextStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "normal",
+      "color": null
+    },
+    "toneHighlight": true,
+    "toneDelimiters": [
+      "**",
+      "()",
+      "（）"
+    ],
+    "toneSymbol": "none",
+    "quoteHighlight": true,
+    "quoteDelimiters": [
+      "“”",
+      "「」",
+      "\"\""
+    ],
+    "quoteSymbol": "\"\""
+  },
+  "character_bubble_font": {
+    "textStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "normal",
+      "color": 4293784319
+    },
+    "toneTextStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "italic",
+      "color": null
+    },
+    "quoteTextStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "normal",
+      "color": null
+    },
+    "toneHighlight": true,
+    "toneDelimiters": [
+      "**",
+      "()",
+      "（）"
+    ],
+    "toneSymbol": "none",
+    "quoteHighlight": true,
+    "quoteDelimiters": [
+      "“”",
+      "「」",
+      "\"\""
+    ],
+    "quoteSymbol": "\"\""
+  },
+  "console": {
+    "color": 4280692285,
+    "blur": 0,
+    "radius": 12,
+    "sendColor": 4290629104,
+    "fontSize": 16,
+    "fontWeight": 400,
+    "fontColor": 4293784319,
+    "placeholderColor": 4288982722
+  },
+  "thinking": {
+    "fontSize": 14,
+    "fontWeight": 400,
+    "color": 4293784319,
+    "backgroundColor": 4280692285
+  },
+  "status_bar": {
+    "fontSize": 14,
+    "fontWeight": 400,
+    "color": 4293784319,
+    "backgroundColor": 4280692285
+  },
+  "user_avatar": {
+    "avatar": true,
+    "radius": 100,
+    "name": true
+  },
+  "character_avatar": {
+    "avatar": true,
+    "radius": 100,
+    "name": true
+  },
+  "group_user_avatar": {
+    "avatar": true,
+    "radius": 100,
+    "name": true
+  },
+  "group_character_avatar": {
+    "avatar": true,
+    "radius": 100,
+    "name": true
+  }
+}
