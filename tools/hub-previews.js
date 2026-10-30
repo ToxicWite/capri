@@ -102,17 +102,17 @@ function page(t, m, generating) {
     html,body{margin:0}
     body{width:${W}px;height:${H}px;overflow:hidden;display:flex;flex-direction:column;
       background:${rgba(m.background.color)} url("${bg}") ${t.bg} no-repeat;font-family:Inter,"Roboto",sans-serif}
-    .head{height:300px;box-sizing:border-box;display:flex;align-items:flex-end;justify-content:center;
+    .head{height:322px;box-sizing:border-box;display:flex;align-items:flex-end;justify-content:center;
       gap:10px;padding-bottom:4px}
     .top{display:flex;flex-direction:column}
-    .list{flex:1;padding:12px 12px 0;display:flex;flex-direction:column;gap:9px}
+    .list{flex:1;padding:6px 12px 0;display:flex;flex-direction:column;gap:6px}
     .row{display:flex;gap:7px;align-items:flex-start}.row.u{flex-direction:row-reverse}
     img.tavo-avatar{width:30px;height:30px;flex:none}
     .col{display:flex;flex-direction:column;gap:3px;max-width:82%}.u .col{align-items:flex-end}
     .tavo-speaker-name{font-size:10px}
     .tavo-bubble{padding:7px 10px}
     .tavo-message-content{font-size:13px;line-height:1.45}
-    .tavo-composer{padding:8px 10px 10px}
+    .tavo-composer{padding:6px 10px 6px}
     .tavo-composer-shell{display:flex;align-items:center;gap:8px;padding:9px 12px;
       background-color:${rgba(con.color)};border-radius:${con.radius}px}
     .tavo-composer-input{flex:1;font-size:13px;color:${rgba(con.placeholderColor)}}
