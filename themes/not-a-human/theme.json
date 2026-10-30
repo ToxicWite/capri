@@ -4,23 +4,23 @@
   "display_mode": "message",
   "visual_novel_bubble_height_ratio": 0.6,
   "bubble_display_type": "bubble",
-  "custom_css": "/* ============================================================\n   NOT A HUMAN — тема для Tavo\n   Тёмная дверь, ядовитый бирюзовый, полутоновый растр.\n   По ответам персонажа ползёт фонарик, пока идёт генерация —\n   все его сообщения «дышат», поле ввода — старый CRT-телевизор.\n   Нужен Advanced Rendering.\n   ============================================================ */\n\n/* ---------- Анимации ---------- */\n@keyframes nah-flashlight {\n  0%   { background-position: -40% 10%, 0 0; }\n  30%  { background-position: 55% 95%, 0 0; }\n  55%  { background-position: 130% 25%, 0 0; }\n  80%  { background-position: 25% 60%, 0 0; }\n  100% { background-position: -40% 10%, 0 0; }\n}\n\n@keyframes nah-breathe {\n  0%, 100% { transform: scale(1); }\n  45%      { transform: scale(1.018, 1.03); }\n}\n\n@keyframes nah-photo-flash {\n  0%, 94%, 100% { filter: grayscale(1) sepia(1) hue-rotate(115deg) saturate(2.2) contrast(1.25); }\n  95% { filter: grayscale(1) brightness(2.6) contrast(0.7); }\n  97% { filter: grayscale(1) sepia(1) hue-rotate(115deg) saturate(2.2) contrast(1.25) brightness(1.4); }\n}\n\n@keyframes nah-crt-flicker {\n  0%, 96%, 100% { opacity: 1; }\n  97% { opacity: 0.86; }\n  98% { opacity: 1; }\n  99% { opacity: 0.9; }\n}\n\n@keyframes nah-on-air {\n  0%, 49%   { opacity: 1; filter: drop-shadow(0 0 6px #ff3b30); }\n  50%, 100% { opacity: 0.35; filter: none; }\n}\n\n/* ---------- Пузыри: кадры-улики ---------- */\n.tavo-bubble {\n  border-radius: 3px;\n}\n\n/* Персонаж — тёмный кадр в светящейся бирюзовой рамке, его осматривают фонариком */\n.tavo-character-bubble {\n  background-color: rgba(4, 16, 14, 0.94);\n  background-image:\n    radial-gradient(circle closest-side, rgba(190, 255, 236, 0.32), rgba(120, 230, 205, 0.12) 55%, rgba(0, 0, 0, 0) 100%),\n    url(\"theme/assets/halftone-dark.png\");\n  background-size: 190px 190px, 128px 128px;\n  background-repeat: no-repeat, repeat;\n  background-position: -40% 10%, 0 0;\n  border: 2px solid #3fe0d0;\n  box-shadow:\n    0 0 10px rgba(63, 224, 208, 0.45),\n    inset 0 0 28px rgba(0, 0, 0, 0.85);\n  animation: nah-flashlight 11s ease-in-out infinite;\n}\n\n/* Пользователь — светлая мятная «фотография» из коллажа */\n.tavo-user-bubble {\n  background-color: #8fe8c8;\n  background-image: url(\"theme/assets/halftone-mint.png\");\n  background-size: 128px 128px;\n  border: 2px solid #04100e;\n  box-shadow: 0 0 0 1px rgba(143, 232, 200, 0.6), 4px 4px 0 rgba(4, 16, 14, 0.9);\n}\n\n.tavo-message-content {\n  line-height: 1.7;\n}\n\n.tavo-message-content::selection,\n.tavo-message-content *::selection {\n  background: #3fe0d0;\n  color: #04100e;\n}\n\n/* Пока идёт генерация — сообщения персонажа медленно дышат */\n:root:has(.tavo-composer-stop-icon) .tavo-character-bubble {\n  animation:\n    nah-flashlight 11s ease-in-out infinite,\n    nah-breathe 3.4s ease-in-out infinite;\n}\n\n.tavo-message-divider {\n  border: none;\n  height: 1px;\n  background: #3fe0d0;\n  box-shadow: 0 0 6px #3fe0d0;\n  opacity: 0.5;\n}\n\n/* ---------- Имена и аватары ---------- */\n.tavo-speaker-name {\n  font-family: ui-monospace, \"Courier New\", monospace;\n  font-weight: 700;\n  text-transform: uppercase;\n  letter-spacing: 0.12em;\n  color: #8fe8c8;\n  text-shadow: 0 0 6px rgba(63, 224, 208, 0.6);\n}\n\n/* Все лица — постеризованные бирюзовые фото, как в досье */\n.tavo-avatar {\n  border-radius: 2px;\n  box-shadow: 0 0 0 2px #3fe0d0, 0 0 10px rgba(63, 224, 208, 0.5);\n  filter: grayscale(1) sepia(1) hue-rotate(115deg) saturate(2.2) contrast(1.25);\n}\n\n/* Персонажа время от времени фотографируют со вспышкой */\n.tavo-character-avatar,\n.tavo-group-character-avatar {\n  animation: nah-photo-flash 9s linear infinite;\n}\n\n/* ---------- Рассуждения, вложения, тулбар ---------- */\n.tavo-message-reasoning {\n  border-left: 2px dashed #3fe0d0;\n  background: rgba(63, 224, 208, 0.05);\n  padding-left: 8px;\n}\n\n.tavo-message-reasoning > summary {\n  font-family: ui-monospace, \"Courier New\", monospace;\n  color: #3fe0d0;\n  letter-spacing: 0.06em;\n}\n\n.tavo-message-attachments {\n  filter: drop-shadow(0 0 6px rgba(63, 224, 208, 0.5));\n}\n\n.tavo-action-bar-button,\n.tavo-action-bar-button-group {\n  background-color: rgba(4, 16, 14, 0.8);\n  border-radius: 3px;\n}\n\n.tavo-action-bar-button-group {\n  box-shadow: 0 0 0 1px rgba(63, 224, 208, 0.4);\n}\n\n/* ---------- Поле ввода: старый CRT-телевизор ---------- */\n.tavo-composer-shell {\n  background-color: rgba(4, 16, 14, 0.95);\n  background-image: repeating-linear-gradient(\n    to bottom,\n    rgba(63, 224, 208, 0.07) 0,\n    rgba(63, 224, 208, 0.07) 1px,\n    rgba(0, 0, 0, 0) 1px,\n    rgba(0, 0, 0, 0) 3px\n  );\n  border: 3px solid #0b2a25;\n  border-radius: 22px / 30px;\n  box-shadow:\n    0 0 0 1px #3fe0d0,\n    0 0 14px rgba(63, 224, 208, 0.35),\n    inset 0 0 22px rgba(63, 224, 208, 0.22);\n  animation: nah-crt-flicker 7s steps(1, end) infinite;\n}\n\n.tavo-composer-input {\n  color: #cff7ea;\n  caret-color: #3fe0d0;\n  text-shadow: 0 0 6px rgba(63, 224, 208, 0.55);\n}\n\n.tavo-composer-input::placeholder {\n  color: #4f8f80;\n}\n\n.tavo-composer-send-icon,\n.tavo-composer-add-icon,\n.tavo-composer-voice-icon {\n  filter: drop-shadow(0 0 4px #3fe0d0);\n}\n\n/* «Стоп» мигает красной лампой эфира */\n.tavo-composer-stop-icon {\n  animation: nah-on-air 1s steps(1, end) infinite;\n}\n\n/* ---------- Без движения для тех, кому надо ---------- */\n@media (prefers-reduced-motion: reduce) {\n  .tavo-character-bubble,\n  :root:has(.tavo-composer-stop-icon) .tavo-character-bubble,\n  .tavo-character-avatar,\n  .tavo-group-character-avatar,\n  .tavo-composer-shell,\n  .tavo-composer-stop-icon {\n    animation: none;\n  }\n}\n\n/* ---------- Версия с надписями (Visitor Check) ---------- */\n@keyframes nah-verdict {\n  0%   { content: \" [HUMAN?]\"; color: #8fe8c8; }\n  40%  { content: \" [VISITOR?]\"; color: #ff6b5e; }\n  70%  { content: \" [???]\"; color: #cff7ea; }\n  100% { content: \" [HUMAN?]\"; color: #8fe8c8; }\n}\n\n/* Вердикт рядом с каждым именем всё время меняется */\n.tavo-speaker-name::after {\n  content: \" [HUMAN?]\";\n  font-size: 0.85em;\n  letter-spacing: 0.08em;\n  opacity: 0.85;\n  animation: nah-verdict 7s steps(1, end) infinite;\n}\n\n.tavo-message-reasoning > summary::after {\n  content: \"  // INSPECTING\";\n  color: #ff6b5e;\n  opacity: 0.8;\n  font-size: 0.85em;\n}\n\n/* Номер канала в углу «экрана», во время генерации — лампа ON AIR */\n.tavo-composer-shell {\n  background-image:\n    url(\"theme/assets/ch03.png\"),\n    repeating-linear-gradient(\n      to bottom,\n      rgba(63, 224, 208, 0.07) 0,\n      rgba(63, 224, 208, 0.07) 1px,\n      rgba(0, 0, 0, 0) 1px,\n      rgba(0, 0, 0, 0) 3px\n    );\n  background-size: auto 11px, auto;\n  background-repeat: no-repeat, repeat;\n  background-position: right 16px top 4px, 0 0;\n}\n\n:root:has(.tavo-composer-stop-icon) .tavo-composer-shell {\n  background-image:\n    url(\"theme/assets/on-air.png\"),\n    repeating-linear-gradient(\n      to bottom,\n      rgba(63, 224, 208, 0.07) 0,\n      rgba(63, 224, 208, 0.07) 1px,\n      rgba(0, 0, 0, 0) 1px,\n      rgba(0, 0, 0, 0) 3px\n    );\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .tavo-speaker-name::after {\n    animation: none;\n  }\n}\n",
+  "custom_css": "/* ============================================================\n   NOT A HUMAN — тема для Tavo\n   Визуальный язык игры: ночь «через глазок», бирюзовый монохром,\n   реплики на голых чёрных плашках, синий экран старого CRT\n   и ромбики энергии, которые тают, пока персонаж думает.\n   Нужен Advanced Rendering.\n   ============================================================ */\n\n/* ---------- Анимации ---------- */\n@keyframes nah-flashlight {\n  0%   { background-position: -45% 15%; }\n  30%  { background-position: 55% 100%; }\n  55%  { background-position: 140% 20%; }\n  80%  { background-position: 30% 65%; }\n  100% { background-position: -45% 15%; }\n}\n\n@keyframes nah-breathe {\n  0%, 100% { transform: scale(1); }\n  45%      { transform: scale(1.015, 1.028); }\n}\n\n@keyframes nah-photo-flash {\n  0%, 94%, 100% { filter: grayscale(1) sepia(1) hue-rotate(130deg) saturate(1.6) contrast(1.4) brightness(0.9); }\n  95% { filter: grayscale(1) brightness(2.8) contrast(0.6); }\n  97% { filter: grayscale(1) sepia(1) hue-rotate(130deg) saturate(1.6) contrast(1.4) brightness(1.3); }\n}\n\n@keyframes nah-static {\n  0%   { background-position: 0 0, 0 0; }\n  20%  { background-position: -37px 19px, 0 0; }\n  40%  { background-position: 52px -41px, 0 0; }\n  60%  { background-position: -13px 66px, 0 0; }\n  80%  { background-position: 71px 8px, 0 0; }\n  100% { background-position: 0 0, 0 0; }\n}\n\n@keyframes nah-energy-drain {\n  0%   { background-image: url(\"theme/assets/energy-5.png\"); }\n  16%  { background-image: url(\"theme/assets/energy-4.png\"); }\n  33%  { background-image: url(\"theme/assets/energy-3.png\"); }\n  50%  { background-image: url(\"theme/assets/energy-2.png\"); }\n  66%  { background-image: url(\"theme/assets/energy-1.png\"); }\n  83%  { background-image: url(\"theme/assets/energy-0.png\"); }\n  100% { background-image: url(\"theme/assets/energy-0.png\"); }\n}\n\n/* ---------- Реплики: голые чёрные плашки, как в игре ---------- */\n.tavo-bubble {\n  border-radius: 0;\n  border: none;\n}\n\n/* Персонаж — чёрная плашка, по ней ползёт луч фонарика */\n.tavo-character-bubble {\n  background-color: rgba(0, 0, 0, 0.93);\n  background-image: radial-gradient(circle closest-side, rgba(170, 245, 232, 0.2), rgba(110, 224, 212, 0.07) 55%, rgba(0, 0, 0, 0) 100%);\n  background-size: 200px 200px;\n  background-repeat: no-repeat;\n  background-position: -45% 15%;\n  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);\n  animation: nah-flashlight 12s ease-in-out infinite;\n}\n\n/* Пользователь — плашка варианта ответа */\n.tavo-user-bubble {\n  background-color: rgba(14, 21, 20, 0.95);\n  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);\n}\n\n.tavo-message-content {\n  line-height: 1.6;\n  letter-spacing: 0.01em;\n}\n\n.tavo-message-content::selection,\n.tavo-message-content *::selection {\n  background: #6fe0d4;\n  color: #000;\n}\n\n/* Пока идёт генерация — его реплики медленно дышат */\n:root:has(.tavo-composer-stop-icon) .tavo-character-bubble {\n  animation:\n    nah-flashlight 12s ease-in-out infinite,\n    nah-breathe 3.4s ease-in-out infinite;\n}\n\n.tavo-message-divider {\n  border: none;\n  height: 1px;\n  background: rgba(111, 224, 212, 0.2);\n}\n\n/* ---------- Имена и аватары ---------- */\n.tavo-speaker-name {\n  color: #6fe0d4;\n  font-weight: 500;\n  letter-spacing: 0.04em;\n  opacity: 0.8;\n}\n\n/* Аватары — фотокарточки осмотра в светлой рамке */\n.tavo-avatar {\n  border-radius: 0;\n  box-shadow: 0 0 0 3px #e8e4d8, 0 4px 12px rgba(0, 0, 0, 0.6);\n}\n\n/* Персонаж — ночной бирюзовый снимок, иногда со вспышкой */\n.tavo-character-avatar,\n.tavo-group-character-avatar {\n  filter: grayscale(1) sepia(1) hue-rotate(130deg) saturate(1.6) contrast(1.4) brightness(0.9);\n  animation: nah-photo-flash 9s linear infinite;\n}\n\n/* Вы — тёплый «домашний» снимок, как интерьеры днём */\n.tavo-user-avatar,\n.tavo-group-user-avatar {\n  filter: sepia(0.35) contrast(1.1) saturate(0.85);\n}\n\n/* ---------- Рассуждения, вложения, тулбар ---------- */\n.tavo-message-reasoning {\n  background: rgba(0, 0, 0, 0.6);\n  border-left: 2px solid rgba(111, 224, 212, 0.35);\n  padding-left: 8px;\n}\n\n.tavo-message-reasoning > summary {\n  color: #4fb5aa;\n}\n\n/* Вложения — как вставка-улика при осмотре */\n.tavo-message-attachments {\n  box-shadow: 0 0 0 4px #e8e4d8, 0 8px 20px rgba(0, 0, 0, 0.6);\n}\n\n.tavo-action-bar-button,\n.tavo-action-bar-button-group {\n  background-color: rgba(0, 0, 0, 0.85);\n  border-radius: 0;\n}\n\n/* ---------- Ромбики энергии над полем ввода ---------- */\n.tavo-composer {\n  padding-top: 22px;\n  background-image: url(\"theme/assets/energy-5.png\");\n  background-size: auto 13px;\n  background-repeat: no-repeat;\n  background-position: left 18px top 4px;\n}\n\n/* Пока персонаж генерирует — энергия тает */\n:root:has(.tavo-composer-stop-icon) .tavo-composer {\n  animation: nah-energy-drain 6s steps(1, end) infinite;\n}\n\n/* ---------- Поле ввода: синий экран старого телевизора ---------- */\n.tavo-composer-shell {\n  background-color: #1b33c8;\n  background-image: repeating-linear-gradient(\n    to bottom,\n    rgba(255, 255, 255, 0.06) 0,\n    rgba(255, 255, 255, 0.06) 1px,\n    rgba(0, 0, 0, 0) 1px,\n    rgba(0, 0, 0, 0) 3px\n  );\n  border: 6px solid #151515;\n  border-radius: 16px / 22px;\n  box-shadow:\n    0 0 0 1px #2e2e2e,\n    0 8px 18px rgba(0, 0, 0, 0.7),\n    inset 0 0 26px rgba(0, 0, 30, 0.65),\n    inset 0 0 2px rgba(255, 255, 255, 0.5);\n}\n\n/* Во время генерации экран заливает помехами */\n:root:has(.tavo-composer-stop-icon) .tavo-composer-shell {\n  background-image:\n    url(\"theme/assets/static.png\"),\n    repeating-linear-gradient(\n      to bottom,\n      rgba(255, 255, 255, 0.06) 0,\n      rgba(255, 255, 255, 0.06) 1px,\n      rgba(0, 0, 0, 0) 1px,\n      rgba(0, 0, 0, 0) 3px\n    );\n  background-size: 128px 128px, auto;\n  animation: nah-static 0.5s steps(1, end) infinite;\n}\n\n.tavo-composer-input {\n  color: #fff;\n  caret-color: #fff;\n}\n\n.tavo-composer-input::placeholder {\n  color: #a9b6ff;\n}\n\n.tavo-composer-send-icon,\n.tavo-composer-add-icon,\n.tavo-composer-voice-icon,\n.tavo-composer-stop-icon {\n  filter: brightness(0) invert(1);\n}\n\n/* ---------- Без движения для тех, кому надо ---------- */\n@media (prefers-reduced-motion: reduce) {\n  .tavo-character-bubble,\n  :root:has(.tavo-composer-stop-icon) .tavo-character-bubble,\n  .tavo-character-avatar,\n  .tavo-group-character-avatar,\n  :root:has(.tavo-composer-stop-icon) .tavo-composer,\n  :root:has(.tavo-composer-stop-icon) .tavo-composer-shell {\n    animation: none;\n  }\n}\n\n/* ---------- Версия с надписями (Visitor Check) ---------- */\n@keyframes nah-ticker {\n  0%   { background-position: 0 2px, 0 0, 0 0; }\n  20%  { background-position: calc(-0.2 * 371px) 2px, 0 0, 0 0; }\n  40%  { background-position: calc(-0.4 * 371px) 2px, 0 0, 0 0; }\n  60%  { background-position: calc(-0.6 * 371px) 2px, 0 0, 0 0; }\n  80%  { background-position: calc(-0.8 * 371px) 2px, 0 0, 0 0; }\n  100% { background-position: calc(-1 * 371px) 2px, 0 0, 0 0; }\n}\n\n.tavo-message-reasoning > summary::after {\n  content: \"  — examining the guest\";\n  opacity: 0.6;\n  font-style: italic;\n}\n\n/* Во время генерации по экрану бежит экстренное вещание */\n:root:has(.tavo-composer-stop-icon) .tavo-composer-shell {\n  background-image:\n    url(\"theme/assets/ticker.png\"),\n    url(\"theme/assets/static.png\"),\n    repeating-linear-gradient(\n      to bottom,\n      rgba(255, 255, 255, 0.06) 0,\n      rgba(255, 255, 255, 0.06) 1px,\n      rgba(0, 0, 0, 0) 1px,\n      rgba(0, 0, 0, 0) 3px\n    );\n  background-size: 371px 10px, 128px 128px, auto;\n  background-repeat: repeat-x, repeat, repeat;\n  animation: nah-ticker 9s linear infinite;\n}\n",
   "background": {
     "charAvatar": false,
-    "image": "theme/assets/door.png",
+    "image": "theme/assets/night-porch.png",
     "imageOpacity": 1,
-    "color": 4278455820
+    "color": 4278191108
   },
   "user_bubble": {
-    "color": 4069517512,
+    "color": 4061009172,
     "blur": 0,
-    "radius": 4,
+    "radius": 0,
     "alignment": "right"
   },
   "character_bubble": {
-    "color": 3942912014,
-    "blur": 6,
-    "radius": 4,
+    "color": 3942645760,
+    "blur": 0,
+    "radius": 0,
     "alignment": "left"
   },
   "user_bubble_font": {
@@ -29,21 +29,21 @@
       "fontSize": 16,
       "fontWeight": 400,
       "fontStyle": "normal",
-      "color": 4278591514
+      "color": 4293518554
     },
     "toneTextStyle": {
       "fontFamily": null,
       "fontSize": 16,
       "fontWeight": 400,
       "fontStyle": "italic",
-      "color": 4280179276
+      "color": 4288322194
     },
     "quoteTextStyle": {
       "fontFamily": null,
       "fontSize": 16,
-      "fontWeight": 600,
+      "fontWeight": 500,
       "fontStyle": "normal",
-      "color": 4278190080
+      "color": 4294967295
     },
     "toneHighlight": true,
     "toneDelimiters": [
@@ -67,21 +67,21 @@
       "fontSize": 16,
       "fontWeight": 400,
       "fontStyle": "normal",
-      "color": 4291819498
+      "color": 4285522132
     },
     "toneTextStyle": {
       "fontFamily": null,
       "fontSize": 16,
       "fontWeight": 400,
       "fontStyle": "italic",
-      "color": 4285519552
+      "color": 4282358930
     },
     "quoteTextStyle": {
       "fontFamily": null,
       "fontSize": 16,
-      "fontWeight": 600,
+      "fontWeight": 500,
       "fontStyle": "normal",
-      "color": 4294967295
+      "color": 4289263084
     },
     "toneHighlight": true,
     "toneDelimiters": [
@@ -100,45 +100,45 @@
     "quoteSymbol": "\"\""
   },
   "console": {
-    "color": 4060352526,
-    "blur": 6,
-    "radius": 18,
-    "sendColor": 4282376400,
+    "color": 4279972808,
+    "blur": 0,
+    "radius": 14,
+    "sendColor": 4294967295,
     "fontSize": 16,
     "fontWeight": 500,
-    "fontColor": 4291819498,
-    "placeholderColor": 4283404160
+    "fontColor": 4294967295,
+    "placeholderColor": 4289312511
   },
   "thinking": {
     "fontSize": 14,
     "fontWeight": 400,
-    "color": 4287621320,
-    "backgroundColor": 3859025934
+    "color": 4283413930,
+    "backgroundColor": 3858759680
   },
   "status_bar": {
     "fontSize": 13,
-    "fontWeight": 600,
-    "color": 4287621320,
-    "backgroundColor": 3859025934
+    "fontWeight": 500,
+    "color": 4285522132,
+    "backgroundColor": 3858759680
   },
   "user_avatar": {
     "avatar": true,
-    "radius": 4,
+    "radius": 0,
     "name": true
   },
   "character_avatar": {
     "avatar": true,
-    "radius": 4,
+    "radius": 0,
     "name": true
   },
   "group_user_avatar": {
     "avatar": true,
-    "radius": 4,
+    "radius": 0,
     "name": true
   },
   "group_character_avatar": {
     "avatar": true,
-    "radius": 4,
+    "radius": 0,
     "name": true
   }
 }
