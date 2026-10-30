@@ -1,9 +1,8 @@
 /* ============================================================
-   OPHANIM — библейски точный ангел
-   Чёрная пустота, мрамор и гравюра. Ответы персонажа — тёмный
-   мрамор с крылом-глазом в углу, ваши — лист в двойной рамке.
-   Пока персонаж отвечает, над полем ввода открываются глаза
-   и смотрят, а у аватара загорается нимб.
+   SERAPH — изящный ангел в темноте
+   Нимб со звездой и раскрытые крылья на фоне, тёмный мрамор
+   с золотой звездой в углу рамки. Пока персонаж отвечает, над
+   полем ввода опускаются перья, а у аватара загорается нимб.
    Шрифт Cormorant (SIL OFL 1.1) встроен в тему.
    Нужен Advanced Rendering.
    ============================================================ */
@@ -59,20 +58,20 @@
 
 /* ---------- Анимации ---------- */
 
-/* Глаза медленно плывут над полем ввода */
-@keyframes ophanim-watch {
-  0%   { background-position: 0 0; }
-  100% { background-position: -320px 0; }
+/* Перья медленно опускаются над полем ввода */
+@keyframes seraph-feathers {
+  0%   { background-position: 0 -120px, center top 10px; }
+  100% { background-position: 0 0, center top 10px; }
 }
 
 /* Нимб у аватара во время ответа */
-@keyframes ophanim-halo {
+@keyframes seraph-halo {
   0%, 100% { box-shadow: 0 0 0 2px rgba(201, 170, 110, 0.55), 0 0 10px 2px rgba(201, 170, 110, 0.25); }
   50%      { box-shadow: 0 0 0 2px rgba(201, 170, 110, 0.9), 0 0 18px 5px rgba(201, 170, 110, 0.45); }
 }
 
 /* Холодный свет медленно скользит по мрамору */
-@keyframes ophanim-light {
+@keyframes seraph-light {
   0%   { background-position: left 0 top 0, -60% 0, 0 0; }
   100% { background-position: left 0 top 0, 160% 0, 0 0; }
 }
@@ -102,7 +101,7 @@
 .tavo-character-bubble {
   background-color: #222226;
   background-image:
-    url("theme/assets/wing-corner.svg"),
+    url("theme/assets/star-corner.svg"),
     linear-gradient(105deg, rgba(255, 255, 255, 0) 40%, rgba(226, 222, 212, 0.07) 50%, rgba(255, 255, 255, 0) 60%),
     url("theme/assets/marble.png");
   background-size: min(120px, 45%) auto, 50% 100%, 320px 320px;
@@ -111,7 +110,7 @@
   border: 1px solid rgba(226, 222, 212, 0.18);
   box-shadow: 0 6px 22px rgba(0, 0, 0, 0.7);
   padding: 16px 18px 14px 22px;
-  animation: ophanim-light 14s ease-in-out infinite alternate;
+  animation: seraph-light 14s ease-in-out infinite alternate;
 }
 
 /* ---------- Вы: лист в двойной гравюрной рамке ---------- */
@@ -134,14 +133,13 @@
 }
 
 .tavo-speaker-name::before {
-  content: "";
-  display: inline-block;
-  width: 1.3em;
-  height: 0.76em;
-  margin-right: 0.4em;
-  vertical-align: -0.02em;
-  background: url("theme/assets/eye.svg") center / contain no-repeat;
-  opacity: 0.85;
+  content: "✦";
+  margin-right: 0.45em;
+  color: #c9aa6e;
+  font-size: 0.8em;
+  vertical-align: 0.1em;
+  background: none;
+  opacity: 0.9;
 }
 
 .tavo-avatar {
@@ -154,7 +152,7 @@
 :root:has(.tavo-composer-stop-icon) .tavo-character-avatar,
 :root:has(.tavo-composer-stop-icon) .tavo-group-character-avatar {
   filter: grayscale(0.4);
-  animation: ophanim-halo 2.6s ease-in-out infinite;
+  animation: seraph-halo 2.6s ease-in-out infinite;
 }
 
 /* ---------- Мысли, разделитель, вложения ---------- */
@@ -189,20 +187,22 @@
   border-radius: 0;
 }
 
-/* ---------- Поле ввода и глаза над ним ---------- */
+/* ---------- Поле ввода: тонкая золотая черта со звездой ---------- */
 .tavo-composer {
-  padding-top: 32px;
-  background-image: url("theme/assets/eyes-closed.png");
-  background-size: 320px 30px;
-  background-repeat: repeat-x;
-  background-position: 0 0;
-  animation: ophanim-watch 60s linear infinite;
+  padding-top: 22px;
+  background-image: url("theme/assets/divider.svg");
+  background-size: min(300px, 70%) 22px;
+  background-repeat: no-repeat;
+  background-position: center top;
 }
 
-/* Пока персонаж отвечает — глаза открыты и смотрят */
+/* Пока персонаж отвечает — над полем медленно опускаются перья */
 :root:has(.tavo-composer-stop-icon) .tavo-composer {
-  background-image: url("theme/assets/eyes-open.png");
-  animation-duration: 30s;
+  padding-top: 22px;
+  background-image: url("theme/assets/feathers.png"), url("theme/assets/divider.svg");
+  background-size: 320px 120px, min(300px, 70%) 22px;
+  background-repeat: repeat-x, no-repeat;
+  animation: seraph-feathers 9s linear infinite;
 }
 
 .tavo-composer-shell {
@@ -233,7 +233,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .tavo-character-bubble,
-  .tavo-composer,
   :root:has(.tavo-composer-stop-icon) .tavo-composer,
   :root:has(.tavo-composer-stop-icon) .tavo-character-avatar,
   :root:has(.tavo-composer-stop-icon) .tavo-group-character-avatar {

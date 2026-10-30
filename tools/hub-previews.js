@@ -102,20 +102,20 @@ const THEMES = [
     ],
   },
   {
-    dir: 'ophanim',
+    dir: 'seraph',
     head: 336,
-    bg: 'center -140px / 400px auto',
+    bg: 'center -40px / 400px auto',
     name: 'Seraphiel',
-    placeholder: 'Speak, and be seen…',
+    placeholder: 'Speak softly…',
     avatar: ['#e2ded4', '#222226'],
     markup: true,
-    title: `<img src="ASSETS/eye.svg" style="width:30px">
-      <span style="font:500 26px 'Cormorant SC',Georgia,serif;color:#e2ded4;letter-spacing:.3em">OPHANIM</span>
-      <img src="ASSETS/eye.svg" style="width:30px">`,
+    title: `<span style="font:500 15px Georgia,serif;color:#c9aa6e">✦</span>
+      <span style="font:500 26px 'Cormorant SC',Georgia,serif;color:#e2ded4;letter-spacing:.32em">SERAPH</span>
+      <span style="font:500 15px Georgia,serif;color:#c9aa6e">✦</span>`,
     lines: [
-      ['c', '*Every eye turns to you.* "Be not afraid."'],
-      ['u', 'That is what monsters say.'],
-      ['c', '"And yet you stayed."'],
+      ['c', '*Light settles on the floor like snow.* "Be not afraid."'],
+      ['u', 'Are you here to save me?'],
+      ['c', '"Only to stay with you."'],
     ],
   },
   {
