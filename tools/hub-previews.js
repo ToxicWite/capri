@@ -87,6 +87,21 @@ const THEMES = [
     ],
   },
   {
+    dir: 'falling-blossoms',
+    bg: 'center top / 360px auto',
+    name: 'Lin Mei',
+    placeholder: 'Write a few lines…',
+    avatar: ['#c8352b', '#f6e3d8'],
+    markup: true,
+    title: `<img src="SRC/title.png" style="height:30px">
+      <span style="font:italic 500 17px Lora,Georgia,serif;color:#8c2a20;letter-spacing:.08em">Falling Blossoms</span>`,
+    lines: [
+      ['c', '*She sets down the brush.* "The plum tree lost half its flowers to the rain last night."'],
+      ['u', 'Then let us count the ones that stayed.'],
+      ['c', '"Spoken like a poet." *a petal lands on the inkstone*'],
+    ],
+  },
+  {
     dir: 'ternovaya-noch',
     active: false,
     flat: true, // тема в плоском режиме: сообщения во всю ширину, между ними разделитель
@@ -181,7 +196,7 @@ function page(t, m, generating) {
     .tavo-composer-input{flex:1;font-size:13px;color:${rgba(con.placeholderColor)}}
     .ic{width:18px;height:18px}
   </style><style>${css}</style></head><body>
-    <div class="head">${t.title.replaceAll('ASSETS/', assets)}</div><div class="top">
+    <div class="head">${t.title.replaceAll('ASSETS/', assets).replaceAll('SRC/', assets.replace(/assets\/$/, 'src/'))}</div><div class="top">
     <div class="list">${rows}</div>
     <div class="tavo-composer"><div class="tavo-composer-shell">
       <svg class="ic tavo-composer-add-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="${rgba(con.fontColor)}" stroke-width="2"/></svg>
