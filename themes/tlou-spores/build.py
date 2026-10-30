@@ -144,23 +144,21 @@ def make_fungus_corner():
 
 
 def make_fireflies():
-    """Четыре кадра светлячков для полосы над полем ввода."""
+    """Два слоя светлячков (яркие и тусклые), тайлятся по горизонтали."""
     w, h = 720, 72
-    rng = random.Random(17)
-    flies = [(rng.uniform(30, w - 30), rng.uniform(26, h - 26)) for _ in range(7)]
-    for f in range(4):
+    for name, seed, n, alpha in [("fireflies-a.png", 17, 4, 255), ("fireflies-b.png", 23, 4, 150)]:
+        rng = random.Random(seed)
         img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
         glow = Image.new("RGBA", (w, h), (0, 0, 0, 0))
         d, gd = ImageDraw.Draw(img), ImageDraw.Draw(glow)
-        for i, (x, y) in enumerate(flies):
-            on = (i + f) % 3 != 0
-            x += math.sin(f * 1.6 + i) * 6
-            y += math.cos(f * 1.3 + i * 2) * 4
-            a = 255 if on else 60
-            gd.ellipse([x - 13, y - 13, x + 13, y + 13], fill=FIREFLY + (a // 2,))
-            d.ellipse([x - 3.4, y - 3.4, x + 3.4, y + 3.4], fill=FIREFLY + (a,))
+        for i in range(n):
+            # равномерно по ширине, чтобы при прокрутке не было «дыр»
+            x = (i + rng.uniform(0.25, 0.75)) * w / n
+            y = rng.uniform(26, h - 26)
+            gd.ellipse([x - 13, y - 13, x + 13, y + 13], fill=FIREFLY + (alpha // 2,))
+            d.ellipse([x - 3.4, y - 3.4, x + 3.4, y + 3.4], fill=FIREFLY + (alpha,))
         glow = glow.filter(ImageFilter.GaussianBlur(6))
-        Image.alpha_composite(glow, img).resize((w // 2, h // 2), Image.LANCZOS).save(ASSETS / f"fireflies-{f}.png", optimize=True)
+        Image.alpha_composite(glow, img).resize((w // 2, h // 2), Image.LANCZOS).save(ASSETS / name, optimize=True)
 
 
 def font(color, tone, quote):

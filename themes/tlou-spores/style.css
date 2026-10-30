@@ -18,12 +18,13 @@
   50%      { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.85), 0 0 26px rgba(255, 255, 255, 0.45); }
 }
 
+/* Плавный дрейф двух слоёв светлячков навстречу друг другу (360px = ширина тайла) */
 @keyframes tlou-fireflies {
-  0%   { background-image: url("theme/assets/fireflies-0.png"); }
-  25%  { background-image: url("theme/assets/fireflies-1.png"); }
-  50%  { background-image: url("theme/assets/fireflies-2.png"); }
-  75%  { background-image: url("theme/assets/fireflies-3.png"); }
-  100% { background-image: url("theme/assets/fireflies-0.png"); }
+  0%   { background-position: 0 0, 0 2px; }
+  25%  { background-position: -90px 3px, 90px -1px; }
+  50%  { background-position: -180px 0, 180px 2px; }
+  75%  { background-position: -270px -3px, 270px 4px; }
+  100% { background-position: -360px 0, 360px 2px; }
 }
 
 @keyframes tlou-filter {
@@ -149,11 +150,13 @@
 /* ---------- Светлячки над полем ввода: Look for the light ---------- */
 .tavo-composer {
   padding-top: 24px;
-  background-image: url("theme/assets/fireflies-0.png");
-  background-size: auto 36px;
-  background-repeat: no-repeat;
-  background-position: center top;
-  animation: tlou-fireflies 2.6s steps(1, end) infinite;
+  background-image:
+    url("theme/assets/fireflies-a.png"),
+    url("theme/assets/fireflies-b.png");
+  background-size: 360px 36px, 360px 36px;
+  background-repeat: repeat-x, repeat-x;
+  background-position: 0 0, 0 2px;
+  animation: tlou-fireflies 48s linear infinite;
 }
 
 /* ---------- Поле ввода: стекло противогаза ---------- */
