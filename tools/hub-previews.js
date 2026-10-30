@@ -70,6 +70,22 @@ const THEMES = [
     ],
   },
   {
+    dir: 'invisible-cities',
+    head: 314, // у этой темы пузыри выше из-за названий городов
+    bg: 'center top / 380px auto',
+    name: 'Marco Polo',
+    you: 'Kublai Khan',
+    placeholder: 'Ask about another city…',
+    avatar: ['#d4af6a', '#121a3a'],
+    title: `<span style="font:600 23px Cinzel,Georgia,serif;color:#e6d3a3;letter-spacing:.2em;
+      text-shadow:0 0 14px rgba(255,214,140,.35)">INVISIBLE CITIES</span>`,
+    lines: [
+      ['c', '"In Valdrada, Sire, every gesture is repeated in the lake."'],
+      ['u', 'And does this city exist, Marco?'],
+      ['c', '"Each city, Sire, is a little of Venice."'],
+    ],
+  },
+  {
     dir: 'ternovaya-noch',
     active: false,
     flat: true, // тема в плоском режиме: сообщения во всю ширину, между ними разделитель
@@ -144,7 +160,7 @@ function page(t, m, generating) {
     html,body{margin:0}
     body{width:${W}px;height:${H}px;overflow:hidden;display:flex;flex-direction:column;
       background:${rgba(m.background.color)} url("${bg}") ${t.bg} no-repeat;font-family:Inter,"Roboto",sans-serif}
-    .head{height:322px;box-sizing:border-box;display:flex;align-items:flex-end;justify-content:center;
+    .head{height:${t.head || 322}px;box-sizing:border-box;display:flex;align-items:flex-end;justify-content:center;
       gap:10px;padding-bottom:4px}
     .top{display:flex;flex-direction:column}
     .list{flex:1;padding:6px 12px 0;display:flex;flex-direction:column;gap:6px}
