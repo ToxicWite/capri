@@ -54,6 +54,23 @@ const THEMES = [
       ['c', '*kills the flashlight* "Stay low. Not a sound."'],
     ],
   },
+  {
+    dir: 'ternovaya-noch',
+    active: false,
+    flat: true, // тема в плоском режиме: сообщения во всю ширину, между ними разделитель
+    bg: 'center -20px / 360px auto',
+    name: 'Ноэль',
+    you: 'Ты',
+    placeholder: 'Напиши что-нибудь…',
+    avatar: ['#c3cad6', '#1a2238'],
+    title: `<span style="font:500 21px Literata,Georgia,serif;color:#c3cad6;letter-spacing:.14em;
+      text-shadow:0 0 12px rgba(159,178,214,.45)">✦ Терновая ночь ✦</span>`,
+    lines: [
+      ['c', '*Складывает крылья.* «Тоже не спится?»'],
+      ['u', '*Сажусь рядом.* «Звёзды сегодня колючие.»'],
+      ['c', '«Это шипы. Ночь умеет защищаться.»'],
+    ],
+  },
 ]
 
 const rgba = (n) => {
@@ -73,7 +90,7 @@ const avatarSvg = ([fg, bg]) =>
 function richText(text, font) {
   const tone = font.toneTextStyle
   const quote = font.quoteTextStyle
-  return text.replace(/(\*[^*]+\*)|("[^"]+")/g, (_, act, q) =>
+  return text.replace(/(\*[^*]+\*)|("[^"]+"|«[^»]+»)/g, (_, act, q) =>
     act
       ? `<span style="color:${rgba(tone.color)};font-style:${tone.fontStyle}">${act}</span>`
       : `<span style="color:${rgba(quote.color)};font-weight:${quote.fontWeight}">${q}</span>`)
@@ -87,15 +104,25 @@ function page(t, m, generating) {
   const uf = m.user_bubble_font
   const ava = avatarSvg(t.avatar)
   const userAva = avatarSvg(['#9a9a92', '#2a2a28'])
-  const rows = t.lines.map(([who, text]) => {
-    const c = who === 'c'
-    return `<div class="row ${c ? '' : 'u'}">
-      <img class="tavo-avatar ${c ? 'tavo-character-avatar' : 'tavo-user-avatar'}" src="${c ? ava : userAva}">
-      <div class="col"><div class="tavo-speaker-name">${c ? t.name : 'You'}</div>
-        <div class="tavo-bubble ${c ? 'tavo-character-bubble' : 'tavo-user-bubble'}">
+  const radius = (r) => (r >= 50 ? '50%' : `${r}px`)
+  const bubble = (c, text) => `<div class="tavo-bubble ${c ? 'tavo-character-bubble' : 'tavo-user-bubble'}">
           <div class="tavo-bubble-content ${c ? 'tavo-character-bubble-content' : 'tavo-user-bubble-content'}">
             <div class="tavo-message-content" style="color:${rgba((c ? cf : uf).textStyle.color)}">${richText(text, c ? cf : uf)}</div>
-          </div></div></div></div>`
+          </div></div>`
+  const avatarImg = (c) => `<img class="tavo-avatar ${c ? 'tavo-character-avatar' : 'tavo-user-avatar'}"
+      style="border-radius:${radius((c ? m.character_avatar : m.user_avatar).radius)}" src="${c ? ava : userAva}">`
+  const rows = t.flat
+    ? t.lines.map(([who, text]) => {
+        const c = who === 'c'
+        return `<div class="flat"><div class="flat-head">${avatarImg(c)}
+          <div class="tavo-speaker-name">${c ? t.name : t.you || 'You'}</div></div>${bubble(c, text)}</div>`
+      }).join('<div class="tavo-message-divider"></div>')
+    : t.lines.map(([who, text]) => {
+    const c = who === 'c'
+    return `<div class="row ${c ? '' : 'u'}">
+      ${avatarImg(c)}
+      <div class="col"><div class="tavo-speaker-name">${c ? t.name : t.you || 'You'}</div>
+        ${bubble(c, text)}</div></div>`
   }).join('')
   const con = m.console
   return `<!doctype html><html><head><meta charset="utf-8"><style>
@@ -110,6 +137,10 @@ function page(t, m, generating) {
     img.tavo-avatar{width:30px;height:30px;flex:none}
     .col{display:flex;flex-direction:column;gap:3px;max-width:82%}.u .col{align-items:flex-end}
     .tavo-speaker-name{font-size:10px}
+    .flat{display:flex;flex-direction:column;gap:4px}
+    .flat-head{display:flex;align-items:center;gap:7px}.flat img.tavo-avatar{width:24px;height:24px}
+    .flat .tavo-bubble{background-color:${rgba(m.character_bubble.color)};border-radius:${m.character_bubble.radius}px}
+    .flat .tavo-user-bubble{background-color:${rgba(m.user_bubble.color)};border-radius:${m.user_bubble.radius}px}
     .tavo-bubble{padding:7px 10px}
     .tavo-message-content{font-size:13px;line-height:1.45}
     .tavo-composer{padding:6px 10px 6px}
@@ -122,7 +153,7 @@ function page(t, m, generating) {
     <div class="list">${rows}</div>
     <div class="tavo-composer"><div class="tavo-composer-shell">
       <svg class="ic tavo-composer-add-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="${rgba(con.fontColor)}" stroke-width="2"/></svg>
-      <div class="tavo-composer-input">Say something…</div>
+      <div class="tavo-composer-input">${t.placeholder || 'Say something…'}</div>
       ${generating
         ? `<svg class="ic tavo-composer-stop-icon" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2" fill="${rgba(con.sendColor)}"/></svg>`
         : `<svg class="ic tavo-composer-send-icon" viewBox="0 0 24 24"><path d="M4 12l16-8-5 16-3-6z" fill="${rgba(con.sendColor)}"/></svg>`}

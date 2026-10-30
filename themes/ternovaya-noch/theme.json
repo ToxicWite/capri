@@ -1,0 +1,144 @@
+{
+  "spec": "tavo_theme_v1",
+  "name": "Терновая ночь",
+  "display_mode": "message",
+  "visual_novel_bubble_height_ratio": 0.6,
+  "bubble_display_type": "flat",
+  "custom_css": "/* ✦ Терновая ночь ✦ — тема для Tavo (нужен Advanced Rendering) */\n\n@font-face {\n  font-family: \"Literata\";\n  font-style: normal;\n  font-weight: 400 600;\n  font-display: swap;\n  src: url(\"theme/assets/literata-cyrillic.woff2\") format(\"woff2\");\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n@font-face {\n  font-family: \"Literata\";\n  font-style: normal;\n  font-weight: 400 600;\n  font-display: swap;\n  src: url(\"theme/assets/literata-latin.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n\n@keyframes thorn-twinkle {\n  0%, 100% { opacity: 0.45; }\n  50% { opacity: 1; }\n}\n\n/* ── текст ── */\n.tavo-bubble-content {\n  font-family: \"Literata\", \"Noto Serif\", Georgia, serif;\n  line-height: 1.78;\n  letter-spacing: 0.005em;\n}\n\n.tavo-message-content ::selection {\n  background: rgba(108, 127, 166, 0.45);\n  color: #f2f5fb;\n}\n\n/* ── сообщения: тихие страницы на фоне неба ── */\n.tavo-bubble {\n  border: 1px solid rgba(142, 152, 168, 0.12);\n  box-shadow: inset 0 0 36px rgba(3, 6, 15, 0.35);\n}\n\n.tavo-character-bubble {\n  border-left: 2px solid rgba(195, 202, 214, 0.32);\n}\n\n.tavo-user-bubble {\n  border-left: 2px dashed rgba(142, 152, 168, 0.28);\n}\n\n/* разделитель: засохшая лоза с глазом */\n.tavo-message-divider {\n  height: 30px;\n  border: 0;\n  background: url(\"theme/assets/divider.svg\") center / min(320px, 72%) auto no-repeat;\n  opacity: 0.85;\n}\n\n/* ── имена и аватары ── */\n.tavo-speaker-name {\n  font-family: \"Literata\", Georgia, serif;\n  letter-spacing: 0.12em;\n  color: #aab3c2;\n}\n\n.tavo-speaker-name::before {\n  content: \"✦ \";\n  color: #c3cad6;\n  animation: thorn-twinkle 4.5s ease-in-out infinite;\n}\n\n.tavo-avatar {\n  box-shadow: 0 0 0 1.5px rgba(195, 202, 214, 0.5), 0 0 14px rgba(159, 178, 214, 0.22);\n}\n\n/* ── размышления модели ── */\n.tavo-message-reasoning {\n  background: rgba(8, 14, 30, 0.6);\n  border: 1px dashed rgba(142, 152, 168, 0.35);\n  border-radius: 12px;\n  padding: 6px 12px;\n  color: #8e98a8;\n  font-size: 0.9em;\n}\n\n.tavo-message-reasoning > summary {\n  color: #aab3c2;\n  letter-spacing: 0.06em;\n  opacity: 0.85;\n}\n\n/* спойлеры <details> внутри ответов (архив отношений и т.п.) */\n.tavo-message-content details {\n  margin: 8px 0;\n  padding: 4px 12px;\n  background: rgba(8, 14, 30, 0.45);\n  border: 1px solid rgba(142, 152, 168, 0.25);\n  border-radius: 10px;\n  font-size: 0.88em;\n}\n\n.tavo-message-content details > summary {\n  color: #aab3c2;\n  cursor: pointer;\n}\n\n.tavo-message-content hr {\n  border: 0;\n  height: 30px;\n  background: url(\"theme/assets/divider.svg\") center / min(260px, 60%) auto no-repeat;\n  opacity: 0.7;\n}\n\n/* ── кнопки под сообщением ── */\n.tavo-action-bar-button {\n  opacity: 0.7;\n}\n\n/* ── поле ввода ── */\n.tavo-composer-shell {\n  background: linear-gradient(180deg, rgba(14, 22, 44, 0.88), rgba(8, 13, 28, 0.92));\n  border: 1px solid rgba(195, 202, 214, 0.22);\n  border-radius: 22px;\n  box-shadow: 0 -4px 24px rgba(3, 6, 15, 0.55), inset 0 1px 0 rgba(195, 202, 214, 0.08);\n  backdrop-filter: blur(14px);\n  -webkit-backdrop-filter: blur(14px);\n}\n\n.tavo-composer-input {\n  color: #e6ebf3;\n  caret-color: #c3cad6;\n  font-family: \"Literata\", Georgia, serif;\n}\n\n.tavo-composer-send-icon,\n.tavo-composer-add-icon,\n.tavo-composer-voice-icon,\n.tavo-composer-stop-icon {\n  filter: grayscale(1) brightness(1.5);\n  opacity: 0.85;\n}\n",
+  "background": {
+    "charAvatar": false,
+    "image": "theme/assets/night.jpg",
+    "imageOpacity": 1,
+    "color": 4278520344
+  },
+  "user_bubble": {
+    "color": 2148604467,
+    "blur": 0,
+    "radius": 14,
+    "alignment": "left"
+  },
+  "character_bubble": {
+    "color": 1795822118,
+    "blur": 0,
+    "radius": 14,
+    "alignment": "left"
+  },
+  "user_bubble_font": {
+    "textStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "normal",
+      "color": 4290955992
+    },
+    "toneTextStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "italic",
+      "color": 4287469739
+    },
+    "quoteTextStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 500,
+      "fontStyle": "normal",
+      "color": 4293323763
+    },
+    "toneHighlight": true,
+    "quoteHighlight": true,
+    "toneDelimiters": [
+      "**",
+      "()",
+      "（）"
+    ],
+    "quoteDelimiters": [
+      "“”",
+      "«»",
+      "„“",
+      "\"\""
+    ],
+    "toneSymbol": "none",
+    "quoteSymbol": ""
+  },
+  "character_bubble_font": {
+    "textStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "normal",
+      "color": 4292731884
+    },
+    "toneTextStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 400,
+      "fontStyle": "italic",
+      "color": 4288325306
+    },
+    "quoteTextStyle": {
+      "fontFamily": null,
+      "fontSize": 16,
+      "fontWeight": 500,
+      "fontStyle": "normal",
+      "color": 4294112763
+    },
+    "toneHighlight": true,
+    "quoteHighlight": true,
+    "toneDelimiters": [
+      "**",
+      "()",
+      "（）"
+    ],
+    "quoteDelimiters": [
+      "“”",
+      "«»",
+      "„“",
+      "\"\""
+    ],
+    "toneSymbol": "none",
+    "quoteSymbol": ""
+  },
+  "user_avatar": {
+    "avatar": true,
+    "name": true,
+    "radius": 100
+  },
+  "character_avatar": {
+    "avatar": true,
+    "name": true,
+    "radius": 100
+  },
+  "group_user_avatar": {
+    "avatar": true,
+    "name": true,
+    "radius": 100
+  },
+  "group_character_avatar": {
+    "avatar": true,
+    "name": true,
+    "radius": 100
+  },
+  "thinking": {
+    "fontSize": 13,
+    "fontWeight": 400,
+    "color": 4287535272,
+    "backgroundColor": 2987004454
+  },
+  "status_bar": {
+    "fontSize": 13,
+    "fontWeight": 500,
+    "color": 4289377218,
+    "backgroundColor": 3205108262
+  },
+  "console": {
+    "color": 3507163942,
+    "blur": 20,
+    "radius": 22,
+    "sendColor": 4291021526,
+    "fontSize": 16,
+    "fontWeight": 400,
+    "fontColor": 4293323763,
+    "placeholderColor": 4285232519
+  }
+}
