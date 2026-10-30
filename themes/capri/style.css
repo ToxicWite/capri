@@ -57,7 +57,7 @@
   background-image:
     url("theme/assets/teeth.png"),
     url("theme/assets/static-black.png");
-  background-size: 90px 15px, 256px 256px;
+  background-size: min(90px, 50%) auto, 256px 256px;
   background-repeat: no-repeat, repeat;
   background-position: right 12px bottom 4px, 0 0;
   border: 1px solid rgba(124, 58, 255, 0.7);
