@@ -1,0 +1,196 @@
+/* ============================================================
+   NOT A HUMAN — тема для Tavo
+   Тёмная дверь, ядовитый бирюзовый, полутоновый растр.
+   По ответам персонажа ползёт фонарик, пока идёт генерация —
+   все его сообщения «дышат», поле ввода — старый CRT-телевизор.
+   Нужен Advanced Rendering.
+   ============================================================ */
+
+/* ---------- Анимации ---------- */
+@keyframes nah-flashlight {
+  0%   { background-position: -40% 10%, 0 0; }
+  30%  { background-position: 55% 95%, 0 0; }
+  55%  { background-position: 130% 25%, 0 0; }
+  80%  { background-position: 25% 60%, 0 0; }
+  100% { background-position: -40% 10%, 0 0; }
+}
+
+@keyframes nah-breathe {
+  0%, 100% { transform: scale(1); }
+  45%      { transform: scale(1.018, 1.03); }
+}
+
+@keyframes nah-photo-flash {
+  0%, 94%, 100% { filter: grayscale(1) sepia(1) hue-rotate(115deg) saturate(2.2) contrast(1.25); }
+  95% { filter: grayscale(1) brightness(2.6) contrast(0.7); }
+  97% { filter: grayscale(1) sepia(1) hue-rotate(115deg) saturate(2.2) contrast(1.25) brightness(1.4); }
+}
+
+@keyframes nah-crt-flicker {
+  0%, 96%, 100% { opacity: 1; }
+  97% { opacity: 0.86; }
+  98% { opacity: 1; }
+  99% { opacity: 0.9; }
+}
+
+@keyframes nah-on-air {
+  0%, 49%   { opacity: 1; filter: drop-shadow(0 0 6px #ff3b30); }
+  50%, 100% { opacity: 0.35; filter: none; }
+}
+
+/* ---------- Пузыри: кадры-улики ---------- */
+.tavo-bubble {
+  border-radius: 3px;
+}
+
+/* Персонаж — тёмный кадр в светящейся бирюзовой рамке, его осматривают фонариком */
+.tavo-character-bubble {
+  background-color: rgba(4, 16, 14, 0.94);
+  background-image:
+    radial-gradient(circle closest-side, rgba(190, 255, 236, 0.32), rgba(120, 230, 205, 0.12) 55%, rgba(0, 0, 0, 0) 100%),
+    url("theme/assets/halftone-dark.png");
+  background-size: 190px 190px, 128px 128px;
+  background-repeat: no-repeat, repeat;
+  background-position: -40% 10%, 0 0;
+  border: 2px solid #3fe0d0;
+  box-shadow:
+    0 0 10px rgba(63, 224, 208, 0.45),
+    inset 0 0 28px rgba(0, 0, 0, 0.85);
+  animation: nah-flashlight 11s ease-in-out infinite;
+}
+
+/* Пользователь — светлая мятная «фотография» из коллажа */
+.tavo-user-bubble {
+  background-color: #8fe8c8;
+  background-image: url("theme/assets/halftone-mint.png");
+  background-size: 128px 128px;
+  border: 2px solid #04100e;
+  box-shadow: 0 0 0 1px rgba(143, 232, 200, 0.6), 4px 4px 0 rgba(4, 16, 14, 0.9);
+}
+
+.tavo-message-content {
+  line-height: 1.7;
+}
+
+.tavo-message-content::selection,
+.tavo-message-content *::selection {
+  background: #3fe0d0;
+  color: #04100e;
+}
+
+/* Пока идёт генерация — сообщения персонажа медленно дышат */
+:root:has(.tavo-composer-stop-icon) .tavo-character-bubble {
+  animation:
+    nah-flashlight 11s ease-in-out infinite,
+    nah-breathe 3.4s ease-in-out infinite;
+}
+
+.tavo-message-divider {
+  border: none;
+  height: 1px;
+  background: #3fe0d0;
+  box-shadow: 0 0 6px #3fe0d0;
+  opacity: 0.5;
+}
+
+/* ---------- Имена и аватары ---------- */
+.tavo-speaker-name {
+  font-family: ui-monospace, "Courier New", monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #8fe8c8;
+  text-shadow: 0 0 6px rgba(63, 224, 208, 0.6);
+}
+
+/* Все лица — постеризованные бирюзовые фото, как в досье */
+.tavo-avatar {
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px #3fe0d0, 0 0 10px rgba(63, 224, 208, 0.5);
+  filter: grayscale(1) sepia(1) hue-rotate(115deg) saturate(2.2) contrast(1.25);
+}
+
+/* Персонажа время от времени фотографируют со вспышкой */
+.tavo-character-avatar,
+.tavo-group-character-avatar {
+  animation: nah-photo-flash 9s linear infinite;
+}
+
+/* ---------- Рассуждения, вложения, тулбар ---------- */
+.tavo-message-reasoning {
+  border-left: 2px dashed #3fe0d0;
+  background: rgba(63, 224, 208, 0.05);
+  padding-left: 8px;
+}
+
+.tavo-message-reasoning > summary {
+  font-family: ui-monospace, "Courier New", monospace;
+  color: #3fe0d0;
+  letter-spacing: 0.06em;
+}
+
+.tavo-message-attachments {
+  filter: drop-shadow(0 0 6px rgba(63, 224, 208, 0.5));
+}
+
+.tavo-action-bar-button,
+.tavo-action-bar-button-group {
+  background-color: rgba(4, 16, 14, 0.8);
+  border-radius: 3px;
+}
+
+.tavo-action-bar-button-group {
+  box-shadow: 0 0 0 1px rgba(63, 224, 208, 0.4);
+}
+
+/* ---------- Поле ввода: старый CRT-телевизор ---------- */
+.tavo-composer-shell {
+  background-color: rgba(4, 16, 14, 0.95);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(63, 224, 208, 0.07) 0,
+    rgba(63, 224, 208, 0.07) 1px,
+    rgba(0, 0, 0, 0) 1px,
+    rgba(0, 0, 0, 0) 3px
+  );
+  border: 3px solid #0b2a25;
+  border-radius: 22px / 30px;
+  box-shadow:
+    0 0 0 1px #3fe0d0,
+    0 0 14px rgba(63, 224, 208, 0.35),
+    inset 0 0 22px rgba(63, 224, 208, 0.22);
+  animation: nah-crt-flicker 7s steps(1, end) infinite;
+}
+
+.tavo-composer-input {
+  color: #cff7ea;
+  caret-color: #3fe0d0;
+  text-shadow: 0 0 6px rgba(63, 224, 208, 0.55);
+}
+
+.tavo-composer-input::placeholder {
+  color: #4f8f80;
+}
+
+.tavo-composer-send-icon,
+.tavo-composer-add-icon,
+.tavo-composer-voice-icon {
+  filter: drop-shadow(0 0 4px #3fe0d0);
+}
+
+/* «Стоп» мигает красной лампой эфира */
+.tavo-composer-stop-icon {
+  animation: nah-on-air 1s steps(1, end) infinite;
+}
+
+/* ---------- Без движения для тех, кому надо ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .tavo-character-bubble,
+  :root:has(.tavo-composer-stop-icon) .tavo-character-bubble,
+  .tavo-character-avatar,
+  .tavo-group-character-avatar,
+  .tavo-composer-shell,
+  .tavo-composer-stop-icon {
+    animation: none;
+  }
+}

@@ -1,0 +1,57 @@
+/* ---------- Версия с надписями (Visitor Check) ---------- */
+@keyframes nah-verdict {
+  0%   { content: " [HUMAN?]"; color: #8fe8c8; }
+  40%  { content: " [VISITOR?]"; color: #ff6b5e; }
+  70%  { content: " [???]"; color: #cff7ea; }
+  100% { content: " [HUMAN?]"; color: #8fe8c8; }
+}
+
+/* Вердикт рядом с каждым именем всё время меняется */
+.tavo-speaker-name::after {
+  content: " [HUMAN?]";
+  font-size: 0.85em;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+  animation: nah-verdict 7s steps(1, end) infinite;
+}
+
+.tavo-message-reasoning > summary::after {
+  content: "  // INSPECTING";
+  color: #ff6b5e;
+  opacity: 0.8;
+  font-size: 0.85em;
+}
+
+/* Номер канала в углу «экрана», во время генерации — лампа ON AIR */
+.tavo-composer-shell {
+  background-image:
+    url("theme/assets/ch03.png"),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(63, 224, 208, 0.07) 0,
+      rgba(63, 224, 208, 0.07) 1px,
+      rgba(0, 0, 0, 0) 1px,
+      rgba(0, 0, 0, 0) 3px
+    );
+  background-size: auto 11px, auto;
+  background-repeat: no-repeat, repeat;
+  background-position: right 16px top 4px, 0 0;
+}
+
+:root:has(.tavo-composer-stop-icon) .tavo-composer-shell {
+  background-image:
+    url("theme/assets/on-air.png"),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(63, 224, 208, 0.07) 0,
+      rgba(63, 224, 208, 0.07) 1px,
+      rgba(0, 0, 0, 0) 1px,
+      rgba(0, 0, 0, 0) 3px
+    );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tavo-speaker-name::after {
+    animation: none;
+  }
+}
