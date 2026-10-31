@@ -18,6 +18,7 @@
 - `dist/*.thm` — готовые файлы для импорта в Tavo.
 - `tools/hub-previews.js` — обложки 9:16 для Hub (`preview-hub.png`, `preview-hub-active.png`): `node tools/hub-previews.js`.
 - `docs/tavo-themes.md` — выжимка документации Tavo по темам (формат `.thm`, поля, публичные селекторы).
+- `docs/handoff.md` — текст для передачи контекста другому чату Claude.
 - `themes/ternovaya-noch/` — её собственная тема, распакована только ради обложки; не менять её файлы.
 
 ## Что проверено на её телефоне
