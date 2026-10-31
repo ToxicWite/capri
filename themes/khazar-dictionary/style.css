@@ -88,15 +88,19 @@
   border-radius: 2px;
 }
 
-/* По умолчанию (и пока ответ пишется) — статья «Атех» из Красной книги */
+/* По умолчанию (и пока ответ пишется) — статья «Атех» из Красной книги.
+   Первый слой фона — вкладка-указатель с буквой на правом краю, как в старых словарях */
 .tavo-character-bubble {
   --book: #B5574C;
   --book-rgb: 181, 87, 76;
   --entry: "Ateh  ·  The Red Book";
-  --tab: "A";
-  position: relative;
   background-color: rgba(23, 21, 19, 0.93);
-  background-image: linear-gradient(to bottom, rgba(var(--book-rgb), 0.1), rgba(var(--book-rgb), 0) 140px);
+  background-image:
+    url("theme/assets/tab-red-a.png"),
+    linear-gradient(to bottom, rgba(var(--book-rgb), 0.1), rgba(var(--book-rgb), 0) 140px);
+  background-size: 18px 30px, auto;
+  background-repeat: no-repeat, no-repeat;
+  background-position: right 0 top 12px, 0 0;
   border: 1px solid rgba(201, 174, 116, 0.12);
   border-left: 3px solid rgba(var(--book-rgb), 0.75);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55), inset 0 0 30px rgba(0, 0, 0, 0.3);
@@ -114,24 +118,6 @@
   font-size: 0.74em;
   letter-spacing: 0.1em;
   color: var(--book);
-}
-
-/* Вкладка-указатель на краю страницы, как в старых словарях */
-.tavo-character-bubble-content::after {
-  content: var(--tab);
-  position: absolute;
-  top: 12px;
-  right: 0;
-  width: 18px;
-  height: 30px;
-  border-radius: 2px 0 0 2px;
-  background: linear-gradient(to right, rgba(var(--book-rgb), 0.7), rgba(var(--book-rgb), 0.95));
-  font-family: "Alegreya SC", "Alegreya", Georgia, serif;
-  font-size: 13px;
-  line-height: 30px;
-  text-align: center;
-  color: #161412;
-  pointer-events: none;
 }
 
 /* ---------- Вы: заметки читателя на полях ---------- */

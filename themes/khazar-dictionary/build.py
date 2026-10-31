@@ -46,7 +46,10 @@ ENTRIES = [
     ["Ateh", "Kagan", "Khazar Polemic", "Cohen, Samuel"],
 ]
 
-GLYPHS = "ABCDEFGHIKLMNOPRSTVXZabdefghiklmnoprstuvzАБВГДЖЗИКЛМНОПРСТУФХЦЧШЩЭЮЯбвгджзлмнпфцчшщъыэюя"
+# Подложка пузыря: лёгкий отсвет цвета книги сверху
+TINT = "linear-gradient(to bottom, rgba(var(--book-rgb), 0.1), rgba(var(--book-rgb), 0) 140px)"
+
+GLYPHS ="ABCDEFGHIKLMNOPRSTVXZabdefghiklmnoprstuvzАБВГДЖЗИКЛМНОПРСТУФХЦЧШЩЭЮЯбвгджзлмнпфцчшщъыэюя"
 
 
 def argb(hex_rgb, alpha=0xFF):
@@ -197,6 +200,28 @@ def make_letters_tile():
     img.save(ASSETS / "letters.png", optimize=True)
 
 
+def tab_name(b, letter):
+    return f"tab-{('red', 'green', 'yellow')[b]}-{letter.lower()}.png"
+
+
+def make_tabs():
+    """Вкладки-указатели с буквой для каждой книги: 18×30 CSS-пикселей, нарисованы в 3x."""
+    s = 3
+    w, h = 18 * s, 30 * s
+    f = ImageFont.truetype(str(FONTS / "AlegreyaSC-Medium.ttf"), 14 * s)
+    for b, book in enumerate(BOOKS):
+        rgb = tuple(int(book["color"][i:i + 2], 16) for i in (1, 3, 5))
+        for letter in sorted({e[0] for e in ENTRIES[b]}):
+            grad = np.linspace(0.72, 0.95, w)[None, :, None] * np.array(rgb)[None, None, :]
+            img = Image.fromarray(np.repeat(grad, h, axis=0).astype(np.uint8)).convert("RGBA")
+            mask = Image.new("L", (w, h), 0)
+            ImageDraw.Draw(mask).rounded_rectangle([0, 0, w + 3 * s, h - 1], radius=2 * s, fill=255)
+            img.putalpha(mask)
+            d = ImageDraw.Draw(img)
+            d.text((w / 2, h / 2), letter, font=f, fill=(22, 20, 18, 255), anchor="mm")
+            img.save(ASSETS / tab_name(b, letter), optimize=True)
+
+
 def make_svgs():
     # разделитель: три ромба трёх книг
     colors = [b["color"] for b in BOOKS]
@@ -225,7 +250,8 @@ def book_rules():
             book = BOOKS[b]
             rules.append(
                 f'{base}{paras}{flag} {{ --book: {book["color"]}; --book-rgb: {book["rgb"]}; '
-                f'--entry: "{entry}  ·  {book["name"]}"; --tab: "{entry[0]}"; }}')
+                f'--entry: "{entry}  ·  {book["name"]}"; '
+                f'background-image: url("theme/assets/{tab_name(b, entry[0])}"), {TINT}; }}')
     return "\n".join(rules)
 
 
@@ -274,6 +300,7 @@ def main():
     DIST.mkdir(exist_ok=True)
     make_background()
     make_letters_tile()
+    make_tabs()
     make_svgs()
     css = (HERE / "style.css").read_text(encoding="utf-8").replace("BOOK_RULES", book_rules())
     m = manifest(css)
