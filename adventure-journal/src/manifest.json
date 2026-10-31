@@ -16,7 +16,7 @@
     }
   },
   "cover": "cover.png",
-  "minAppVersion": "1.0.0",
+  "minAppVersion": "1.3.0",
   "permissions": ["generate", "input", "message", "variable", "file"],
   "contributes": {
     "inputActions": [
