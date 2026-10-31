@@ -41,6 +41,15 @@
 - Обложки одной темы: `node tools/hub-previews.js <папка-темы>` — без аргумента перерисует все.
 - Иногда она даёт доступ к Tavo на телефоне через локальный MCP-сервер (`http://127.0.0.1:7347/mcp`, токен присылает сама — в репозиторий не записывать). Через него можно импортировать `.thm` (сначала `tavo_file_save` в файлы чата, потом `tavo_theme_import`) и править CSS темы `tavo_theme_update`. Скриншотов он не делает — смотреть всё равно ей. Чаты, персонажей и сообщения не трогать без её разрешения.
 
+## Плагины Tavo (проверено на её телефоне, тема Specimen)
+
+- Документация: https://docs.tavoai.dev/en/guides/plugin-development/. Пакет `.tpg` — zip с `manifest.json` (specVersion 2, локали en+ru), проверять `tavo_plugin_audit` через её MCP.
+- Фрагмент `/chat/body/end` живёт **в том же документе**, что и чат: видит `.tavo-character-bubble`, `.tavo-composer`, работает `:root:has(.tavo-composer-stop-icon)`, `position: fixed`, `backdrop-filter` (линза-фильтр над пузырями). Есть `tavo.ui.getInsets()`. Файлы пакета подключаются как `/plugins/<id>/ui/...`.
+- Перетаскивание делать через touch-события (`passive: false` + `preventDefault`) и мышь; отличать нажатие от перетаскивания.
+- Фрагменты `/messages/...` — отдельные iframe ~212×150 внутри пузыря (раздувают его), `tavo.message.current()` асинхронный, `tavo.variable` там падает. Для декора лучше не использовать.
+- В Tavo на её ПК (`D:\xlam\Tavo\tavo.exe`) чат рисует WebView2 — на скриншотах computer-use он чёрный. Проверять на макете (Playwright с поддельным `tavo`) и на её телефоне.
+- Тема Specimen собрана из картинок её Pinterest: они в `themes/specimen/private/` (gitignore), сборка туда же. В Hub не выкладывать; для Hub — перерисовать своё по настроению.
+
 ## Проверка перед отправкой
 
 - Собрать `python3 themes/<тема>/build.py`, проверить архив (`theme.json` в корне, ассеты в `assets/` без вложенных папок, все `theme/assets/...` из CSS есть в архиве).
