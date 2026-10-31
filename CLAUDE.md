@@ -35,6 +35,12 @@
 - Hub: обложка 9:16 (1080×1920); в карточке видно примерно 44–97% высоты, поэтому логотип и чат держать внизу, сверху — только фон. Hub сам переводит названия тем.
 - Цвета: в `theme.json` — десятичное `0xAARRGGBB`, в API — `#AARRGGBB`, в CSS — обычный CSS.
 
+## Окружение на её компьютере (Windows)
+
+- Репозиторий: `D:\Claude work\capri`. Python 3.12 (с Pillow, numpy, fonttools) — `%LOCALAPPDATA%\Programs\Python\Python312\python.exe`, в PATH его нет, `python3` открывает Microsoft Store. Node.js — `C:\Program Files\nodejs`; Playwright и Chromium поставлены в `node_modules` (в git не идут).
+- Обложки одной темы: `node tools/hub-previews.js <папка-темы>` — без аргумента перерисует все.
+- Иногда она даёт доступ к Tavo на телефоне через локальный MCP-сервер (`http://127.0.0.1:7347/mcp`, токен присылает сама — в репозиторий не записывать). Через него можно импортировать `.thm` (сначала `tavo_file_save` в файлы чата, потом `tavo_theme_import`) и править CSS темы `tavo_theme_update`. Скриншотов он не делает — смотреть всё равно ей. Чаты, персонажей и сообщения не трогать без её разрешения.
+
 ## Проверка перед отправкой
 
 - Собрать `python3 themes/<тема>/build.py`, проверить архив (`theme.json` в корне, ассеты в `assets/` без вложенных папок, все `theme/assets/...` из CSS есть в архиве).
