@@ -186,7 +186,7 @@
 /* ---------- Поле ввода ---------- */
 .tavo-composer {
   position: relative;
-  padding-top: 30px;
+  padding-top: 34px;
 }
 
 /* По верхнему краю — три тонкие закладки трёх книг */
@@ -210,13 +210,13 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: -70px;
-  height: 98px;
+  top: -14px;
+  height: 44px;
   pointer-events: none;
   background-image: url("theme/assets/letters.png"), url("theme/assets/letters.png");
   background-size: 360px 240px, 540px 360px;
   background-repeat: repeat, repeat;
-  opacity: 0.85;
+  opacity: 0.8;
   -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 22%, #000 40%, transparent 100%);
   mask-image: linear-gradient(to top, transparent 0%, #000 22%, #000 40%, transparent 100%);
   animation: khazar-forget 18s linear infinite;

@@ -3,9 +3,10 @@
 // с настоящим CSS темы и маленький логотип стоят внизу, сверху только фон.
 // Для каждой темы две картинки: покой и генерация.
 //
-// Запуск: node tools/hub-previews.js   (нужен playwright)
+// Запуск: node tools/hub-previews.js [папка-темы ...]   (нужен playwright)
 const fs = require('fs')
 const path = require('path')
+const { pathToFileURL } = require('url')
 const { chromium } = require('playwright')
 
 const ROOT = path.resolve(__dirname, '..')
@@ -135,6 +136,24 @@ const THEMES = [
     ],
   },
   {
+    dir: 'khazar-dictionary',
+    bg: 'center -215px / 400px auto',
+    extraCss: `.tavo-character-bubble{padding:9px 30px 9px 14px}
+      .tavo-character-bubble-content::before{margin-bottom:5px;padding-bottom:3px}`,
+    name: 'Princess Ateh',
+    you: 'Reader',
+    placeholder: 'Write in the margin…',
+    avatar: ['#c9ae74', '#171513'],
+    markup: true,
+    title: `<span style="font:500 22px 'Alegreya SC',Georgia,serif;color:#e4dac4;letter-spacing:.1em;
+      text-shadow:0 0 12px rgba(236,222,186,.3)">Dictionary of the Khazars</span>`,
+    lines: [
+      ['c', '"Every word here was read before."\n\n"By one who did not survive it."'],
+      ['u', 'Then why keep it open?'],
+      ['c', '*Letters glimmer on her eyelids.* "Sleep."'],
+    ],
+  },
+  {
     dir: 'ternovaya-noch',
     active: false,
     flat: true, // тема в плоском режиме: сообщения во всю ширину, между ними разделитель
@@ -177,7 +196,7 @@ function richText(text, font, markup) {
 }
 
 function page(t, m, generating) {
-  const assets = 'file://' + path.join(ROOT, 'themes', t.dir, 'assets') + '/'
+  const assets = pathToFileURL(path.join(ROOT, 'themes', t.dir, 'assets')).href + '/'
   const css = m.custom_css.replaceAll('theme/assets/', assets)
   const bg = m.background.image.replace('theme/assets/', assets)
   const cf = m.character_bubble_font
@@ -187,7 +206,9 @@ function page(t, m, generating) {
   const radius = (r) => (r >= 50 ? '50%' : `${r}px`)
   const bubble = (c, text) => `<div class="tavo-bubble ${c ? 'tavo-character-bubble' : 'tavo-user-bubble'}">
           <div class="tavo-bubble-content ${c ? 'tavo-character-bubble-content' : 'tavo-user-bubble-content'}">
-            <div class="tavo-message-content" style="color:${rgba((c ? cf : uf).textStyle.color)}">${t.markup ? '<p style="margin:0">' : ''}${richText(text, c ? cf : uf, t.markup)}${t.markup ? '</p>' : ''}</div>
+            <div class="tavo-message-content" style="color:${rgba((c ? cf : uf).textStyle.color)}">${t.markup
+              ? text.split('\n\n').map((p, i) => `<p style="margin:${i ? '6px' : 0} 0 0">${richText(p, c ? cf : uf, true)}</p>`).join('')
+              : richText(text, c ? cf : uf, false)}</div>
           </div></div>`
   const avatarImg = (c) => `<img class="tavo-avatar ${c ? 'tavo-character-avatar' : 'tavo-user-avatar'}"
       style="border-radius:${radius((c ? m.character_avatar : m.user_avatar).radius)}" src="${c ? ava : userAva}">`
@@ -228,7 +249,7 @@ function page(t, m, generating) {
       background-color:${rgba(con.color)};border-radius:${con.radius}px}
     .tavo-composer-input{flex:1;font-size:13px;color:${rgba(con.placeholderColor)}}
     .ic{width:18px;height:18px}
-  </style><style>${css}</style></head><body>
+  </style><style>${css}</style><style>${t.extraCss || ''}</style></head><body>
     <div class="head">${t.title.replaceAll('ASSETS/', assets).replaceAll('SRC/', assets.replace(/assets\/$/, 'src/'))}</div><div class="top">
     <div class="list">${rows}</div>
     <div class="tavo-composer"><div class="tavo-composer-shell">
@@ -243,13 +264,14 @@ function page(t, m, generating) {
 ;(async () => {
   const browser = await chromium.launch()
   const p = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 3 })
-  for (const t of THEMES) {
+  const only = process.argv.slice(2)
+  for (const t of THEMES.filter((t) => !only.length || only.includes(t.dir))) {
     const m = JSON.parse(fs.readFileSync(path.join(ROOT, 'themes', t.dir, 'theme.json'), 'utf8'))
     const states = t.active === false ? [['hub', false]] : [['hub', false], ['hub-active', true]]
     for (const [suffix, gen] of states) {
       const html = path.join(ROOT, 'themes', t.dir, `.preview-${suffix}.html`)
       fs.writeFileSync(html, page(t, m, gen))
-      await p.goto('file://' + html)
+      await p.goto(pathToFileURL(html).href)
       await p.waitForTimeout(gen ? 3200 : 1200)
       const out = path.join(ROOT, 'themes', t.dir, `preview-${suffix}.png`)
       await p.screenshot({ path: out })
