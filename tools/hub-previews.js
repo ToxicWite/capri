@@ -119,6 +119,22 @@ const THEMES = [
     ],
   },
   {
+    dir: 'winter-traveler',
+    bg: 'center -60px / 400px auto',
+    name: 'The Other Reader',
+    you: 'Reader',
+    placeholder: 'Begin again…',
+    avatar: ['#d8c9a8', '#1c1a18'],
+    markup: true,
+    title: `<span style="font:italic 400 21px Spectral,Georgia,serif;color:#e6dcc6;letter-spacing:.04em;
+      text-shadow:0 0 12px rgba(255,205,140,.3)">If on a winter’s night</span>`,
+    lines: [
+      ['c', '*Steam covers the first paragraph.* "You are about to begin a new novel."'],
+      ['u', 'And will I finish this one?'],
+      ['c', '"Nobody ever does."'],
+    ],
+  },
+  {
     dir: 'ternovaya-noch',
     active: false,
     flat: true, // тема в плоском режиме: сообщения во всю ширину, между ними разделитель

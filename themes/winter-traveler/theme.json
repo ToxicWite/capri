@@ -1,0 +1,144 @@
+{
+  "spec": "tavo_theme_v1",
+  "name": "If on a winter's night",
+  "display_mode": "message",
+  "visual_novel_bubble_height_ratio": 0.6,
+  "bubble_display_type": "bubble",
+  "custom_css": "/* ============================================================\n   IF ON A WINTER'S NIGHT A TRAVELER — по роману Итало Кальвино\n   Зимний ночной вокзал. Каждый ответ персонажа — начало нового\n   романа: над ним название одной из десяти глав-инципитов,\n   справа свисает закладка. Пока персонаж отвечает, над полем\n   ввода поднимается пар паровоза и идёт снег.\n   Шрифт Spectral (SIL OFL 1.1) встроен в тему.\n   Нужен Advanced Rendering.\n   ============================================================ */\n\n@font-face {\n  font-family: \"Spectral\";\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"theme/assets/spectral-normal-400-cyrillic.woff2\") format(\"woff2\");\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n@font-face {\n  font-family: \"Spectral\";\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"theme/assets/spectral-normal-400-latin.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n@font-face {\n  font-family: \"Spectral\";\n  font-style: italic;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"theme/assets/spectral-italic-400-cyrillic.woff2\") format(\"woff2\");\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n@font-face {\n  font-family: \"Spectral\";\n  font-style: italic;\n  font-weight: 400;\n  font-display: swap;\n  src: url(\"theme/assets/spectral-italic-400-latin.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n@font-face {\n  font-family: \"Spectral SC\";\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"theme/assets/spectral-sc-normal-500-cyrillic.woff2\") format(\"woff2\");\n  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;\n}\n@font-face {\n  font-family: \"Spectral SC\";\n  font-style: normal;\n  font-weight: 500;\n  font-display: swap;\n  src: url(\"theme/assets/spectral-sc-normal-500-latin.woff2\") format(\"woff2\");\n  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;\n}\n\n/* ---------- Анимации ---------- */\n\n/* Снег медленно падает по страницам */\n@keyframes traveler-snow {\n  0%   { background-position: right 14px top 0, 0 0; }\n  100% { background-position: right 14px top 0, 40px 480px; }\n}\n\n/* Пар поднимается над полем ввода и уходит вбок */\n@keyframes traveler-steam {\n  0%   { background-position: 0 0, 0 0; }\n  100% { background-position: -400px -200px, 60px 240px; }\n}\n\n/* ---------- Типографика ---------- */\n.tavo-bubble-content,\n.tavo-composer-input {\n  font-family: \"Spectral\", \"Noto Serif\", Georgia, serif;\n}\n\n.tavo-message-content {\n  line-height: 1.62;\n}\n\n.tavo-message-content::selection,\n.tavo-message-content *::selection {\n  background: rgba(216, 201, 168, 0.3);\n  color: inherit;\n}\n\n/* ---------- Персонаж: начало нового романа ---------- */\n.tavo-bubble {\n  border-radius: 2px;\n}\n\n.tavo-character-bubble {\n  background-color: rgba(28, 26, 24, 0.93);\n  background-image:\n    url(\"theme/assets/ribbon.svg\"),\n    url(\"theme/assets/snow.png\");\n  background-size: 12px 38px, 240px 240px;\n  background-repeat: no-repeat, repeat;\n  background-position: right 14px top 0, 0 0;\n  border: 1px solid rgba(216, 201, 168, 0.14);\n  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(0, 0, 0, 0.35);\n  padding: 14px 34px 14px 18px;\n  animation: traveler-snow 50s linear infinite;\n}\n\n/* Название главы над каждым ответом */\n.tavo-character-bubble-content::before {\n  content: \"I  ·  If on a winter’s night a traveler\";\n  display: block;\n  margin-bottom: 6px;\n  font-family: \"Spectral SC\", \"Spectral\", Georgia, serif;\n  font-size: 0.72em;\n  letter-spacing: 0.1em;\n  color: #d8c9a8;\n  opacity: 0.8;\n}\n\n/* ---------- Вы: Читатель ---------- */\n.tavo-user-bubble {\n  background-color: rgba(26, 30, 40, 0.9);\n  border-right: 2px solid rgba(216, 201, 168, 0.45);\n  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);\n}\n\n.tavo-user-bubble-content {\n  font-style: italic;\n}\n\n/* ---------- Имена и аватары ---------- */\n.tavo-speaker-name {\n  font-family: \"Spectral SC\", \"Spectral\", Georgia, serif;\n  letter-spacing: 0.08em;\n  color: #d8c9a8;\n}\n\n.tavo-avatar {\n  outline: 1px solid rgba(216, 201, 168, 0.5);\n  outline-offset: -1px;\n  filter: sepia(0.25) saturate(0.85);\n}\n\n/* ---------- Мысли, разделитель, вложения ---------- */\n.tavo-message-reasoning {\n  font-style: italic;\n  color: #a89c86;\n  border-left: 1px solid rgba(216, 201, 168, 0.3);\n  padding-left: 10px;\n}\n\n.tavo-message-divider {\n  height: 26px;\n  border: 0;\n  background: url(\"theme/assets/divider.svg\") center / min(320px, 76%) auto no-repeat;\n}\n\n.tavo-message-attachments {\n  outline: 3px solid rgba(28, 26, 24, 0.9);\n  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);\n}\n\n.tavo-action-bar-button,\n.tavo-action-bar-button-group {\n  background-color: rgba(20, 23, 31, 0.85);\n  border-radius: 2px;\n}\n\n/* ---------- Поле ввода: окно вагона ---------- */\n.tavo-composer {\n  padding-top: 26px;\n}\n\n.tavo-composer-shell {\n  background-color: rgba(20, 23, 31, 0.95);\n  border: 1px solid rgba(216, 201, 168, 0.3);\n  border-radius: 3px;\n  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 205, 140, 0.08);\n}\n\n/* Пока персонаж отвечает — над полем поднимается пар и идёт снег */\n:root:has(.tavo-composer-stop-icon) .tavo-composer {\n  background-image: url(\"theme/assets/steam.png\"), url(\"theme/assets/snow.png\");\n  background-size: 400px 200px, 240px 240px;\n  background-repeat: repeat, repeat;\n  animation: traveler-steam 14s linear infinite;\n}\n\n.tavo-composer-input {\n  color: #e6dcc6;\n  caret-color: #d8c9a8;\n}\n\n.tavo-composer-input::placeholder {\n  color: #7c7a76;\n  font-style: italic;\n}\n\n.tavo-composer-send-icon,\n.tavo-composer-add-icon,\n.tavo-composer-voice-icon,\n.tavo-composer-stop-icon {\n  filter: sepia(0.6) brightness(1.1);\n}\n\n@media (prefers-reduced-motion: reduce) {\n  .tavo-character-bubble,\n  :root:has(.tavo-composer-stop-icon) .tavo-composer {\n    animation: none;\n  }\n}\n\n/* ---------- Главы (сгенерировано build.py) ---------- */\n.tavo-character-bubble-content:has(p:nth-of-type(1)):not(:has(p:nth-of-type(2))):not(:has(:is(em, i)))::before { content: \"I  ·  If on a winter’s night a traveler\"; }\n.tavo-character-bubble-content:has(p:nth-of-type(1)):not(:has(p:nth-of-type(2))):has(:is(em, i))::before { content: \"II  ·  Outside the town of Malbork\"; }\n.tavo-character-bubble-content:has(p:nth-of-type(2)):not(:has(p:nth-of-type(3))):not(:has(:is(em, i)))::before { content: \"III  ·  Leaning from the steep slope\"; }\n.tavo-character-bubble-content:has(p:nth-of-type(2)):not(:has(p:nth-of-type(3))):has(:is(em, i))::before { content: \"IV  ·  Without fear of wind or vertigo\"; }\n.tavo-character-bubble-content:has(p:nth-of-type(3)):not(:has(p:nth-of-type(4))):not(:has(:is(em, i)))::before { content: \"V  ·  Looks down in the gathering shadow\"; }\n.tavo-character-bubble-content:has(p:nth-of-type(3)):not(:has(p:nth-of-type(4))):has(:is(em, i))::before { content: \"VI  ·  In a network of lines that enlace\"; }\n.tavo-character-bubble-content:has(p:nth-of-type(4)):not(:has(p:nth-of-type(5))):not(:has(:is(em, i)))::before { content: \"VII  ·  In a network of lines that intersect\"; }\n.tavo-character-bubble-content:has(p:nth-of-type(4)):not(:has(p:nth-of-type(5))):has(:is(em, i))::before { content: \"VIII  ·  On the carpet of leaves illuminated by the moon\"; }\n.tavo-character-bubble-content:has(p:nth-of-type(5)):not(:has(:is(em, i)))::before { content: \"IX  ·  Around an empty grave\"; }\n.tavo-character-bubble-content:has(p:nth-of-type(5)):has(:is(em, i))::before { content: \"X  ·  What story down there awaits its end?\"; }\n",
+  "background": {
+    "charAvatar": false,
+    "image": "theme/assets/station.jpg",
+    "imageOpacity": 1,
+    "color": 4279243806
+  },
+  "user_bubble": {
+    "color": 3944357416,
+    "blur": 0,
+    "radius": 2,
+    "alignment": "right"
+  },
+  "character_bubble": {
+    "color": 4028373528,
+    "blur": 0,
+    "radius": 2,
+    "alignment": "left"
+  },
+  "user_bubble_font": {
+    "textStyle": {
+      "fontFamily": null,
+      "fontSize": 17,
+      "fontWeight": 400,
+      "fontStyle": "normal",
+      "color": 4292467940
+    },
+    "toneTextStyle": {
+      "fontFamily": null,
+      "fontSize": 17,
+      "fontWeight": 400,
+      "fontStyle": "italic",
+      "color": 4288324016
+    },
+    "quoteTextStyle": {
+      "fontFamily": null,
+      "fontSize": 17,
+      "fontWeight": 500,
+      "fontStyle": "normal",
+      "color": 4293980918
+    },
+    "toneHighlight": true,
+    "toneDelimiters": [
+      "**",
+      "()",
+      "（）"
+    ],
+    "toneSymbol": "none",
+    "quoteHighlight": true,
+    "quoteDelimiters": [
+      "“”",
+      "«»",
+      "„“",
+      "\"\""
+    ],
+    "quoteSymbol": "\"\""
+  },
+  "character_bubble_font": {
+    "textStyle": {
+      "fontFamily": null,
+      "fontSize": 17,
+      "fontWeight": 400,
+      "fontStyle": "normal",
+      "color": 4293319878
+    },
+    "toneTextStyle": {
+      "fontFamily": null,
+      "fontSize": 17,
+      "fontWeight": 400,
+      "fontStyle": "italic",
+      "color": 4289240198
+    },
+    "quoteTextStyle": {
+      "fontFamily": null,
+      "fontSize": 17,
+      "fontWeight": 500,
+      "fontStyle": "normal",
+      "color": 4294171046
+    },
+    "toneHighlight": true,
+    "toneDelimiters": [
+      "**",
+      "()",
+      "（）"
+    ],
+    "toneSymbol": "none",
+    "quoteHighlight": true,
+    "quoteDelimiters": [
+      "“”",
+      "«»",
+      "„“",
+      "\"\""
+    ],
+    "quoteSymbol": "\"\""
+  },
+  "console": {
+    "color": 4061402911,
+    "blur": 8,
+    "radius": 3,
+    "sendColor": 4292397480,
+    "fontSize": 17,
+    "fontWeight": 400,
+    "fontColor": 4293319878,
+    "placeholderColor": 4286347894
+  },
+  "thinking": {
+    "fontSize": 14,
+    "fontWeight": 400,
+    "color": 4289240198,
+    "backgroundColor": 3860076319
+  },
+  "status_bar": {
+    "fontSize": 13,
+    "fontWeight": 500,
+    "color": 4292397480,
+    "backgroundColor": 3860076319
+  },
+  "user_avatar": {
+    "avatar": true,
+    "radius": 100,
+    "name": true
+  },
+  "character_avatar": {
+    "avatar": true,
+    "radius": 100,
+    "name": true
+  },
+  "group_user_avatar": {
+    "avatar": true,
+    "radius": 100,
+    "name": true
+  },
+  "group_character_avatar": {
+    "avatar": true,
+    "radius": 100,
+    "name": true
+  }
+}

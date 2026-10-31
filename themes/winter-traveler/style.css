@@ -1,0 +1,214 @@
+/* ============================================================
+   IF ON A WINTER'S NIGHT A TRAVELER — по роману Итало Кальвино
+   Зимний ночной вокзал. Каждый ответ персонажа — начало нового
+   романа: над ним название одной из десяти глав-инципитов,
+   справа свисает закладка. Пока персонаж отвечает, над полем
+   ввода поднимается пар паровоза и идёт снег.
+   Шрифт Spectral (SIL OFL 1.1) встроен в тему.
+   Нужен Advanced Rendering.
+   ============================================================ */
+
+@font-face {
+  font-family: "Spectral";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("theme/assets/spectral-normal-400-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Spectral";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("theme/assets/spectral-normal-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Spectral";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("theme/assets/spectral-italic-400-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Spectral";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("theme/assets/spectral-italic-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Spectral SC";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("theme/assets/spectral-sc-normal-500-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Spectral SC";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("theme/assets/spectral-sc-normal-500-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---------- Анимации ---------- */
+
+/* Снег медленно падает по страницам */
+@keyframes traveler-snow {
+  0%   { background-position: right 14px top 0, 0 0; }
+  100% { background-position: right 14px top 0, 40px 480px; }
+}
+
+/* Пар поднимается над полем ввода и уходит вбок */
+@keyframes traveler-steam {
+  0%   { background-position: 0 0, 0 0; }
+  100% { background-position: -400px -200px, 60px 240px; }
+}
+
+/* ---------- Типографика ---------- */
+.tavo-bubble-content,
+.tavo-composer-input {
+  font-family: "Spectral", "Noto Serif", Georgia, serif;
+}
+
+.tavo-message-content {
+  line-height: 1.62;
+}
+
+.tavo-message-content::selection,
+.tavo-message-content *::selection {
+  background: rgba(216, 201, 168, 0.3);
+  color: inherit;
+}
+
+/* ---------- Персонаж: начало нового романа ---------- */
+.tavo-bubble {
+  border-radius: 2px;
+}
+
+.tavo-character-bubble {
+  background-color: rgba(28, 26, 24, 0.93);
+  background-image:
+    url("theme/assets/ribbon.svg"),
+    url("theme/assets/snow.png");
+  background-size: 12px 38px, 240px 240px;
+  background-repeat: no-repeat, repeat;
+  background-position: right 14px top 0, 0 0;
+  border: 1px solid rgba(216, 201, 168, 0.14);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(0, 0, 0, 0.35);
+  padding: 14px 34px 14px 18px;
+  animation: traveler-snow 50s linear infinite;
+}
+
+/* Название главы над каждым ответом */
+.tavo-character-bubble-content::before {
+  content: "I  ·  If on a winter’s night a traveler";
+  display: block;
+  margin-bottom: 6px;
+  font-family: "Spectral SC", "Spectral", Georgia, serif;
+  font-size: 0.72em;
+  letter-spacing: 0.1em;
+  color: #d8c9a8;
+  opacity: 0.8;
+}
+
+/* ---------- Вы: Читатель ---------- */
+.tavo-user-bubble {
+  background-color: rgba(26, 30, 40, 0.9);
+  border-right: 2px solid rgba(216, 201, 168, 0.45);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.tavo-user-bubble-content {
+  font-style: italic;
+}
+
+/* ---------- Имена и аватары ---------- */
+.tavo-speaker-name {
+  font-family: "Spectral SC", "Spectral", Georgia, serif;
+  letter-spacing: 0.08em;
+  color: #d8c9a8;
+}
+
+.tavo-avatar {
+  outline: 1px solid rgba(216, 201, 168, 0.5);
+  outline-offset: -1px;
+  filter: sepia(0.25) saturate(0.85);
+}
+
+/* ---------- Мысли, разделитель, вложения ---------- */
+.tavo-message-reasoning {
+  font-style: italic;
+  color: #a89c86;
+  border-left: 1px solid rgba(216, 201, 168, 0.3);
+  padding-left: 10px;
+}
+
+.tavo-message-divider {
+  height: 26px;
+  border: 0;
+  background: url("theme/assets/divider.svg") center / min(320px, 76%) auto no-repeat;
+}
+
+.tavo-message-attachments {
+  outline: 3px solid rgba(28, 26, 24, 0.9);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.tavo-action-bar-button,
+.tavo-action-bar-button-group {
+  background-color: rgba(20, 23, 31, 0.85);
+  border-radius: 2px;
+}
+
+/* ---------- Поле ввода: окно вагона ---------- */
+.tavo-composer {
+  padding-top: 26px;
+}
+
+.tavo-composer-shell {
+  background-color: rgba(20, 23, 31, 0.95);
+  border: 1px solid rgba(216, 201, 168, 0.3);
+  border-radius: 3px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 205, 140, 0.08);
+}
+
+/* Пока персонаж отвечает — над полем поднимается пар и идёт снег */
+:root:has(.tavo-composer-stop-icon) .tavo-composer {
+  background-image: url("theme/assets/steam.png"), url("theme/assets/snow.png");
+  background-size: 400px 200px, 240px 240px;
+  background-repeat: repeat, repeat;
+  animation: traveler-steam 14s linear infinite;
+}
+
+.tavo-composer-input {
+  color: #e6dcc6;
+  caret-color: #d8c9a8;
+}
+
+.tavo-composer-input::placeholder {
+  color: #7c7a76;
+  font-style: italic;
+}
+
+.tavo-composer-send-icon,
+.tavo-composer-add-icon,
+.tavo-composer-voice-icon,
+.tavo-composer-stop-icon {
+  filter: sepia(0.6) brightness(1.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tavo-character-bubble,
+  :root:has(.tavo-composer-stop-icon) .tavo-composer {
+    animation: none;
+  }
+}
+
+CHAPTER_RULES
