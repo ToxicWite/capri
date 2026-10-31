@@ -1,0 +1,141 @@
+{
+  "specVersion": 2,
+  "id": "com.capri.adventure-journal",
+  "name": { "$t": "plugin.name" },
+  "version": "1.0.0",
+  "entry": "entry.js",
+  "author": "Capri",
+  "description": { "$t": "plugin.description" },
+  "releaseNotes": { "$t": "releaseNotes.1_0_0" },
+  "localization": {
+    "defaultLocale": "en",
+    "resources": {
+      "en": "locales/en.json",
+      "ru": "locales/ru.json",
+      "zh-CN": "locales/zh-CN.json"
+    }
+  },
+  "cover": "cover.png",
+  "minAppVersion": "1.0.0",
+  "permissions": ["generate", "input", "message", "variable", "file"],
+  "contributes": {
+    "inputActions": [
+      { "id": "roll-dice", "label": { "$t": "actions.rollDice" }, "icon": "icons/dice.png" }
+    ],
+    "sidebar": [
+      { "id": "open-journal", "label": { "$t": "actions.openJournal" } },
+      { "id": "update-now", "label": { "$t": "actions.updateNow" } },
+      { "id": "choose-template", "label": { "$t": "actions.chooseTemplate" } },
+      { "id": "undo-update", "label": { "$t": "actions.undo" } },
+      { "id": "export-journal", "label": { "$t": "actions.export" } },
+      { "id": "import-journal", "label": { "$t": "actions.import" } },
+      { "id": "reset-journal", "label": { "$t": "actions.reset" } },
+      { "id": "reset-button", "label": { "$t": "actions.resetButton" } }
+    ],
+    "lastMessageActions": [
+      {
+        "id": "update-from-message",
+        "label": { "$t": "actions.updateFromMessage" },
+        "icon": "icons/journal.png",
+        "role": "character"
+      }
+    ],
+    "htmlFragments": [
+      { "id": "journal-panel", "src": "ui/panel.html", "mount": "/chat/body/end" }
+    ],
+    "settings": {
+      "schema": [
+        { "type": "info", "text": { "$t": "settings.info" }, "icon": "info" },
+        {
+          "key": "defaultTemplate",
+          "type": "select",
+          "label": { "$t": "settings.defaultTemplate" },
+          "default": "fantasy",
+          "options": [
+            { "value": "fantasy", "label": { "$t": "template.fantasy" } },
+            { "value": "scifi", "label": { "$t": "template.scifi" } },
+            { "value": "romance", "label": { "$t": "template.romance" } },
+            { "value": "slice", "label": { "$t": "template.slice" } },
+            { "value": "horror", "label": { "$t": "template.horror" } },
+            { "value": "custom", "label": { "$t": "template.custom" } }
+          ]
+        },
+        {
+          "key": "customStats",
+          "type": "text",
+          "label": { "$t": "settings.customStats" },
+          "description": { "$t": "settings.customStats.desc" },
+          "default": { "$t": "settings.customStats.default" }
+        },
+        {
+          "key": "customFocus",
+          "type": "textarea",
+          "label": { "$t": "settings.customFocus" },
+          "description": { "$t": "settings.customFocus.desc" },
+          "default": ""
+        },
+        { "type": "divider" },
+        {
+          "key": "updateMode",
+          "type": "select",
+          "label": { "$t": "settings.updateMode" },
+          "description": { "$t": "settings.updateMode.desc" },
+          "default": "auto",
+          "options": [
+            { "value": "auto", "label": { "$t": "settings.updateMode.auto" } },
+            { "value": "confirm", "label": { "$t": "settings.updateMode.confirm" } },
+            { "value": "manual", "label": { "$t": "settings.updateMode.manual" } }
+          ]
+        },
+        {
+          "key": "updateEvery",
+          "type": "slider",
+          "label": { "$t": "settings.updateEvery" },
+          "description": { "$t": "settings.updateEvery.desc" },
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "key": "injectState",
+          "type": "switch",
+          "label": { "$t": "settings.injectState" },
+          "description": { "$t": "settings.injectState.desc" },
+          "default": true
+        },
+        {
+          "key": "contentLanguage",
+          "type": "select",
+          "label": { "$t": "settings.contentLanguage" },
+          "default": "conversation",
+          "options": [
+            { "value": "conversation", "label": { "$t": "settings.contentLanguage.conversation" } },
+            { "value": "app", "label": { "$t": "settings.contentLanguage.app" } }
+          ]
+        },
+        { "type": "break" },
+        { "key": "notify", "type": "switch", "label": { "$t": "settings.notify" }, "default": true },
+        { "key": "showButton", "type": "switch", "label": { "$t": "settings.showButton" }, "default": true },
+        {
+          "key": "timeoutSec",
+          "type": "slider",
+          "label": { "$t": "settings.timeoutSec" },
+          "min": 15,
+          "max": 120,
+          "step": 5,
+          "default": 45
+        },
+        {
+          "key": "maxTokens",
+          "type": "slider",
+          "label": { "$t": "settings.maxTokens" },
+          "min": 300,
+          "max": 1500,
+          "step": 100,
+          "default": 700
+        }
+      ]
+    }
+  }
+}
