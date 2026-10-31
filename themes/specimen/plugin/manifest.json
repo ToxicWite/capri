@@ -1,0 +1,26 @@
+{
+  "specVersion": 2,
+  "id": "com.tokii.specimen-lab",
+  "name": { "$t": "plugin.name" },
+  "version": "1.0.0",
+  "author": "@Tokii",
+  "description": { "$t": "plugin.description" },
+  "releaseNotes": { "$t": "releaseNotes.1_0_0" },
+  "localization": {
+    "defaultLocale": "en",
+    "resources": { "en": "locales/en.json", "ru": "locales/ru.json" }
+  },
+  "permissions": ["variable"],
+  "contributes": {
+    "htmlFragments": [
+      { "id": "lab", "src": "ui/lab.html", "mount": "/chat/body/end" }
+    ],
+    "settings": {
+      "schema": [
+        { "type": "info", "text": { "$t": "settings.info" }, "icon": "info" },
+        { "key": "showLamp", "type": "switch", "label": { "$t": "settings.showLamp" }, "default": true },
+        { "key": "showPet", "type": "switch", "label": { "$t": "settings.showPet" }, "default": true }
+      ]
+    }
+  }
+}

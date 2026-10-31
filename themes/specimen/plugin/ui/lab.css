@@ -1,0 +1,231 @@
+/* Specimen Lab: УФ-лампа, пушистик и шкаф экспонатов */
+.spl {
+  --spl-cyan: #5ff2e6;
+  --spl-pink: #ff4fb8;
+  --spl-uv: #9b6bff;
+  font: 13px/1.4 "Plex", "Roboto", sans-serif;
+  color: #dcefee;
+}
+.spl [hidden] { display: none !important; }
+
+/* ---------- УФ-лампа ---------- */
+.spl-lamp {
+  position: fixed;
+  z-index: 45;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+  /* УФ: чат под лампой становится фиолетовым монохромом, светлое светится */
+  -webkit-backdrop-filter: grayscale(1) contrast(1.6) brightness(1.15) sepia(1) hue-rotate(215deg) saturate(5);
+  backdrop-filter: grayscale(1) contrast(1.6) brightness(1.15) sepia(1) hue-rotate(215deg) saturate(5);
+  border: 2px solid var(--spl-uv);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 26px rgba(155, 107, 255, 0.55), inset 0 0 30px rgba(155, 107, 255, 0.35);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.spl-lamp.spl-xray {
+  /* рентген: негатив, кости светятся голубым */
+  -webkit-backdrop-filter: invert(1) hue-rotate(180deg) grayscale(0.6) contrast(1.3);
+  backdrop-filter: invert(1) hue-rotate(180deg) grayscale(0.6) contrast(1.3);
+  border-color: var(--spl-cyan);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 26px rgba(95, 242, 230, 0.5), inset 0 0 30px rgba(95, 242, 230, 0.3);
+}
+.spl-lamp.spl-dragging { cursor: grabbing; }
+.spl-lamp.spl-near { border-color: #b8ff6a; }
+.spl-lamp.spl-flash { animation: spl-flash 0.9s ease-out; }
+
+/* Спрятанные экспонаты: картинка лежит «под» экраном, лампа показывает свой кусочек */
+.spl-hidden {
+  position: absolute;
+  inset: 0;
+  background-image: url("/plugins/com.tokii.specimen-lab/ui/hidden.webp");
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  opacity: 0.95;
+  pointer-events: none;
+}
+.spl-xray .spl-hidden { filter: grayscale(1) contrast(1.4) brightness(1.2); }
+
+.spl-cross {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)) center / 1px 14px no-repeat,
+    linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)) center / 14px 1px no-repeat,
+    radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.35) 100%);
+}
+.spl-mode {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  text-align: center;
+  font: 500 9px/1 "Plex Mono", monospace;
+  letter-spacing: 0.22em;
+  color: #fff;
+  text-shadow: 0 0 6px var(--spl-uv);
+  pointer-events: none;
+}
+
+@keyframes spl-flash {
+  0%   { box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 80px 20px rgba(184, 255, 106, 0.9); border-color: #b8ff6a; }
+  100% { box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.6), 0 0 26px rgba(155, 107, 255, 0.55); }
+}
+
+/* ---------- Пушистик ---------- */
+.spl-pet {
+  position: fixed;
+  z-index: 46;
+  width: 74px;
+  height: 64px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+.spl-pet-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  transform-origin: 50% 100%;
+  animation: spl-breathe 3.2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6));
+}
+.spl-pet.spl-left .spl-pet-img { transform: scaleX(-1); animation-name: spl-breathe-l; }
+.spl-pet.spl-hop .spl-pet-img { animation: spl-hop 0.6s ease-out; }
+.spl-pet.spl-left.spl-hop .spl-pet-img { animation-name: spl-hop-l; }
+
+/* Пока персонаж отвечает, пушистик дрожит */
+:root:has(.tavo-composer-stop-icon) .spl-pet-img { animation: spl-tremble 0.18s linear infinite; }
+:root:has(.tavo-composer-stop-icon) .spl-pet.spl-left .spl-pet-img { animation-name: spl-tremble-l; }
+
+@keyframes spl-breathe   { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.04, 0.95); } }
+@keyframes spl-breathe-l { 0%, 100% { transform: scale(-1, 1); } 50% { transform: scale(-1.04, 0.95); } }
+@keyframes spl-hop   { 0% { transform: translateY(0); } 35% { transform: translateY(-22px) scale(0.92, 1.08); } 70% { transform: translateY(0) scale(1.08, 0.9); } 100% { transform: none; } }
+@keyframes spl-hop-l { 0% { transform: scaleX(-1); } 35% { transform: translateY(-22px) scale(-0.92, 1.08); } 70% { transform: scale(-1.08, 0.9); } 100% { transform: scaleX(-1); } }
+@keyframes spl-tremble   { 0% { transform: translate(0, 0); } 25% { transform: translate(1px, -1px); } 50% { transform: translate(-1px, 0); } 75% { transform: translate(0, 1px); } }
+@keyframes spl-tremble-l { 0% { transform: scaleX(-1) translate(0, 0); } 25% { transform: scaleX(-1) translate(1px, -1px); } 50% { transform: scaleX(-1) translate(-1px, 0); } 75% { transform: scaleX(-1) translate(0, 1px); } }
+
+.spl-say {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 4px;
+  padding: 4px 8px;
+  white-space: nowrap;
+  background: rgba(9, 12, 14, 0.94);
+  border: 1px solid rgba(255, 79, 184, 0.6);
+  border-radius: 3px;
+  font: 500 10px/1.2 "Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  color: #ff8fd0;
+  pointer-events: none;
+}
+
+/* ---------- Шкаф ---------- */
+.spl-cab {
+  position: fixed;
+  z-index: 47;
+  top: calc(var(--tavo-inset-top-bar, 56px) + 10px);
+  bottom: calc(var(--tavo-inset-bottom-input, 80px) + 10px);
+  left: 12px;
+  right: 12px;
+  max-width: 460px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: rgba(7, 9, 11, 0.97);
+  border: 1px solid rgba(95, 242, 230, 0.35);
+  border-radius: 4px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(95, 242, 230, 0.08);
+  overflow: hidden;
+  animation: spl-open 0.35s ease-out;
+}
+@keyframes spl-open { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+.spl-cab-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 14px 6px 16px;
+}
+.spl-cab-head strong {
+  display: block;
+  font: 500 12px/1.3 "Plex Mono", monospace;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--spl-cyan);
+}
+.spl-cab-head small {
+  display: block;
+  margin-top: 4px;
+  font: 500 10px/1.2 "Plex Mono", monospace;
+  letter-spacing: 0.14em;
+  color: #7fb9b6;
+}
+.spl-hint {
+  margin: 0;
+  padding: 0 16px 10px;
+  font-size: 12px;
+  color: #7fb9b6;
+}
+.spl-grid {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 4px 14px 14px;
+}
+.spl-card {
+  position: relative;
+  border: 1px solid rgba(95, 242, 230, 0.2);
+  border-radius: 3px;
+  overflow: hidden;
+  background: #050607;
+}
+.spl-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.spl-card.spl-missing img { filter: grayscale(1) brightness(0.22) contrast(1.4) blur(5px); transform: scale(1.08); }
+.spl-card figcaption {
+  padding: 6px 8px 8px;
+  font: 500 10px/1.3 "Plex Mono", monospace;
+  letter-spacing: 0.06em;
+  color: #dcefee;
+}
+.spl-card figcaption em { display: block; font-style: italic; color: #b8ff6a; }
+.spl-card.spl-missing figcaption em { color: #4f6a6c; }
+.spl-cab-foot {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 14px 14px;
+  border-top: 1px solid rgba(95, 242, 230, 0.12);
+}
+.spl-btn {
+  font: 500 11px/1 "Plex Mono", monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #050607;
+  background: var(--spl-cyan);
+  border: 0;
+  border-radius: 2px;
+  padding: 9px 12px;
+  cursor: pointer;
+}
+.spl-btn-ghost { color: var(--spl-pink); background: transparent; border: 1px solid rgba(255, 79, 184, 0.5); }
+
+@media (prefers-reduced-motion: reduce) {
+  .spl-pet-img, .spl-cab, .spl-lamp { animation: none !important; }
+}
