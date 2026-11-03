@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <title>Capri · Norsk</title>
+  <meta name="description" content="Личное приложение для изучения норвежского: словарик, мини-игры, стрик и уровни." />
+  <meta name="theme-color" content="#09080f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Capri" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon-180.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="aurora" aria-hidden="true">
+    <span class="a1"></span><span class="a2"></span><span class="a3"></span>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main id="view" class="view"></main>
+
+  <nav class="tabbar" id="tabbar">
+    <button data-tab="home" class="active"><span class="ti">ᚺ</span><span>Hjem</span></button>
+    <button data-tab="dict"><span class="ti">ᚢ</span><span>Ordbok</span></button>
+    <button data-tab="games"><span class="ti">ᛃ</span><span>Spill</span></button>
+    <button data-tab="me"><span class="ti">ᛗ</span><span>Meg</span></button>
+  </nav>
+
+  <div id="overlay" class="overlay" hidden></div>
+  <div id="sheet-root"></div>
+  <div id="toasts" class="toasts"></div>
+
+  <script src="js/words.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

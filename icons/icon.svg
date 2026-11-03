@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#151127"/><stop offset="1" stop-color="#07060c"/></linearGradient>
+    <linearGradient id="au" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6ef7c8"/><stop offset=".55" stop-color="#86d4ff"/><stop offset="1" stop-color="#b18cff"/></linearGradient>
+    <filter id="b"><feGaussianBlur stdDeviation="14"/></filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <path d="M40 210 C140 120 220 250 300 170 S440 120 480 160" stroke="url(#au)" stroke-width="46" fill="none" opacity=".55" filter="url(#b)"/>
+  <path d="M40 210 C140 120 220 250 300 170 S440 120 480 160" stroke="url(#au)" stroke-width="10" fill="none" opacity=".9"/>
+  <path d="M0 512 L0 380 L120 270 L190 340 L270 250 L380 360 L440 320 L512 380 L512 512 Z" fill="#0c0a16"/>
+  <path d="M120 270 L150 298 L132 300 Z M270 250 L305 285 L282 284 Z" fill="#d9d2ef" opacity=".55"/>
+  <text x="256" y="470" text-anchor="middle" font-family="Georgia, serif" font-size="92" font-style="italic" fill="#efeaf7">ᚾ ø</text>
+  <circle cx="400" cy="90" r="6" fill="#efeaf7"/><circle cx="120" cy="70" r="4" fill="#efeaf7" opacity=".7"/><circle cx="330" cy="60" r="3" fill="#efeaf7" opacity=".6"/>
+</svg>
