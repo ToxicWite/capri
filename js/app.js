@@ -239,6 +239,14 @@
     onMount && onMount(sh, close);
     return close;
   }
+  // подтверждение внутри приложения (системные confirm() работают не везде)
+  function ask(title, text, okLabel, onOk, cancelLabel = 'Отмена') {
+    sheet(`<h2>${esc(title)}</h2><p class="muted" style="margin:8px 0 0">${esc(text)}</p>
+      <div class="detail-actions"><button class="btn" id="askNo">${esc(cancelLabel)}</button><button class="btn danger" id="askYes">${esc(okLabel)}</button></div>`, (sh, close) => {
+      $('#askNo', sh).onclick = close;
+      $('#askYes', sh).onclick = () => { close(); onOk(); };
+    });
+  }
   const art = (w) => w.gender ? `<span class="art ${w.gender}">${w.gender}</span>${esc(w.bare)}` : w.pos === 'verb' ? `<span class="art å">å</span>${esc(w.bare)}` : esc(w.no);
   const lvlBars = (id) => { const b = box(id); const cls = b >= 3 ? '' : 'learning'; return `<span class="lvl ${cls}">${[1, 2, 3, 4, 5].map((i) => `<i class="${b >= i ? 'on' : ''}"></i>`).join('')}</span>`; };
 
@@ -425,7 +433,7 @@
       $('#dSpeak', sh).onclick = () => speak(w.no);
       $('#dFav', sh).onclick = () => { if (S.fav[w.id]) delete S.fav[w.id]; else S.fav[w.id] = 1; save(); close(); refresh(); };
       const del = $('#dDel', sh);
-      if (del) del.onclick = () => { if (!confirm(`Удалить «${w.no}»?`)) return; S.custom = S.custom.filter((x) => x.no !== w.no); delete S.words[w.id]; delete S.fav[w.id]; rebuildWords(); save(); close(); refresh(); };
+      if (del) del.onclick = () => ask(`Удалить «${w.no}»?`, 'Слово и его прогресс исчезнут из словарика.', 'Удалить', () => { S.custom = S.custom.filter((x) => x.no !== w.no); delete S.words[w.id]; delete S.fav[w.id]; rebuildWords(); save(); close(); refresh(); });
       const rs = $('#dReset', sh);
       if (rs) rs.onclick = () => { if (r) delete S.words[w.id]; else S.words[w.id] = { b: 5, c: 1, w: 0, due: Date.now() + 16 * DAY, t: Date.now() }; save(); close(); refresh(); };
     });
@@ -542,15 +550,37 @@
     $$('#rateSeg button').forEach((b) => (b.onclick = () => { S.settings.rate = +b.dataset.v; save(); speak('Hei! Jeg lærer norsk.'); renderMe(); }));
     $$('.toggle[data-s]').forEach((b) => (b.onclick = () => { S.settings[b.dataset.s] = !S.settings[b.dataset.s]; save(); b.classList.toggle('on'); }));
     $('#exp').onclick = () => {
-      const blob = new Blob([JSON.stringify(S, null, 1)], { type: 'application/json' });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `capri-norsk-${dayKey()}.json`; a.click();
+      const code = btoa(unescape(encodeURIComponent(JSON.stringify(S))));
+      sheet(`<h2>Резервная копия</h2>
+        <p class="muted small" style="margin:6px 0 0">Скопируй этот код и сохрани его в заметках. На другом устройстве нажми «Загрузить копию» и вставь его.</p>
+        <label class="field"><span>Код прогресса</span><textarea id="bkOut" readonly rows="5">${code}</textarea></label>
+        <button class="btn primary block" id="bkCopy" style="margin-top:14px">Скопировать код</button>`, (sh) => {
+        const ta = $('#bkOut', sh);
+        $('#bkCopy', sh).onclick = () => {
+          const ok = () => toast('📋', 'Код скопирован', 'Сохрани его в заметках');
+          const fallback = () => { ta.focus(); ta.select(); toast('👆', 'Код выделен', 'Нажми «Скопировать» в меню телефона'); };
+          try { navigator.clipboard.writeText(code).then(ok, fallback); } catch { fallback(); }
+        };
+      });
     };
     $('#imp').onclick = () => {
-      const i = document.createElement('input'); i.type = 'file'; i.accept = 'application/json,.json';
-      i.onchange = async () => { try { const d = JSON.parse(await i.files[0].text()); if (!d || typeof d.xp !== 'number') throw 0; S = Object.assign(defaults(), d); rebuildWords(); save(); toast('✅', 'Копия загружена', ''); renderMe(); } catch { toast('⚠️', 'Не получилось прочитать файл', ''); } };
-      i.click();
+      sheet(`<h2>Загрузить копию</h2>
+        <p class="muted small" style="margin:6px 0 0">Вставь код прогресса или выбери файл копии. Текущий прогресс на этом устройстве заменится.</p>
+        <label class="field"><span>Код прогресса</span><textarea id="bkIn" rows="5" placeholder="вставь код сюда"></textarea></label>
+        <label class="field"><span>…или файл .json</span><input id="bkFile" type="file" accept="application/json,.json,.txt" /></label>
+        <button class="btn primary block" id="bkLoad" style="margin-top:14px">Загрузить</button>`, (sh, close) => {
+        const apply = (txt) => {
+          try {
+            txt = txt.trim();
+            const d = JSON.parse(txt.startsWith('{') ? txt : decodeURIComponent(escape(atob(txt))));
+            if (!d || typeof d.xp !== 'number') throw 0;
+            S = Object.assign(defaults(), d); rebuildWords(); save(); close(); toast('✅', 'Копия загружена', ''); renderMe();
+          } catch { toast('⚠️', 'Код не подошёл', 'Проверь, что скопирован целиком'); }
+        };
+        $('#bkLoad', sh).onclick = async () => { const f = $('#bkFile', sh).files[0]; apply(f ? await f.text() : $('#bkIn', sh).value); };
+      });
     };
-    $('#reset').onclick = () => { if (confirm('Точно стереть весь прогресс? Это нельзя отменить.')) { S = defaults(); rebuildWords(); save(); go('home'); } };
+    $('#reset').onclick = () => ask('Стереть весь прогресс?', 'XP, стрик, слова и ачивки удалятся с этого устройства. Это нельзя отменить.', 'Стереть всё', () => { S = defaults(); rebuildWords(); save(); go('home'); });
   }
 
   // ================= EXERCISES =================
@@ -617,7 +647,10 @@
     ov.innerHTML = `<div class="inner">
       <div class="s-top"><button class="icon-btn" id="sClose">✕</button><div class="s-prog"><i id="sProg"></i></div><div id="sMeta" class="combo"></div></div>
       <div class="s-body" id="sBody"></div></div>`;
-    $('#sClose').onclick = () => { if (st.i > 0 && !st.done && !confirm('Выйти? Прогресс этой тренировки сохранится частично.')) return; finish(true); };
+    $('#sClose').onclick = () => {
+      if (st.done || st.i === 0) return st.done ? close() : finish(true);
+      ask('Выйти из тренировки?', 'Набранные XP и ответы сохранятся.', 'Выйти', () => finish(true), 'Продолжить');
+    };
 
     if (cfg.timer) {
       timerId = setInterval(() => {
